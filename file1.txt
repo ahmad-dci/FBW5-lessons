@@ -1,1 +1,2 @@
+this file is inferior to "still-better-than-file1.txt", and you know it!
 change from github 
