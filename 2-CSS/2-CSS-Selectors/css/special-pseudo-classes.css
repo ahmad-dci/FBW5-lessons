@@ -1,0 +1,6 @@
+input:disabled{
+    background-color: red;
+}
+input:in-range {
+    border: 2px solid yellow;
+  }
