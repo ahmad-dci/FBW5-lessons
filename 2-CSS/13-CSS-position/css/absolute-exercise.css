@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-div{
+.contentdiv{
 width: 50%;
 display: inline-block;
 overflow: hidden;
@@ -34,4 +34,21 @@ padding: 10px;
     outline: 10px solid lightgreen;
     width: 250px ;
     z-index: 3;
+}
+.shadow{
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.589);
+    position: absolute;
+    top:0;
+}
+.box{
+    position: absolute;
+    width:30vw ;
+    height: 10vw;
+    left: 35vw;
+    top: 5vh;
+    background-color: white;
+    border-radius: 5px;
+
 }
