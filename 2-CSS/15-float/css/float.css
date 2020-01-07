@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+div {
+    border: 1px solid black;
+}
+
+.div1 {
+    height: 5vh;
+}
+
+.div2 {
+    height: 15vh;
+}
+
+.div3 {
+    height: 20vh;
+    width: 30%;
+    float: left;
+}
+
+.div4 {
+    height: 20vh;
+    width: 70%;
+    float: left;
+}
+
+.div5 {
+    height: 20vh;
+    width: 70%;
+    float: left;
+}
+
+.div6 {
+    height: 20vh;
+    width: 30%;
+    float: left;
+}
+
+.div7 {
+    height: 40vh;
+    width: 30%;
+    float: left;
+}
+
+.div8 {
+    height: 20vh;
+    width: 70%;
+    float: left;
+}
+
+.div9 {
+    height: 20vh;
+    width: 70%;
+    float: left;
+}
