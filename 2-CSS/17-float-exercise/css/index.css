@@ -1,30 +1,38 @@
+body{
+    background-color: rgb(243, 236, 236);
+}
 .card{
-    height: 20vh;
+    /* height: 20vh; */
     margin: 20px;
     position: relative;
+    background-color: white;
+    max-height: 416px;
+    /* overflow-y: scroll; */
+    box-shadow: 1px 7px 17px #b1a6a6;
+    border-radius: 10px;
 }
-.container{
-    width:60% ;
-    margin: auto;
-}
+
 .img1{
     height: 150px;
     background-image:linear-gradient( rgba(221, 152, 25, 0.438), rgba(230, 156, 19, 0.534)),
      url(../imgs/nat-5.jpg);
     background-size: cover;
     clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+    border-radius: 10px 10px 0 0;
 }
 .img2{
     height: 150px;
     background-image:linear-gradient( rgba(32, 189, 18, 0.39), rgba(16, 180, 30, 0.534)), url(../imgs/nat-6.jpg);
     background-size: cover;
     clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+    border-radius: 10px 10px 0 0;
 }
 .img3{
     height: 150px;
     background-image:linear-gradient( rgba(31, 115, 211, 0.431), rgba(38, 35, 231, 0.534)), url(../imgs/nat-7.jpg);
     background-size: cover;
     clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+    border-radius: 10px 10px 0 0;
 }
 .title1{
     position: absolute;
@@ -80,3 +88,20 @@
     padding: 5px;
     color: white ;
 }
+.list{
+    list-style-type: none;
+    margin-top: 20px;
+    text-align: center;
+    color: gray;
+    font-size: smaller;
+    padding: 20px;
+}
+.list>li{
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(201, 197, 197, 0.829);
+}
+.list>li:last-child{
+    border-bottom:none
+}
+

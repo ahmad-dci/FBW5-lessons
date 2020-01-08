@@ -42,3 +42,23 @@
 [class*='col']{
     float: left;
 }
+.container{
+    width:80% ;
+    margin: auto;
+}
+@media only screen and (max-width:768px){
+    [class*='col']{
+        width: 50%;
+    }
+    .container{
+        width: 100%;
+    }
+}
+@media only screen and (max-width:480px){
+    [class*='col']{
+        width: 100%;
+    }
+    .container{
+        width: 100%;
+    }
+}
