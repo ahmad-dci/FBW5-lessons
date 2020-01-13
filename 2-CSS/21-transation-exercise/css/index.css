@@ -30,6 +30,10 @@
 .togglebox>span:nth-child(1){
     left: 20px;
     top:23.5px;
+    /* transition: transform 0.5s; */
+    transition-duration: 0.5s;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(1,1.54,.76,-1);
 }
 .togglebox>span:nth-child(2){
     left: 20px;
@@ -38,4 +42,18 @@
 .togglebox>span:nth-child(3){
     left: 20px;
     top:43.5px;
+    transition: transform 0.5s;
+    transition-timing-function: cubic-bezier(1,1.54,.76,-1);
+}
+.banner>input:checked + label>.togglebox>span:nth-child(2){
+    display: none;
+}
+.banner>input:checked + label>.togglebox>span:nth-child(1){
+    transform: rotate(45deg);
+    top:50%;
+}
+.banner>input:checked + label>.togglebox>span:nth-child(3){
+    
+    transform: rotate(-45deg);
+    top:50%;
 }
