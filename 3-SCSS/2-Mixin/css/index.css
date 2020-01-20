@@ -14,5 +14,7 @@
   color: red;
   font-size: 50px;
   border: 5px solid blue;
+  -webkit-box-shadow: 5px 5px 5px lightblue;
+          box-shadow: 5px 5px 5px lightblue;
 }
 /*# sourceMappingURL=index.css.map */
