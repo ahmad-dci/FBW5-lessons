@@ -48,3 +48,32 @@ function firstNamePrinter1(arr) {
       }
 
       document.write(firstNamePrinter2(parArr))
+
+      // write a function return an array which contains items from parArr
+      // where those Items lastnames  contain a certain charcter as a parameter
+
+      // solution hard way
+function hardFunction(arr, chr){
+  let resultArr = []
+arr.forEach(item => {
+  if(item.lastName.indexOf(chr) > -1){
+    resultArr.push(item)
+  }
+})
+return resultArr
+}
+console.log( hardFunction(parArr, 'B'))
+
+// solution with easy way
+function easyWay(arr, chr) {
+  return arr.filter(item => item.lastName.indexOf(chr) > -1)
+  }
+
+  console.log( easyWay(parArr, 'a'))
+  document.write( '//////////////////////<br>')
+
+  document.write(parArr+ '<br>')
+  easyWay(parArr, 'B').forEach(blaItem => {
+    document.write( blaItem.firstName + '<br>')
+})
+
