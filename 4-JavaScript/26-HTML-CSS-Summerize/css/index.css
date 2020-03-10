@@ -67,7 +67,35 @@ text-align: center;
     border-top: 1px solid gray;
 }
 /* cards section ends here */
+/* footer starts here */
+.footer{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: rgba(0, 0, 0, 0.74);
+}
+.logo-container>img{
+    width:150px
+}
+.contact-container>ul,
+.social{
+    list-style-type: none;
+    padding: 0;
+    margin-left: 10px;
+}
+.contact-container>ul>li>a, 
+.social>li>a{
+    color:white;
+    text-decoration: none;
+}
+.input-container>input,.input-container>textarea {
+    margin: 10px;
+}
+.footer-btn{
+    margin-left: 10px;
+    border-radius: 10px ;
+}
 
+/* footer ends here */
 
 
 @media only screen and (max-width:480px){
