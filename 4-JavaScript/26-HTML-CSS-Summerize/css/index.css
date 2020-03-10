@@ -56,6 +56,16 @@ border: 2px solid gray;
 width: 200px;
 
 }
+.cards>h2{
+    text-align: center;
+}
+.card-head>h3{
+text-align: center;
+}
+.card-content{
+    margin: 5px;
+    border-top: 1px solid gray;
+}
 /* cards section ends here */
 
 
@@ -70,4 +80,16 @@ width: 200px;
     nav>ul>li{
         margin: 3px;
     }
+    .cards-container{
+        flex-direction: column;
+    }
+    .cards{
+        margin: 0;
+        width: 100%;
+    }
+    .card{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
 }
