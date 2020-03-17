@@ -65,6 +65,9 @@ window.onload = () => {
           let productsDiv = document.querySelector('.products')
           productsDiv.append(productDiv)
 
+          // here you need to write your events handler
+
+
     //       productsDiv.innerHTML += '<div class="product">'+
     //       '<div>'+
     //           '<input type="text">'+
