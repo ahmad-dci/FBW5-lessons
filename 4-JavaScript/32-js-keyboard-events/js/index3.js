@@ -65,6 +65,21 @@ window.onload = () => {
           let productsDiv = document.querySelector('.products')
           productsDiv.append(productDiv)
 
+    //       productsDiv.innerHTML += '<div class="product">'+
+    //       '<div>'+
+    //           '<input type="text">'+
+    //       '</div>'+
+    //       '<div>'+
+    //           '<input type="number" min="0" value="0">'+
+    //       '</div>'+
+    //       '<div>'+
+    //           '<input type="number" min="0" value="0">'+
+    //       '</div>'+
+    //       '<div>'+
+    //           '<span>0</span>'+
+    //       '</div>'+
+    //   '</div>'
+
 
 
 
