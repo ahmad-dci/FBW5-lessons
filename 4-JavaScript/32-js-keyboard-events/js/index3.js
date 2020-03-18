@@ -70,6 +70,10 @@ window.onload = () => {
           let productsDiv = document.querySelector('.products')
           productsDiv.append(productDiv)
 
+          setEvent('keyup',newPriceInput, newPriceInput, newquantityInput, newResultSpan)
+          setEvent('change',newPriceInput, newPriceInput, newquantityInput, newResultSpan)
+          setEvent('keyup',newquantityInput, newPriceInput, newquantityInput, newResultSpan)
+          setEvent('change',newquantityInput, newPriceInput, newquantityInput, newResultSpan)
           // here you need to write your events handler
 
 
