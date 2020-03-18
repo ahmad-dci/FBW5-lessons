@@ -47,9 +47,9 @@ window.onload = () => {
           productDiv.classList.add('product')
 
           let firstDiv = document.createElement('div')
-          let productInput = document.createElement('input')
-          productInput.type = 'text'
-          firstDiv.append(productInput)
+          let newproductInput = document.createElement('input')
+          newproductInput.type = 'text'
+          firstDiv.append(newproductInput)
           productDiv.append(firstDiv)
 
           let secondDiv = document.createElement('div')
@@ -83,7 +83,7 @@ window.onload = () => {
           setEvent('change',newquantityInput, newPriceInput, newquantityInput, newResultSpan,'quantity')
           // here you need to write your events handler
 
-          productInput.addEventListener('keyup', function (e) {
+          newproductInput.addEventListener('keyup', function (e) {
             if(e.which == 13){
               newPriceInput.focus()
             }
