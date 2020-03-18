@@ -2,31 +2,36 @@ window.onload = () => {
     let priceInput = document.querySelector('.product div:nth-child(2) input')
     let quantityInput = document.querySelector('.product div:nth-child(3) input')
     let resultSpan = document.querySelector('.product div:nth-child(4) span')
-    priceInput.addEventListener('keyup', function (e) {
-        let price = parseFloat(priceInput.value)
-        let quantity = parseFloat(quantityInput.value)
-        calculator(resultSpan, price, quantity)
+    setEvent('keyup',priceInput,priceInput,quantityInput,resultSpan)
+    // priceInput.addEventListener('keyup', function (e) {
+    //     let price = parseFloat(priceInput.value)
+    //     let quantity = parseFloat(quantityInput.value)
+    //     calculator(resultSpan, price, quantity)
 
-      })
-      priceInput.addEventListener('change', function (e) {
-        let price = parseFloat(priceInput.value)
-        let quantity = parseFloat(quantityInput.value)
-        calculator(resultSpan, price, quantity)
+    //   })
+    setEvent('change',priceInput,priceInput,quantityInput,resultSpan)
+      // priceInput.addEventListener('change', function (e) {
+      //   let price = parseFloat(priceInput.value)
+      //   let quantity = parseFloat(quantityInput.value)
+      //   calculator(resultSpan, price, quantity)
 
-      })
+      // })
 
-      quantityInput.addEventListener('keyup', function (e) {
-        let price = parseFloat(priceInput.value)
-        let quantity = parseFloat(quantityInput.value)
-        calculator(resultSpan, price, quantity)
 
-      })
-      quantityInput.addEventListener('change', function (e) {
-        let price = parseFloat(priceInput.value)
-        let quantity = parseFloat(quantityInput.value)
-        calculator(resultSpan, price, quantity)
+      setEvent('keyup',quantityInput,priceInput,quantityInput,resultSpan)
+      // quantityInput.addEventListener('keyup', function (e) {
+      //   let price = parseFloat(priceInput.value)
+      //   let quantity = parseFloat(quantityInput.value)
+      //   calculator(resultSpan, price, quantity)
 
-      })
+      // })
+      setEvent('change',quantityInput,priceInput,quantityInput,resultSpan)
+      // quantityInput.addEventListener('change', function (e) {
+      //   let price = parseFloat(priceInput.value)
+      //   let quantity = parseFloat(quantityInput.value)
+      //   calculator(resultSpan, price, quantity)
+
+      // })
 
       let newProduct = document.querySelector('#newProduct')
       newProduct.addEventListener('click', function (e) {
@@ -92,6 +97,15 @@ window.onload = () => {
         })
 }
 
-function calculator(resultEmenet, price, quantity){
-    resultEmenet.innerText = price * quantity
-}
+// function calculator(resultEmenet, price, quantity){
+//     resultEmenet.innerText = price * quantity
+// }
+
+function setEvent(eventName,triggerElement, priceElement, quantityElement, resultElement) {
+  triggerElement.addEventListener(eventName, function (e) {
+    let price = parseFloat(priceElement.value)
+    let quantity = parseFloat(quantityElement.value)
+    resultElement.innerText = (price * quantity) + ' EUR'
+
+  })
+  }
