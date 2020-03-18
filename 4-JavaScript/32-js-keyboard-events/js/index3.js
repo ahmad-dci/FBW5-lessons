@@ -1,15 +1,22 @@
 window.onload = () => {
+    let productInput = document.querySelector('.product div:nth-child(1) input')
     let priceInput = document.querySelector('.product div:nth-child(2) input')
     let quantityInput = document.querySelector('.product div:nth-child(3) input')
     let resultSpan = document.querySelector('.product div:nth-child(4) span')
-    setEvent('keyup',priceInput,priceInput,quantityInput,resultSpan)
+
+    productInput.addEventListener('keyup', function (e) {
+      if(e.which == 13){
+        priceInput.focus()
+      }
+      })
+    setEvent('keyup',priceInput,priceInput,quantityInput,resultSpan, 'price')
     // priceInput.addEventListener('keyup', function (e) {
     //     let price = parseFloat(priceInput.value)
     //     let quantity = parseFloat(quantityInput.value)
     //     calculator(resultSpan, price, quantity)
 
     //   })
-    setEvent('change',priceInput,priceInput,quantityInput,resultSpan)
+    setEvent('change',priceInput,priceInput,quantityInput,resultSpan, 'price')
       // priceInput.addEventListener('change', function (e) {
       //   let price = parseFloat(priceInput.value)
       //   let quantity = parseFloat(quantityInput.value)
@@ -18,14 +25,14 @@ window.onload = () => {
       // })
 
 
-      setEvent('keyup',quantityInput,priceInput,quantityInput,resultSpan)
+      setEvent('keyup',quantityInput,priceInput,quantityInput,resultSpan, 'quantity')
       // quantityInput.addEventListener('keyup', function (e) {
       //   let price = parseFloat(priceInput.value)
       //   let quantity = parseFloat(quantityInput.value)
       //   calculator(resultSpan, price, quantity)
 
       // })
-      setEvent('change',quantityInput,priceInput,quantityInput,resultSpan)
+      setEvent('change',quantityInput,priceInput,quantityInput,resultSpan, 'quantity')
       // quantityInput.addEventListener('change', function (e) {
       //   let price = parseFloat(priceInput.value)
       //   let quantity = parseFloat(quantityInput.value)
@@ -70,12 +77,17 @@ window.onload = () => {
           let productsDiv = document.querySelector('.products')
           productsDiv.append(productDiv)
 
-          setEvent('keyup',newPriceInput, newPriceInput, newquantityInput, newResultSpan)
-          setEvent('change',newPriceInput, newPriceInput, newquantityInput, newResultSpan)
-          setEvent('keyup',newquantityInput, newPriceInput, newquantityInput, newResultSpan)
-          setEvent('change',newquantityInput, newPriceInput, newquantityInput, newResultSpan)
+          setEvent('keyup',newPriceInput, newPriceInput, newquantityInput, newResultSpan,'price')
+          setEvent('change',newPriceInput, newPriceInput, newquantityInput, newResultSpan,'price')
+          setEvent('keyup',newquantityInput, newPriceInput, newquantityInput, newResultSpan, 'quantity')
+          setEvent('change',newquantityInput, newPriceInput, newquantityInput, newResultSpan,'quantity')
           // here you need to write your events handler
 
+          productInput.addEventListener('keyup', function (e) {
+            if(e.which == 13){
+              newPriceInput.focus()
+            }
+            })
 
     //       productsDiv.innerHTML += '<div class="product">'+
     //       '<div>'+
@@ -105,11 +117,30 @@ window.onload = () => {
 //     resultEmenet.innerText = price * quantity
 // }
 
-function setEvent(eventName,triggerElement, priceElement, quantityElement, resultElement) {
+function setEvent(eventName,triggerElement, priceElement, quantityElement, resultElement, elementType) {
   triggerElement.addEventListener(eventName, function (e) {
     let price = parseFloat(priceElement.value)
     let quantity = parseFloat(quantityElement.value)
     resultElement.innerText = (price * quantity) + ' EUR'
+
+    // querySelect return only the first founded element
+    // querySelectAll return all elements match the selector
+    let spansArr = document.querySelectorAll('.product>div>span')
+    let storage = 0
+    spansArr.forEach(element => {
+      let innerValue = element.innerText.replace(' EUR', '')
+      let price = parseFloat(innerValue)
+
+      storage += price
+    });
+    let sumTotlaElement = document.querySelector('.sumTotal')
+    sumTotlaElement.innerText = storage + ' Euro'
+
+    if(elementType == 'price' && eventName == 'keyup' ){
+      if(e.which == 13){
+        quantityElement.focus()
+      }
+    }
 
   })
   }
