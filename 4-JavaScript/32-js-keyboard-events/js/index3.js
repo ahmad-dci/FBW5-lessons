@@ -55,6 +55,42 @@ window.onload = () => {
             newProductCreator()
           }
         })
+
+        document.querySelector('#invoiceGenerate').addEventListener('click', function (e) {
+          e.preventDefault()
+          let productsArr = document.querySelectorAll('.products .product') 
+          console.log(productsArr[0].children);
+          
+          let printTable = document.querySelector('#printTable')
+          // remove all old rows from the table
+          for(let i = 1; i < printTable.children.length; i++){
+            printTable.children[i].remove()
+          }
+          // finish removing from the table
+          for(let i = 1; i < productsArr.length; i++){
+            let newRow = document.createElement('tr')
+
+            let productTd = document.createElement('td')
+            productTd.innerText = productsArr[i].children[0].children[0].value
+            newRow.append(productTd)
+
+            let priceTd = document.createElement('td')
+            priceTd.innerText = productsArr[i].children[1].children[0].value + ' EUR'
+            newRow.append(priceTd)
+
+            let quantityTd = document.createElement('td')
+            quantityTd.innerText = productsArr[i].children[2].children[0].value
+            newRow.append(quantityTd)
+
+            let totalTd = document.createElement('td')
+            totalTd.innerText = productsArr[i].children[3].children[0].innerText
+            newRow.append(totalTd)
+
+            printTable.append(newRow)
+
+          }
+
+          })
 }
 
 // function calculator(resultEmenet, price, quantity){
