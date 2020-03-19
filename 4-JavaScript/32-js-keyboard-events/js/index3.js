@@ -92,9 +92,9 @@ function setEvent(eventName,triggerElement, priceElement, quantityElement, resul
         //alert(productInput.value.trim())
         let currentProduct = priceElement.parentElement.parentElement
         let products = currentProduct.parentElement
-        let childrenArr = Array.from(products.children)
-        // console.log(childrenArr.indexOf(currentProduct))
-        // console.log(childrenArr.length)
+        let childrenArr = Array.from(products.children) // convert collection to array so we can use indexOf
+        console.log(childrenArr.indexOf(currentProduct))
+        console.log(childrenArr.length)
         let productsLength = childrenArr.length
         let currentProductIndex  = childrenArr.indexOf(currentProduct)
         if(productInput.value.trim() != ''){
