@@ -92,6 +92,8 @@ window.onload = () => {
             printTable.append(newRow)
 
           }
+          let sumTotal1 = document.querySelector('.sumTotal')
+          document.querySelector('#printSection .sumTotal').innerText = sumTotal1.innerText
 
           })
 }
