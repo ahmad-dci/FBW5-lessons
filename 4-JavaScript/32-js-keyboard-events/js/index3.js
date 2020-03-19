@@ -61,12 +61,15 @@ window.onload = () => {
           let productsArr = document.querySelectorAll('.products .product') 
           console.log(productsArr[0].children);
           
-          let printTable = document.querySelector('#printTable')
+          let printTable = document.querySelector('#printTable tbody')
           // remove all old rows from the table
-          for(let i = 1; i < printTable.children.length; i++){
-            printTable.children[i].remove()
-          }
+          // for(let i = 1; i < printTable.children.length; i++){
+          //   printTable.children[i].remove()
+          // }
           // finish removing from the table
+
+          // remove all old rows from the table body
+          printTable.innerHTML = ''
           for(let i = 1; i < productsArr.length; i++){
             let newRow = document.createElement('tr')
 
