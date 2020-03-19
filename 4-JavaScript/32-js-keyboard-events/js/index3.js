@@ -70,6 +70,13 @@ window.onload = () => {
 
           // remove all old rows from the table body
           printTable.innerHTML = ''
+          document.querySelector('#printSection .sumTotal').innerText =''
+          for(let i = 1; i < productsArr.length; i++){
+            if(productsArr[i].children[0].children[0].value.trim() == ''){
+              productsArr[i].children[0].children[0].focus()
+              return
+            }
+          }
           for(let i = 1; i < productsArr.length; i++){
             let newRow = document.createElement('tr')
 
