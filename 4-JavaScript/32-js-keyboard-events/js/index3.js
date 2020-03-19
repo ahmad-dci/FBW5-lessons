@@ -43,7 +43,17 @@ window.onload = () => {
       let newProduct = document.querySelector('#newProduct')
       newProduct.addEventListener('click', function (e) {
           e.preventDefault()
-          newProductCreator()
+          let productInmputsArr = document.querySelectorAll('.product div:nth-child(1) input')
+          let check = true
+          productInmputsArr.forEach(element => {
+            if(element.value.trim() == ''){
+              check = false
+              element.focus()
+            }
+          });
+          if(check){
+            newProductCreator()
+          }
         })
 }
 
@@ -78,7 +88,23 @@ function setEvent(eventName,triggerElement, priceElement, quantityElement, resul
     if(elementType == 'quantity' && eventName == 'keyup' ){
       if(e.which == 13){
         //quantityElement.focus()
-        newProductCreator()
+        let productInput = priceElement.parentElement.parentElement.children[0].children[0]
+        //alert(productInput.value.trim())
+        let currentProduct = priceElement.parentElement.parentElement
+        let products = currentProduct.parentElement
+        let childrenArr = Array.from(products.children)
+        // console.log(childrenArr.indexOf(currentProduct))
+        // console.log(childrenArr.length)
+        let productsLength = childrenArr.length
+        let currentProductIndex  = childrenArr.indexOf(currentProduct)
+        if(productInput.value.trim() != ''){
+          if(productsLength-1 == currentProductIndex ){
+            newProductCreator()
+          } else {
+            childrenArr[currentProductIndex + 1].children[0].children[0].focus()
+          }
+          
+        }
       }
     }
 
