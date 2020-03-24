@@ -26,6 +26,10 @@
 // https://pixabay.com/api/?key=12000491-41fc68d8c365df909e022ceb6&q=lion
 // log the data that will be returned from the Api using fetch
 
+// 9 task 
+// use the the value from the input as keyword to search through the Api
+// so you need to pass the value as a parameter to the getData() function
+
 function appInit(containerId){
     // get element by id containerId the parameter
     let appContainer = document.getElementById(containerId);
@@ -42,6 +46,9 @@ function appInit(containerId){
         let btn1 = document.createElement('button')
         btn1.innerText = 'Search'
         div1.append(btn1)
+        // create pagging buttons container
+        let paggingDiv = document.createElement('div')
+        div1.append(paggingDiv)
         // add div inside the container
         appContainer.append(div1)
         // create and add another div to container
@@ -51,19 +58,22 @@ function appInit(containerId){
         div2.classList.add('images-container') 
         // add click event listner to btn1
         btn1.addEventListener('click', function(){
-            // call getData function
-            getData()
+            
             // clear div2 old content
-            div2.innerHTML = ''
-            // add 20 images inside div2
-        for(let i = 0; i<20; i++){
-            // create image
-            let img = document.createElement('img')
-            // set src attribute to the image
-            img.setAttribute('src','./imgs/dummy.png')
-            // add the image inside div2
-            div2.append(img)
-        }
+            //div2.innerHTML = ''
+            // call getData function
+            getData(inp1.value, div2, paggingDiv, 1)
+            
+            
+            // add 20 dummy images inside div2
+        // for(let i = 0; i<20; i++){
+        //     // create image
+        //     let img = document.createElement('img')
+        //     // set src attribute to the image
+        //     img.setAttribute('src','./imgs/dummy.png')
+        //     // add the image inside div2
+        //     div2.append(img)
+        // }
         })
         // add class 'container to appContainer'
         appContainer.classList.add('container')
@@ -79,12 +89,45 @@ window.onload = function () {
     appInit('container')
   }
 
-  async function getData() {
-      // getting data from Api using fetch
-      let response = await fetch('https://pixabay.com/api/?key=12000491-41fc68d8c365df909e022ceb6&q=lion')
+  async function getData(keyword, imagesContainer, paggingContainer, pageNumber) {
+      //console.log(pageNumber)
+    // clear images container  
+    imagesContainer.innerHTML = ''
+    // getting data from Api using fetch
+      let response = await fetch('https://pixabay.com/api/?key=12000491-41fc68d8c365df909e022ceb6&q='+keyword+'&page='+pageNumber)
       if(response.status == 200){
           let data = await response.json()
+
           console.log(data);
+          // get how many pagging buttons 
+          // we need to divide total hits to 20 in each page
+          let num = data.totalHits / 20
+          //console.log(num);
+          // round up num
+          let btnNumbers = Math.ceil(num)
+          //console.log();
+          // clear paggingContainer content before add buttons to it
+          paggingContainer.innerHTML = ''
+          for(let i = 0 ; i < btnNumbers ; i++ ){
+              let paggingBtn = document.createElement('button')
+              paggingBtn.innerText = i+1
+              paggingContainer.append(paggingBtn)
+              // add event click for pagging button
+              paggingBtn.addEventListener('click',function(){
+                getData(keyword, imagesContainer, paggingContainer, i+1)
+              })
+          }
+          
+          data.hits.forEach(element => {
+              // create img element
+              let img = document.createElement('img')
+              // set the url from the element previewUrl property
+              img.src = element.previewURL
+              // add the image inside imagesContainer
+              imagesContainer.append(img)
+
+          });
+
           
       }
     }
