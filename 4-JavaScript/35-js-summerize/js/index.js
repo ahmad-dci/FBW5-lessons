@@ -86,7 +86,7 @@ function appInit(containerId){
             // clear div2 old content
             //div2.innerHTML = ''
             // call getData function
-            getData(inp1.value, div2, paggingDiv, 1)
+            getData(inp1.value, div2, paggingDiv, 1, colorList)
             
             
             // add 20 dummy images inside div2
@@ -113,12 +113,22 @@ window.onload = function () {
     appInit('container')
   }
 
-  async function getData(keyword, imagesContainer, paggingContainer, pageNumber) {
+  async function getData(keyword, imagesContainer, paggingContainer, pageNumber, colorlistElement) {
       //console.log(pageNumber)
+      // get the selected value from the list 
+      let selectedColor = colorlistElement.options[colorlistElement.selectedIndex].value
+      // declare url colors parameter
+      let colorParameter = ''
+      // check if there is color selected
+      if(selectedColor){
+        colorParameter = '&colors=' + selectedColor
+      }
+    //   console.log(selectedColor)
+    //   console.log(colorlistElement.selectedIndex)
     // clear images container  
     imagesContainer.innerHTML = ''
     // getting data from Api using fetch
-      let response = await fetch('https://pixabay.com/api/?key=12000491-41fc68d8c365df909e022ceb6&q='+keyword+'&page='+pageNumber)
+      let response = await fetch('https://pixabay.com/api/?key=12000491-41fc68d8c365df909e022ceb6&q='+keyword+'&page='+pageNumber+colorParameter)
       if(response.status == 200){
           let data = await response.json()
 
@@ -142,7 +152,7 @@ window.onload = function () {
               }
               // add event click for pagging button
               paggingBtn.addEventListener('click',function(){
-                getData(keyword, imagesContainer, paggingContainer, i+1)
+                getData(keyword, imagesContainer, paggingContainer, i+1, colorlistElement)
               })
           }
           
