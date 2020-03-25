@@ -30,6 +30,10 @@
 // use the the value from the input as keyword to search through the Api
 // so you need to pass the value as a parameter to the getData() function
 
+// 10 task 
+// make the photos clickable so when user clicks on the photo , 
+// new tab will open and the larg photo will be shown there
+
 function appInit(containerId){
     // get element by id containerId the parameter
     let appContainer = document.getElementById(containerId);
@@ -40,6 +44,26 @@ function appInit(containerId){
         let inp1 = document.createElement('input')
         // add input inside div
         div1.append(inp1)
+        // create colors list
+        let colorList = document.createElement('select')
+        //create list option
+        let colorOpt1 = document.createElement('option')
+        // set a value for this option
+        colorOpt1.value = ""
+        // set innerText for the option
+        colorOpt1.innerText = "Choose color"
+        //add the option inside the list element
+        colorList.append(colorOpt1)
+        // create colors options array
+        let colorsArr = ["grayscale", "transparent", "red", "orange", "yellow", "green", "turquoise", "blue", "lilac", "pink", "white", "gray", "black", "brown"]
+        colorsArr.forEach(element => {
+            let colorOpt = document.createElement('option')
+            colorOpt.value = element
+            colorOpt.innerText = element
+            colorList.append(colorOpt)
+        });
+        // add colorList inside div1
+        div1.append(colorList)
         // add class 'controls-container' to div1
         div1.classList.add('controls-container')
         // create a button and add it to div1
@@ -112,6 +136,10 @@ window.onload = function () {
               let paggingBtn = document.createElement('button')
               paggingBtn.innerText = i+1
               paggingContainer.append(paggingBtn)
+              // disable the button if its page is shown
+              if(pageNumber == i+1){
+                  paggingBtn.disabled = true
+              }
               // add event click for pagging button
               paggingBtn.addEventListener('click',function(){
                 getData(keyword, imagesContainer, paggingContainer, i+1)
@@ -123,8 +151,16 @@ window.onload = function () {
               let img = document.createElement('img')
               // set the url from the element previewUrl property
               img.src = element.previewURL
-              // add the image inside imagesContainer
-              imagesContainer.append(img)
+              // create link
+              let imgLink = document.createElement('a')
+              // make link open in new tab
+              imgLink.setAttribute('target', '_blank')
+              // set the href for the link
+              imgLink.setAttribute('href', element.largeImageURL)
+              // add the image inside the link
+              imgLink.append(img)
+              // add the image link inside imagesContainer
+              imagesContainer.append(imgLink)
 
           });
 
