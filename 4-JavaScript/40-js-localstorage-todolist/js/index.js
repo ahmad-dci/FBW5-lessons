@@ -25,5 +25,16 @@ window.onload = function () {
       })
 
       // render todo list array from localstorage
+      let jsonObj = localStorage.getItem('todolist')
+      // check if there is datawith the key todolist in the local storage
+      if(jsonObj != null){
+          let convertedArr = this.JSON.parse(jsonObj)
+          convertedArr.forEach(element => {
+            todoArray.push(element)
+            let listItem = document.createElement('li')
+            listItem.innerText = element
+            todoList.append(listItem)
+          });
+      }
 
   }
