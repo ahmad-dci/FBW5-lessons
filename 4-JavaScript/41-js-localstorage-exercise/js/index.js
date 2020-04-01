@@ -98,20 +98,15 @@ window.onload = function(){
 // 1 == "1"  true check only the value
 // 1 === "1" falsecheck type and value
 
-let somthing =[ {
-    "name": "ahmad",
-    "grades": [
-        {"Math": 90},
-        {"English": 80},
-        {"computer_science1": 30}
-    ]
-},
-{
-    "name": "manish",
-    "grades": [
-        {"Math": 0},
-        {"English": 0}
-    ]
-}
+// Homeworks
+// first
+// show the  student  and its grades at the end of the page on  save student click
 
-]
+// second
+// load the students from the local storage to studentsArr so we keep them in the temp mempry 
+// to save them again instead of losing the data and overwrite the data in the local storage
+
+
+
+
+
