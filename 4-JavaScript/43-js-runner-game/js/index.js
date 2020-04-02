@@ -113,3 +113,7 @@ window.onload=function () {
 
 
   }
+
+  // increase box speed every success jump
+  // students grade system get to grades from localstorage and save them in the studentsArr
+  
