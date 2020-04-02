@@ -2,6 +2,7 @@ window.onload=function () {
 
     // get html elements
     let canvas = document.querySelector('#gameCanvas')
+    let scorSpn = document.querySelector('#scorSpn')
 
     // draw a horzintal line
     let ctx = canvas.getContext('2d');
@@ -20,7 +21,7 @@ window.onload=function () {
     // ctx.fillRect(520, 79, 20, 20)
     // ctx.fillRect(500, 79, 20, 20)
     let boxCounter = 580
-    setInterval(function () {
+    let boxInterval = setInterval(function () {
         // draw a box on the right side of the line 20 * 20
         ctx.clearRect(boxCounter + 20, 79, 20, 20)
         ctx.fillRect(boxCounter, 79, 20, 20)
@@ -55,7 +56,8 @@ window.onload=function () {
         // ctx.drawImage(img, 336, 0, 48, 60, 0, 39, 48, 60)
         // position of each charachter is (charachter index - 1) * 48
         let framCounter = 0
-        setInterval(function () {
+        let scoreCounter = 0
+        let characterInterval = setInterval(function () {
             ctx.clearRect(0, 0, 48, 99)
             //ctx.clearRect(0, 0, 48, 60)
             if(status == "running"){
@@ -69,6 +71,22 @@ window.onload=function () {
                 framCounter = 0
             } else {
                 framCounter = framCounter + 48
+            }
+            if(boxCounter <= 39  && status == "running"){
+                console.log("crash");
+                clearInterval(boxInterval)
+                clearInterval(characterInterval)
+                // draw text 'crash' in canvas
+                ctx.fillStyle = "red"
+                ctx.font = "40px Arial"
+                ctx.fillText("Crash", 250, 50 )
+                
+            }
+            // add 1 for score everytime user jumps above the box
+            if(boxCounter <= 39 && status == "jumpping"){
+                // code 
+                scoreCounter++
+                scorSpn.innerText =  scoreCounter
             }
              
           }, 150)
