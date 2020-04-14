@@ -20,4 +20,19 @@ window.onload = () => {
         localStorage.setItem('blaPerson',JSON.stringify(personObj) )
 
       })
+
+      // task 2
+      // fill the inputs with data inside the local storage IF EXIST
+      // code here
+      // get string data from local storage using the key 'blaPerson'
+      const jsonData = localStorage.getItem('blaPerson')
+      // check if data is not empty or exist 
+      if(jsonData){
+          // convert the json text to object
+          let obj = JSON.parse(jsonData)
+          // fill inputs with data from the object
+          usernameInput.value = obj.username
+          emailInput.value = obj.email
+
+      }
   }

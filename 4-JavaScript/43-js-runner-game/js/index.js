@@ -21,7 +21,21 @@ window.onload=function () {
     // ctx.fillRect(520, 79, 20, 20)
     // ctx.fillRect(500, 79, 20, 20)
     let boxCounter = 580
-    let boxInterval = setInterval(function () {
+    // let boxInterval = setInterval(function () {
+    //     // draw a box on the right side of the line 20 * 20
+    //     ctx.clearRect(boxCounter + 20, 79, 20, 20)
+    //     ctx.fillRect(boxCounter, 79, 20, 20)
+    //     if(boxCounter == 0){
+    //         boxCounter = 580
+    //     } else{
+    //         boxCounter = boxCounter - 20
+    //     }
+        
+    //   }, 100)
+    // variable to check if the box allowed to move
+    let boxMoveCheck = true
+    let boxMoveTime = 100
+    function boxMove () {
         // draw a box on the right side of the line 20 * 20
         ctx.clearRect(boxCounter + 20, 79, 20, 20)
         ctx.fillRect(boxCounter, 79, 20, 20)
@@ -30,9 +44,15 @@ window.onload=function () {
         } else{
             boxCounter = boxCounter - 20
         }
+        if(boxMoveCheck){
+            setTimeout(function () {
+                boxMove()
+              }, boxMoveTime)
+        }
         
-      }, 100)
-
+        
+      }
+      boxMove ()
 
     // draw the image abovethe line in Canvas starting from left 
 
@@ -74,7 +94,8 @@ window.onload=function () {
             }
             if(boxCounter <= 39  && status == "running"){
                 console.log("crash");
-                clearInterval(boxInterval)
+                //clearInterval(boxInterval)
+                boxMoveCheck = false 
                 clearInterval(characterInterval)
                 // draw text 'crash' in canvas
                 ctx.fillStyle = "red"
@@ -87,6 +108,13 @@ window.onload=function () {
                 // code 
                 scoreCounter++
                 scorSpn.innerText =  scoreCounter
+                // reduce box movement time
+                if(boxMoveTime > 50 ){
+                    boxMoveTime -= 10
+                }
+                console.log(boxMoveTime);
+                
+                
             }
              
           }, 150)
