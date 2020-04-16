@@ -13,6 +13,7 @@ window.onload = () => {
     const greenToGrayBtn = document.querySelector('#greenToGrayBtn')
     const effectBtn1 = document.querySelector('#effectBtn1')
     const effectBtn2 = document.querySelector('#effectBtn2')
+    const brightnessSlider = document.querySelector('#brightnessSlider')
 
     // create context instance from canv
     const ctx = canv.getContext('2d')
@@ -128,7 +129,41 @@ window.onload = () => {
             ctx.drawImage(effectImg2, 0 , 0, 500, 500)
         }
     }
-    
+
+    // add change event to brightnessSlider
+    brightnessSlider.onchange = () => {
+        const brightnessValue = brightnessSlider.value
+        console.log(brightnessValue)
+        // get image data
+        let imageData = ctx.getImageData(0, 0, 500, 500)
+        // loop through image data
+        for (let i = 0; i < imageData.data.length; i+=4) {
+            if (imageData.data[i] + parseInt(brightnessValue) > 255)
+            {
+                imageData.data[i] = 255
+            }else{
+                imageData.data[i] = imageData.data[i] + parseInt(brightnessValue)
+            }
+            if(imageData.data[i+1] + parseInt(brightnessValue) > 255){
+                imageData.data[i+1] = 255
+            } else{
+                imageData.data[i+1] = imageData.data[i+1] + parseInt(brightnessValue)
+            }
+            if(imageData.data[i+2] + parseInt(brightnessValue) > 255){
+                imageData.data[i+2] = 255
+            }else{
+                imageData.data[i+2] = imageData.data[i+2] + parseInt(brightnessValue)
+            }
+
+
+        }
+        ctx.clearRect(0, 0, 500, 500)
+        ctx.putImageData(imageData, 0, 0)
+        brightnessSlider.value = 0
+
+        
+    }
+
 }
 
 
