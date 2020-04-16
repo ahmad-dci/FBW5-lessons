@@ -10,6 +10,9 @@ window.onload = () => {
     const orginalBtn = document.querySelector('#orginalBtn')
     const invertBtn = document.querySelector('#invertBtn')
     const removeRedBtn = document.querySelector('#removeRedBtn')
+    const greenToGrayBtn = document.querySelector('#greenToGrayBtn')
+    const effectBtn1 = document.querySelector('#effectBtn1')
+    const effectBtn2 = document.querySelector('#effectBtn2')
 
     // create context instance from canv
     const ctx = canv.getContext('2d')
@@ -85,8 +88,50 @@ window.onload = () => {
         // draw the new image
         ctx.putImageData(imageData, 0, 0)
     }
+    // add event click to greenToGrayBtn
+    greenToGrayBtn.onclick = () => {
+        // get drawing image data
+        const imageData = ctx.getImageData(0, 0, 500, 500)
+        // loop through data array
+        for (let i = 0; i < imageData.data.length; i+=4) {
+            // chaek pixel is green
+            if(imageData.data[i+1]-5 > imageData.data[i] && imageData.data[i+1] > imageData.data[i+2]){
+                let avg = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3
+                imageData.data[i] = avg
+                imageData.data[i+1] = avg
+                imageData.data[i+2] = avg
+            }
+            
+        }
+        ctx.clearRect(0, 0, 500, 500)
+        ctx.putImageData(imageData, 0, 0)
+    }
+    // add click event for effectBtn1
+    effectBtn1.onclick = () => {
+        // create html image
+        const effectImg1 = document.createElement('img')
+        // set src for the created image
+        effectImg1.src = './imgs/red-smoke.png'
+        // add event load to the created image
+        effectImg1.onload = ()  => {
+            ctx.drawImage(effectImg1, 0 , 0, 500, 500)
+        }
+    }
+    // add click event for effectBtn2
+    effectBtn2.onclick = () => {
+        // create html image
+        const effectImg2 = document.createElement('img')
+        // set src for the created image
+        effectImg2.src = './imgs/11.png'
+        // add event load to the created image
+        effectImg2.onload = ()  => {
+            ctx.drawImage(effectImg2, 0 , 0, 500, 500)
+        }
+    }
+    
 }
 
 
 // first loop
+
 // i = 0
