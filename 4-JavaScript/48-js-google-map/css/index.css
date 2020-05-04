@@ -1,3 +1,11 @@
-#map{
+#map-div{
+    width: 500px;
     height: 500px;
+}
+.window{
+    width: 200px;
+    /* background-color: khaki; */
+}
+#windowContainer{
+    display: none;
 }
