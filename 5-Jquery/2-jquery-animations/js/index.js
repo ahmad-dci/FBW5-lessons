@@ -23,8 +23,32 @@ $(document).ready(function () {
         $(this).stop()
     });
 
-    $('.container > div:nth-child(1)').animate({
-        'left': '350px'
-    }, 2000)
+    
+    // create a function to make the boxgo back
+    let goBack = function () {
+        $('.container > div:nth-child(1)').animate({
+            'left': '0'
+        }, 2000, goForward)
+      }
+
+    let goForward = function () {
+        $('.container > div:nth-child(1)').animate({
+            'left': '350px'
+        }, 2000, goBack)
+      }
+
+      goForward()
+
+      // chain methods jquery
+      $('.chainDiv').animate({
+          'height': '200px'
+      },1000)
+      .slideUp(2000)
+      .text("Hello I am here")
+      .slideDown(1000)
+      .fadeOut(1000,function () {
+          alert("mombo jumbo done")
+        });
+      
 
 });
