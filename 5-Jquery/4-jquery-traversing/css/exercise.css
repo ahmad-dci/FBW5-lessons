@@ -16,9 +16,6 @@ nav>ul>li>a{
     text-align: center;
 
     }
-    nav>div>ul{
-        display: none;
-    }
     nav>div>div{
         width: 25px;
         height: 25px;
@@ -50,10 +47,18 @@ nav>ul>li>a{
             display: block;
             
             }
+            nav>ul{
+                display: none;
+                
+                }
         nav>ul>li>a{
             min-width: auto;
             margin-left:0 ;
-            margin-top: 10px;
+            margin-top: 2px;
             padding: 10px;
             }
+            nav>div>div{
+                display: block;
+            }
+
     }
