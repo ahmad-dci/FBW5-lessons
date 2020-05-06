@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('.collapse > h2 > span').click(function (e) { 
         e.preventDefault();
-        $('.collapse > div').slideUp()
+        $('.collapse > div').slideUp(1000)
         // $(this).parent().next().slideToggle();
 
         
