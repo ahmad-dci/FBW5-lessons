@@ -1,4 +1,7 @@
 /* Slider */
+body{
+    height: 100vh;
+}
 .slick-slide {
     margin: 0px 20px;
 }

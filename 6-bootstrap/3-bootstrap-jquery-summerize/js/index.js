@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+
     $('.customer-logos').slick({
       slidesToShow: 6,
       slidesToScroll: 1,
@@ -19,4 +21,22 @@ $(document).ready(function(){
         }
       }]
     });
+
+
+
+    // $('#btn1').on("tap", () => {
+    //     $('#btn1').text("Tapped");
+    // })
+    let btn = document.querySelector('#btn1')
+    btn.addEventListener("touchstart", (e) => {
+        console.log(e);
+        
+        btn.innerText = "Tapped";
+    })
+     let body = document.querySelector('body');
+     let touchesCountSpan = document.querySelector('#touchesCountSpan');
+     body.addEventListener("touchstart", (e) => {
+        touchesCountSpan.innerText = e.touches.length
+     })
+
   });
