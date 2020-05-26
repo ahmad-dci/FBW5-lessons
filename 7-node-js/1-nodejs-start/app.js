@@ -5,7 +5,6 @@ const fs = require('fs')
 http.createServer((req, res) => {
     // res.writeHead(200, {'content-type': 'application/json'})
     // res.writeHead(200, {'content-type': 'text/plain'}) // send text data
-     res.writeHead(200, {'content-type': 'text/html'}) // send html
 
      //send json text
     // let obj = {
@@ -38,9 +37,35 @@ http.createServer((req, res) => {
     // })
 
     console.log(req.url);
+    if(req.url == "/1"){
+        res.writeHead(200, {'content-type': 'text/html'}) // send html
+        let text = fs.readFileSync('views/index.html');
+        res.end(text);
+    }else{
+        if(req.url == "/2"){
+            res.writeHead(200, {'content-type': 'text/html'}) // send html
+            let text = fs.readFileSync('views/index1.html');
+            res.end(text);
+        } else {
+            if(req.url == '/bldsdf/style.css'){
+                res.writeHead(200, {'content-type': 'text/css'}) // send html
+            let text = fs.readFileSync('views/style.css');
+            res.end(text);
+            } else{
+                if(req.url == '/fgfgfgfgfg/ss.css'){
+                    res.writeHead(200, {'content-type': 'text/css'}) // send html
+                    let text = fs.readFileSync('views/style.css');
+                    res.end(text);
+                } else{
+                    res.writeHead(404, {'content-type': 'text/html'}) // send html
+                res.end("404 no such as page");
+                }
+                
+            }
+            
+        }
+    }
     
-    let text = fs.readFileSync('views/index.html');
-    res.end(text);
     
 
 }).listen(4000)
