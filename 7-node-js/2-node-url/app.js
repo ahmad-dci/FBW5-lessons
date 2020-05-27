@@ -5,14 +5,18 @@ http.createServer(function(req, res){
 console.log(req.url);
 switch (req.url) {
     case '/home':
+        // get shared content
+        let sharedText = fs.readFileSync('views/shared.html')
         res.writeHead(200,{'content-type': 'text/html'})
         let text = fs.readFileSync('views/index.html')
         //res.end("<h2>Welcome Home</h2>")
-        res.end(text)
+        res.end(text.toString().replace('this is a shared content', sharedText))
         break;
     case '/about':
+        let sharedText1 = fs.readFileSync('views/shared.html')
         res.writeHead(200,{'content-type': 'text/html'})
-        res.end("<h2>about me</h2>")
+        let text1 = fs.readFileSync('views/about.html')
+        res.end(text1.toString().replace('this is a shared content', sharedText1))
         break;
     case '/somecss':
         res.writeHead(200,{'content-type': 'text/css'})
