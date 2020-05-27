@@ -1,9 +1,15 @@
 const http = require('http')
 const fs = require('fs')
+const url = require('url')
 
 http.createServer(function(req, res){
-console.log(req.url);
-switch (req.url) {
+ console.log(req.url);
+
+let urlObj = url.parse(req.url, true)
+// console.log(urlObj);
+
+
+switch (urlObj.pathname) {
     case '/home':
         // get shared content
         let sharedText = fs.readFileSync('views/shared.html')
@@ -17,6 +23,17 @@ switch (req.url) {
         res.writeHead(200,{'content-type': 'text/html'})
         let text1 = fs.readFileSync('views/about.html')
         res.end(text1.toString().replace('this is a shared content', sharedText1))
+        break;
+    case '/contact':
+        if (urlObj.query.fname) {
+            console.log(urlObj.query.fname);
+        }
+        
+        
+        let sharedText2 = fs.readFileSync('views/shared.html')
+        res.writeHead(200,{'content-type': 'text/html'})
+        let text2 = fs.readFileSync('views/contact.html')
+        res.end(text2.toString().replace(/this is a shared content/g, sharedText2))
         break;
     case '/somecss':
         res.writeHead(200,{'content-type': 'text/css'})
