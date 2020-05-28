@@ -49,8 +49,8 @@ switch (q.pathname) {
             const mailOption ={
                 from: 'blabla@gmail.com',
                 to: 'emailtosendto@bla.com',
-                subject:'email from your website',
-                text: 'this is a text'
+                subject:q.query.subject,
+                text: q.query.name + '\n' + q.query.message
             }
             transporter.sendMail(mailOption, function (error, info) {
                 if(error){
