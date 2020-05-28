@@ -30,7 +30,11 @@ switch (q.pathname) {
         res.end(indexBanner)
         break;
     case '/contact':
-        saver.saveContent("Hello I am a content", 'content.txt')
+        //saver.saveContent("Hello I am a content", 'content.txt')
+        if(q.query.name){
+            let message = q.query.name + '\n' + q.query.subject + '\n' + q.query.message + '\n' 
+            saver.saveContent(message , 'content.txt')
+        }
         let contactContent = fs.readFileSync('views/26-HTML-CSS-Summerize/contact.html')
         res.writeHead(200, {'content-type': 'text/html'})
         res.end(contactContent)
