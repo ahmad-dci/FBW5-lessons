@@ -15,32 +15,28 @@
             <li><a href="#">Service</a></li>
             <li><a href="#">About us</a></li>
             <li><a href="#">Blog</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="/contact" >Contact</a></li>
         </ul>
     </nav>
     <div class="banner"></div>
     <!-- div.cards>h2+div.cards-container>div*3>div.card-head+div.card-content -->
     <div class="cards">
-        <h2>Section Title</h2>
+        <h2>Contact Us</h2>
         <div class="cards-container">
-            <div class="card">
-                <div class="card-head">
-                    <h3>card1 title</h3>
+            <form method="GET" action="/contact">
+            <div class="section">
+                <div class="input-container">
+                    <input type="text" placeholder="Name" name="name">
                 </div>
-                <div class="card-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos earum dolorem vitae deserunt deleniti accusamus. Qui ipsum culpa nobis voluptate a vero quod sit magni atque porro! Ratione, fugit placeat?</div>
-            </div>
-            <div class="card">
-                <div class="card-head">
-                    <h3>card2 title</h3>
+                <div class="input-container">
+                    <input type="text" placeholder="Subject" name="subject">
                 </div>
-                <div class="card-content">Distinctio sunt blanditiis omnis, ratione placeat enim ipsa magnam! Modi laboriosam sapiente iste provident blanditiis earum, velit commodi accusantium adipisci alias ipsum nesciunt consequatur voluptatem est! Tempora, qui eveniet! Iure!</div>
-            </div>
-            <div class="card">
-                <div class="card-head">
-                    <h3>card3 title</h3>
+                <div class="input-container">
+                    <textarea  cols="30" rows="10" placeholder="Message" name="message"></textarea>
                 </div>
-                <div class="card-content">Dicta aperiam porro nihil aliquid. Ipsa consequuntur perspiciatis tempore dolorum dolores excepturi necessitatibus culpa minus saepe non voluptates voluptatibus molestiae qui, fuga ratione sit similique quae ducimus incidunt, cum officia.</div>
+                <input type="submit" class="footer-btn" value="Send">
             </div>
+        </form>
         </div>
     </div>
     <div class="footer">

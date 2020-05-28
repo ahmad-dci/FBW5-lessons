@@ -2,6 +2,9 @@ const http = require('http')
 const fs = require('fs')
 const url = require('url')
 
+// import our module
+const saver = require('./modules/saver')
+
 http.createServer((req, res)=>{
 let q = url.parse(req.url, true)
 
@@ -26,7 +29,12 @@ switch (q.pathname) {
         res.writeHead(200, {'content-type': 'image/jpeg'})
         res.end(indexBanner)
         break;
-
+    case '/contact':
+        saver.saveContent("Hello I am a content", 'content.txt')
+        let contactContent = fs.readFileSync('views/26-HTML-CSS-Summerize/contact.html')
+        res.writeHead(200, {'content-type': 'text/html'})
+        res.end(contactContent)
+        break
     default:
         res.writeHead(404, {'content-type': 'text/html'})
         res.end("404 no page founded")
