@@ -11,8 +11,11 @@ app.get('/', (req, res) => {
     res.render('main');
 });
 
-app.get('/home/subhome', (req, res) => {
-    res.render('main');
+// app.get('/home/subhome', (req, res) => {
+//     res.render('main');
+// });
+app.get('/menu', (req, res) => {
+    res.render('menu')
 });
 
 app.listen(3000, () => {
