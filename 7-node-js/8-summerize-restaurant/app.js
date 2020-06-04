@@ -1,4 +1,5 @@
 const express = require('express');
+const emailSender = require('./modules/emailSender')
 
 const app = express();
 
@@ -26,7 +27,14 @@ app.get('/contact', (req, res) => {
 });
 app.post('/contact', (req, res) => {
     console.log(req.body);
-    
+    emailSender.sendEmail(req.body.name, req.body.email, req.body.subject, req.body.message, (ok) => {
+        if(ok){
+            res.sendStatus(200);
+        } else{
+            res.sendStatus(500);
+        }
+    });
+   
 });
 
 app.listen(3000, () => {
