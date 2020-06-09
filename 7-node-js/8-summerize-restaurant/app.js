@@ -1,7 +1,10 @@
 const express = require('express');
 const emailSender = require('./modules/emailSender')
+const fs = require('fs')
+const adminRoute = require('./routs/adminRoute')
 
 const app = express();
+
 
 
 // use express urlencoder to get posted data
@@ -16,32 +19,47 @@ app.get('/', (req, res) => {
     res.render('main');
 });
 
+
 // app.get('/home/subhome', (req, res) => {
 //     res.render('main');
 // });
+const jsonText = fs.readFileSync(__dirname + '/meals.json')
+const myMeals = JSON.parse(jsonText)
 
-app.get('/admin/addmeal', (req, res) => {
-    res.render('adminAddMeal', {meals: meals})
-});
-app.post('/admin/addmeal', (req, res) => {
-    const mealTitle = req.body.mealTitle
-    const mealPrice = req.body.mealPrice
-    const mealDescription = req.body.mealDescription
+app.use('/admin',adminRoute.adminBurgerRouter(myMeals))
 
-    let obj = {
-        title: mealTitle,
-        description: mealDescription,
-        imgUrl: "/img/burger/4.png",
-        price: mealPrice
-    }
-    meals.push(obj)
-    //res.render('adminAddMeal', {meals: meals})
-    res.redirect('/admin/addmeal')
+// app.get('/admin/addmeal', (req, res) => {
+//     // const jsonText = fs.readFileSync(__dirname + '/meals.json')
+//     // const myMeals = JSON.parse(jsonText)
+//     res.render('adminAddMeal', {meals: myMeals})
+// });
 
-});
+// app.get('/admin/deletmeal', (req, res) => {
+//     res.render('adminDeletMeal', {meals: myMeals})
+// });
+
+// app.post('/admin/addmeal', (req, res) => {
+//     const mealTitle = req.body.mealTitle
+//     const mealPrice = req.body.mealPrice
+//     const mealDescription = req.body.mealDescription
+
+//     let obj = {
+//         title: mealTitle,
+//         description: mealDescription,
+//         imgUrl: "/img/burger/4.png",
+//         price: mealPrice
+//     }
+//     myMeals.push(obj)
+//     fs.writeFileSync(__dirname + '/meals.json', JSON.stringify(myMeals))
+//     //res.render('adminAddMeal', {meals: meals})
+//     res.redirect('/admin/addmeal')
+
+// });
 
 app.get('/menu', (req, res) => {
-    res.render('menu', {meals: meals})
+    // const jsonText = fs.readFileSync(__dirname + '/meals.json')
+    // const myMeals = JSON.parse(jsonText)
+    res.render('menu', {meals: myMeals})
 });
 app.get('/contact', (req, res) => {
     res.render('contact', {sent: 1})
