@@ -14,6 +14,27 @@ function adminBurgerRouter(myMeals){
         res.render('adminDeletMeal', {meals: myMeals})
     });
 
+    adminRoute.post('/deletmeal', (req, res) => {
+        //console.log(req.body.mealid)
+        const idx = req.body.mealid
+        myMeals.splice(idx, 1)
+        fs.writeFileSync('./meals.json', JSON.stringify(myMeals))
+        
+
+        res.sendStatus(200)
+    })
+    adminRoute.get('/editmeal', (req, res) => {
+        res.render('adminEditMeal', {meals: myMeals})
+    })
+    adminRoute.post('/editmeal', (req, res) => {
+        console.log(req.body)
+        myMeals[req.body.mealid].title = req.body.mealTitle
+        myMeals[req.body.mealid].description = req.body.mealDescription
+        myMeals[req.body.mealid].price = req.body.mealPrice
+        fs.writeFileSync('./meals.json', JSON.stringify(myMeals))
+        res.sendStatus(200)
+    })
+
     adminRoute.post('/addmeal', (req, res) => {
         const mealTitle = req.body.mealTitle
         const mealPrice = req.body.mealPrice
