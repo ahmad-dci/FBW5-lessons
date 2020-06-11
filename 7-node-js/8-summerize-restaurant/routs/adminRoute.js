@@ -39,18 +39,38 @@ function adminBurgerRouter(myMeals){
         const mealTitle = req.body.mealTitle
         const mealPrice = req.body.mealPrice
         const mealDescription = req.body.mealDescription
+        
+        // chees burger 
+        // chees_burger_1.jpeg
+        // false cases
+        // number 0
+        // string empty string
+        // object undefined
+        // datatype null 
+        if(mealTitle &&  mealPrice && mealDescription && req.files){
+            const mealImg = req.files.mealimg
+        //mealImg.name // blabla.jpeg
+        // get image extenstion
+        let ext = mealImg.name.substr(mealImg.name.lastIndexOf('.'))
+        mealImg.mv('./public/uploadedfiles/' + mealTitle.replace(/ /g , '_') + myMeals.length + ext).then(() => {
+            let obj = {
+                title: mealTitle,
+                description: mealDescription,
+                imgUrl: '/uploadedfiles/' + mealTitle.replace(/ /g , '_') + myMeals.length + ext,
+                price: mealPrice
+            }
+            myMeals.push(obj)
+            fs.writeFileSync('./meals.json', JSON.stringify(myMeals))
+            //res.render('adminAddMeal', {meals: meals})
+            // you need to write the full path on res.redirect
+            res.redirect('/admin/addmeal')
+        }).catch(error => {
+            res.send(error.message);
+        })
     
-        let obj = {
-            title: mealTitle,
-            description: mealDescription,
-            imgUrl: "/img/burger/4.png",
-            price: mealPrice
-        }
-        myMeals.push(obj)
-        fs.writeFileSync('./meals.json', JSON.stringify(myMeals))
-        //res.render('adminAddMeal', {meals: meals})
-        // you need to write the full path on res.redirect
-        res.redirect('/admin/addmeal')
+    } else {
+        res.send("meal data is not complete");
+    }
     
     });
     return adminRoute

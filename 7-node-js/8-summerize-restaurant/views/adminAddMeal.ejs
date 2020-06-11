@@ -56,7 +56,7 @@
 
     <div class="container">
         <div class="row">
-            <form action="/admin/addmeal" method="POST">
+            <form action="/admin/addmeal" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Meal Title </label>
                   <input type="text" class="form-control" name="mealTitle"  placeholder="Meal Title">
@@ -68,6 +68,10 @@
                 <div class="form-group">
                   <label for="exampleFormControlTextarea1">Meal Description</label>
                   <textarea class="form-control" name="mealDescription"  rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="mealimgfile">Meal Image</label>
+                    <input type="file" name="mealimg" class="form-control-file" id="mealimgfile" accept="image/x-png,image/gif,image/jpeg">
                 </div>
                 <input type="submit" class="btn btn-success" value="save">
               </form>

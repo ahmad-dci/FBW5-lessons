@@ -2,10 +2,14 @@ const express = require('express');
 const emailSender = require('./modules/emailSender')
 const fs = require('fs')
 const adminRoute = require('./routs/adminRoute')
+const fileupload = require('express-fileupload')
 
 const app = express();
 
-
+// set fileupload middleware
+app.use(fileupload({
+    limits: { fileSize: 50 * 1024 * 1024 }
+}))
 
 // use express urlencoder to get posted data
 app.use(express.urlencoded({extended: true}));
