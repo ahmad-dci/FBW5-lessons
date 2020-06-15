@@ -158,6 +158,24 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                             const mealDescription = e.target.parentElement.querySelector(
                                 '.mealDescription').value
                             const mealPrice = e.target.parentElement.querySelector('.mealPrice').value
+                            const imgFile = e.target.parentElement.querySelector('.form-control-file').files[0]
+
+                            // build the form data
+                            const fd = new FormData()
+                            fd.append('mealid', mealid)
+                            fd.append('mealTitle', mealTitle)
+                            fd.append('mealDescription', mealDescription)
+                            fd.append('mealPrice', mealPrice)
+                            if(imgFile){
+                                fd.append('imgFile', imgFile)
+                            }
+
+                            postData_FormData("/admin/editmeal", fd).then(data => {
+                                console.log(data);
+                                
+                            })
+                            
+                            
                             //console.log(mealPrice);
                             // $.ajax({
                             //     type: "POST",
@@ -174,19 +192,25 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                             // });
 
                             // send data using fetch
-                            postData("/admin/editmeal", {
-                                    mealid,
-                                    mealTitle,
-                                    mealDescription,
-                                    mealPrice
-                            }).then(data =>{
-                                console.log(data)
-                            })
+
+                            
+                            
+
+
+                            // postData("/admin/editmeal", {
+                            //         mealid,
+                            //         mealTitle,
+                            //         mealDescription,
+                            //         mealPrice
+                            // }).then(data =>{
+                            //     console.log(data)
+                            // })
 
                         })
                     })
 
 
+                    // send the data as json using fetch
     function postData(url = '', data = {}) {
     // Default options are marked with *
     // eslint-disable-next-line no-undef
@@ -202,6 +226,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       redirect: 'follow', // manual, *follow, error
       referrer: 'no-referrer', // no-referrer, *client
       body: JSON.stringify(data) // body data type must match "Content-Type" header
+    })
+      .then(response => response) // parses JSON response into native Javascript objects
+  }
+
+  // send the data as formdata using fetch
+  function postData_FormData(url = '', formdata = {}) {
+    // Default options are marked with *
+    // eslint-disable-next-line no-undef
+    return fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      body: formdata // body data type must match "Content-Type" header
     })
       .then(response => response) // parses JSON response into native Javascript objects
   }
