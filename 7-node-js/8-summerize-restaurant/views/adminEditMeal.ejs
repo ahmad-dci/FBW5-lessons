@@ -35,7 +35,7 @@
                 <div class="col-xl-6 col-md-6 col-lg-6">
                     <div class="single_delicious d-flex align-items-center">
                         <div class="thumb">
-                            <img src="<%= meals[i].imgUrl%>" alt="">
+                            <img class="mealImg" src="<%= meals[i].imgUrl%>" alt="">
                         </div>
                         <div class="info">
                             <input type="text" class="mealTitle" value="<%= meals[i].title%>">
@@ -170,8 +170,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                 fd.append('imgFile', imgFile)
                             }
 
-                            postData_FormData("/admin/editmeal", fd).then(data => {
-                                console.log(data);
+                            postData_FormData("/admin/editmeal", fd).then(response => {
+                                if(response.status == 200){
+                                    response.json().then(jsonData => {
+                                        console.log(jsonData)
+                                        e.target.parentElement.parentElement.querySelector('.mealImg').src = jsonData + "?" + new Date().getTime()
+                                    })
+                                }
                                 
                             })
                             

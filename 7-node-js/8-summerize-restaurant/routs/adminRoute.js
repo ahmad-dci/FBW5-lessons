@@ -33,17 +33,23 @@ function adminBurgerRouter(myMeals) {
         })
     })
     adminRoute.post('/editmeal', (req, res) => {
-        console.log(req.body)
-        console.log(req.files)
+        //console.log(req.body)
+        //console.log(req.files)
         myMeals[req.body.mealid].title = req.body.mealTitle
         myMeals[req.body.mealid].description = req.body.mealDescription
         myMeals[req.body.mealid].price = req.body.mealPrice
         
         if (req.files) {
-            console.log(req.files)
+            //console.log(req.files)
             const mealImg = req.files.imgFile
             // delete the old image file
-            fs.unlinkSync("./public" + myMeals[req.body.mealid].imgUrl)
+            try {
+                fs.unlinkSync("./public" + myMeals[req.body.mealid].imgUrl)
+            } catch (error) {
+                console.log(error);
+                
+            }
+            
             // get image extenstion
             let ext = mealImg.name.substr(mealImg.name.lastIndexOf('.'))
 
@@ -51,13 +57,15 @@ function adminBurgerRouter(myMeals) {
             mealImg.mv('./public/uploadedfiles/' + req.body.mealTitle.replace(/ /g, '_') + (req.body.mealid ) + ext).then(() => {
                 myMeals[req.body.mealid].imgUrl ="/uploadedfiles/" + req.body.mealTitle.replace(/ /g, '_') + (req.body.mealid ) + ext
                 fs.writeFileSync('./meals.json', JSON.stringify(myMeals))
-                res.sendStatus(200)
+                //res.sendStatus(200)
+                res.json(myMeals[req.body.mealid].imgUrl)
             }).catch(error => {
                 res.sendStatus(500)
             })
         } else {
             fs.writeFileSync('./meals.json', JSON.stringify(myMeals))
-            res.sendStatus(200)
+            //res.sendStatus(200)
+            res.json(myMeals[req.body.mealid].imgUrl)
         }
     })
 
