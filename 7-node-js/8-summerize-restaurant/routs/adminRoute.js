@@ -27,7 +27,7 @@ function adminBurgerRouter(myMeals){
         res.render('adminEditMeal', {meals: myMeals})
     })
     adminRoute.post('/editmeal', (req, res) => {
-        console.log(req.body)
+        console.log( req.body)
         myMeals[req.body.mealid].title = req.body.mealTitle
         myMeals[req.body.mealid].description = req.body.mealDescription
         myMeals[req.body.mealid].price = req.body.mealPrice

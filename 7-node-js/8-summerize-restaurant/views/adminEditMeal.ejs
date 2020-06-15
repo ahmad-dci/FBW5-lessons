@@ -42,6 +42,7 @@
                             <textarea class="mealDescription" cols="30" rows="5"><%= meals[i].description%></textarea>
                             <span>$<input type="number" style="width: 100px;" class="mealPrice"
                                     value="<%= meals[i].price%>"></span>
+                                    <input type="file" name="mealimg" class="form-control-file" id="mealimgfile" accept="image/x-png,image/gif,image/jpeg">
                             <a href="#" class="btn btn-success mt-3 editbtn" mealid="<%=i%>">save</a>
                         </div>
                     </div>
@@ -158,29 +159,29 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                 '.mealDescription').value
                             const mealPrice = e.target.parentElement.querySelector('.mealPrice').value
                             //console.log(mealPrice);
-                            $.ajax({
-                                type: "POST",
-                                url: "/admin/editmeal",
-                                data: {
-                                    mealid,
-                                    mealTitle,
-                                    mealDescription,
-                                    mealPrice
-                                },
-                                success: function (response) {
-                                    
-                                }
-                            });
-
-                            // send data using fetch
-                            // postData("/admin/editmeal", {
+                            // $.ajax({
+                            //     type: "POST",
+                            //     url: "/admin/editmeal",
+                            //     data: {
                             //         mealid,
                             //         mealTitle,
                             //         mealDescription,
                             //         mealPrice
-                            // }).then(data =>{
-                                
-                            // })
+                            //     },
+                            //     success: function (response) {
+                                    
+                            //     }
+                            // });
+
+                            // send data using fetch
+                            postData("/admin/editmeal", {
+                                    mealid,
+                                    mealTitle,
+                                    mealDescription,
+                                    mealPrice
+                            }).then(data =>{
+                                console.log(data)
+                            })
 
                         })
                     })
@@ -195,14 +196,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       credentials: 'same-origin', // include, *same-origin, omit
       headers: {
-      //'Content-Type': 'application/json'
-         'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded'
       },
       redirect: 'follow', // manual, *follow, error
       referrer: 'no-referrer', // no-referrer, *client
       body: JSON.stringify(data) // body data type must match "Content-Type" header
     })
-      .then(response => response.json()) // parses JSON response into native Javascript objects
+      .then(response => response) // parses JSON response into native Javascript objects
   }
                 </script>
 
