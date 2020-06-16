@@ -4,6 +4,10 @@ const fs = require('fs')
 function adminBurgerRouter(myMeals) {
     const adminRoute = express.Router()
 
+    adminRoute.get('/', (req, res) => {
+        res.render('admin')
+    })
+
     adminRoute.get('/addmeal', (req, res) => {
         // const jsonText = fs.readFileSync(__dirname + '/meals.json')
         // const myMeals = JSON.parse(jsonText)
@@ -21,6 +25,12 @@ function adminBurgerRouter(myMeals) {
     adminRoute.post('/deletmeal', (req, res) => {
         //console.log(req.body.mealid)
         const idx = req.body.mealid
+        try {
+          fs.unlinkSync("./public" + myMeals[idx].imgUrl)  
+        } catch (error) {
+            console.log(error)
+        }
+        
         myMeals.splice(idx, 1)
         fs.writeFileSync('./meals.json', JSON.stringify(myMeals))
 

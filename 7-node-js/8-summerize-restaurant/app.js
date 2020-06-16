@@ -61,6 +61,18 @@ app.use('/admin',adminRoute.adminBurgerRouter(myMeals))
 //     res.redirect('/admin/addmeal')
 
 // });
+app.get('/login', (req, res) => {
+    res.render('login')
+});
+
+app.post('/login', (req, res) => {
+    // code here
+    console.log(req.body)
+    const jsonText = fs.readFileSync(__dirname + '/users.json')
+    const users = JSON.parse(jsonText)
+    console.log(users)
+
+});
 
 app.get('/menu', (req, res) => {
     // const jsonText = fs.readFileSync(__dirname + '/meals.json')
