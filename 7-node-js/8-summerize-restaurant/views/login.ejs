@@ -166,6 +166,11 @@
                 password
             }).then(data => {
                 console.log(data)
+                if(data == "exist"){
+                    window.location = "/admin"
+                } else {
+                    alert("password or username is wrong")
+                }
             })
 
         })

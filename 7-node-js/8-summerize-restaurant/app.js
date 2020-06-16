@@ -72,6 +72,29 @@ app.post('/login', (req, res) => {
     const users = JSON.parse(jsonText)
     console.log(users)
 
+    // using for loop
+    // let check = false
+    // for (let i = 0; i < users.length; i++) {
+    //     if (req.body.userName == users[i].username && req.body.password == users[i].password){
+    //         check = true
+    //         break;
+    //     }
+        
+    // }
+    // if (check){
+    //     res.json("exist")
+    // } else {
+    //     res.json('notexisit')
+    // }
+
+    // using es6 array find
+    const foundUser = users.find(user => user.username == req.body.userName && user.password == req.body.password)
+    if (foundUser){
+        res.json("exist")
+    } else {
+        res.json('notexisit')
+    }
+
 });
 
 app.get('/menu', (req, res) => {
