@@ -3,8 +3,22 @@ const emailSender = require('./modules/emailSender')
 const fs = require('fs')
 const adminRoute = require('./routs/adminRoute')
 const fileupload = require('express-fileupload')
+const session = require('express-session')
+const cookie = require('cookie-parser')
+
 
 const app = express();
+
+// create session object options
+const sessionOptions = {
+    secret: 'burger',
+    cookie: {}
+}
+// use a session
+app.use(session(sessionOptions))
+
+// use cookie parser
+app.use(cookie())
 
 // set fileupload middleware
 app.use(fileupload({
@@ -62,15 +76,39 @@ app.use('/admin',adminRoute.adminBurgerRouter(myMeals))
 
 // });
 app.get('/login', (req, res) => {
-    res.render('login')
+    // check saved cookies in req
+    console.log(req.cookies);
+    if (req.cookies.burgerUser){
+        const jsonText = fs.readFileSync(__dirname + '/users.json')
+        const users = JSON.parse(jsonText)
+        const foundUser = users.find(user => user.username == req.cookies.burgerUser.username &&
+             user.password == req.cookies.burgerUser.password)
+        if (foundUser){
+            req.session.user = foundUser
+            res.redirect('/admin')
+        } else {
+            res.render('login')
+        }
+    } else {
+        res.render('login')
+    }
+    
+    
+});
+app.get('/logout', (req, res) => {
+    // destroy the session and log out
+    req.session.destroy()
+    // clear cookie on logout
+    res.clearCookie('burgerUser')
+    res.redirect('/')
 });
 
 app.post('/login', (req, res) => {
     // code here
-    console.log(req.body)
+    //console.log(req.session)
     const jsonText = fs.readFileSync(__dirname + '/users.json')
     const users = JSON.parse(jsonText)
-    console.log(users)
+    //console.log(users)
 
     // using for loop
     // let check = false
@@ -90,7 +128,12 @@ app.post('/login', (req, res) => {
     // using es6 array find
     const foundUser = users.find(user => user.username == req.body.userName && user.password == req.body.password)
     if (foundUser){
+        req.session.user = foundUser
+        // set burgerUser Cookie to use it on login page next time
+        res.cookie("burgerUser", foundUser, {maxAge: 60000})
+
         res.json("exist")
+        
     } else {
         res.json('notexisit')
     }

@@ -3,8 +3,22 @@ const fs = require('fs')
 
 function adminBurgerRouter(myMeals) {
     const adminRoute = express.Router()
+    // build a middlware to check the session for all routes in /admin, /admin/blalba .....
+    adminRoute.use((req, res, next) => {
+        if (req.session.user){
+            next()
+        } else {
+            res.redirect('/')
+        }
+    })
 
     adminRoute.get('/', (req, res) => {
+        console.log(req.session.user);
+        // if(req.session.user){
+        //     res.render('admin')
+        // } else {
+        //     res.redirect('/login')
+        // }
         res.render('admin')
     })
 
