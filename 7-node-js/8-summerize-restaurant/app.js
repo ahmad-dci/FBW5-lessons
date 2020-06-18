@@ -130,7 +130,8 @@ app.post('/login', (req, res) => {
     if (foundUser){
         req.session.user = foundUser
         // set burgerUser Cookie to use it on login page next time
-        res.cookie("burgerUser", foundUser, {maxAge: 60000})
+        //res.cookie("burgerUser", foundUser, {maxAge: 60000})
+        res.cookie("burgerUser", foundUser, {maxAge: 600000, httpOnly: true})
 
         res.json("exist")
         
@@ -185,6 +186,38 @@ app.post('/contact1', (req, res) => {
     }
     
    
+});
+// get meal using id
+// app.get('/meal/:id', (req, res) => {
+//     //res.send(req.params.id);
+//     const idx = req.params.id
+//     if (myMeals[idx]){
+//     res.render('meal', {
+//         mealTitle: myMeals[idx].title,
+//         mealPrice: myMeals[idx].price,
+//         mealDescription: myMeals[idx].description,
+//         mealImg: myMeals[idx].imgUrl
+//     })
+// } else {
+//     res.send("dont dont dont");
+// }
+// });
+
+// get meal using title
+app.get('/meal/:title', (req, res) => {
+    //res.send(req.params.id);
+    const mealtitle = req.params.title
+    const foundMeal = myMeals.find(meal => meal.title.trim().replace(/ /g, '_') == mealtitle)
+    if (foundMeal){
+    res.render('meal', {
+        mealTitle: foundMeal.title,
+        mealPrice: foundMeal.price,
+        mealDescription: foundMeal.description,
+        mealImg: foundMeal.imgUrl
+    })
+} else {
+    res.send("dont dont dont");
+}
 });
 
 app.listen(3000, () => {

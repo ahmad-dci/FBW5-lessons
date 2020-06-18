@@ -97,6 +97,7 @@ function adminBurgerRouter(myMeals) {
         const mealTitle = req.body.mealTitle
         const mealPrice = req.body.mealPrice
         const mealDescription = req.body.mealDescription
+        const mealDetails = req.body.mealDetails
 
         // chees burger 
         // chees_burger_1.jpeg
@@ -115,7 +116,8 @@ function adminBurgerRouter(myMeals) {
                     title: mealTitle,
                     description: mealDescription,
                     imgUrl: '/uploadedfiles/' + mealTitle.replace(/ /g, '_') + myMeals.length + ext,
-                    price: mealPrice
+                    price: mealPrice,
+                    details: mealDetails
                 }
                 myMeals.push(obj)
                 fs.writeFileSync('./meals.json', JSON.stringify(myMeals))
