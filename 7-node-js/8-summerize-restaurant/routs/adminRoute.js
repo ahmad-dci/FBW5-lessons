@@ -106,7 +106,16 @@ function adminBurgerRouter(myMeals) {
         // string empty string
         // object undefined
         // datatype null 
+
+        
+
         if (mealTitle && mealPrice && mealDescription && req.files) {
+
+            //check if mealtitle is exist
+        const foundMachMeal = myMeals.find(meal => meal.title == mealTitle )
+        if(foundMachMeal) {
+            res.send("this meal is already exist");
+        } else {
             const mealImg = req.files.mealimg
             //mealImg.name // blabla.jpeg
             // get image extenstion
@@ -127,12 +136,26 @@ function adminBurgerRouter(myMeals) {
             }).catch(error => {
                 res.send(error.message);
             })
+        }
+
+            
 
         } else {
             res.send("meal data is not complete");
         }
 
     });
+
+    adminRoute.post('/checkmealname', (req, res) => {
+        console.log(req.body)
+        const foundedMeal = myMeals.find(meal => meal.title == req.body.mealtitle)
+        if (foundedMeal){
+            res.json('exist')
+        }else{
+            res.json('notexist')
+        }
+    })
+
     return adminRoute
 }
 

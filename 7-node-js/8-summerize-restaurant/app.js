@@ -131,7 +131,7 @@ app.post('/login', (req, res) => {
         req.session.user = foundUser
         // set burgerUser Cookie to use it on login page next time
         //res.cookie("burgerUser", foundUser, {maxAge: 60000})
-        res.cookie("burgerUser", foundUser, {maxAge: 600000, httpOnly: true})
+        res.cookie("burgerUser", foundUser, {maxAge: 6000000, httpOnly: true})
 
         res.json("exist")
         
@@ -213,7 +213,8 @@ app.get('/meal/:title', (req, res) => {
         mealTitle: foundMeal.title,
         mealPrice: foundMeal.price,
         mealDescription: foundMeal.description,
-        mealImg: foundMeal.imgUrl
+        mealImg: foundMeal.imgUrl,
+        mealDetails: foundMeal.details
     })
 } else {
     res.send("dont dont dont");
