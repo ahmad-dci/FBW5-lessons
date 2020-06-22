@@ -25,6 +25,14 @@ app.get('/', (req, res) => {
     res.render('main')
 });
 
+app.get('/register', (req, res) => {
+    res.render('register')
+});
+
+app.post('/register', (req, res) => {
+    // your post register handler here
+    
+});
 
 app.listen(3000, () => {
     console.log('App listening on port 3000!');
