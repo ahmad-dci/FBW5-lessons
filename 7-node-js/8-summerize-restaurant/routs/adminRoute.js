@@ -26,7 +26,8 @@ function adminBurgerRouter(myMeals) {
         // const jsonText = fs.readFileSync(__dirname + '/meals.json')
         // const myMeals = JSON.parse(jsonText)
         res.render('adminAddMeal', {
-            meals: myMeals
+            meals: myMeals,
+            check: true
         })
     });
 
@@ -114,7 +115,10 @@ function adminBurgerRouter(myMeals) {
             //check if mealtitle is exist
         const foundMachMeal = myMeals.find(meal => meal.title == mealTitle )
         if(foundMachMeal) {
-            res.send("this meal is already exist");
+            res.render('adminAddMeal', {
+                meals: myMeals,
+                check: false
+            });
         } else {
             const mealImg = req.files.mealimg
             //mealImg.name // blabla.jpeg
