@@ -6,6 +6,7 @@ const fs = require('fs')
 
 // include dataModule
 const dataModule = require('./modules/dataModule')
+const adminRouter = require('./routes/adminRoutes')
 
 const app = express()
 app.use(express.static(__dirname + '/public'))
@@ -23,6 +24,9 @@ app.use(cookie())
 app.use(fileupload({
     limits: { fileSize: 50 * 1024 * 1024 }
 }))
+// app.use(bla()) function in use that means it is a middleware
+// please add the usage of any router after all others middleware so they will effect on router requests
+app.use('/admin', adminRouter)
 
 app.get('/', (req, res) => {
     res.render('main')

@@ -16,7 +16,8 @@
                 <div class="row">
                     <div class="col-md-3"><a href="#" class="web-url">www.bookstore.com</a></div>
                     <div class="col-md-6">
-                        <h5>Free Shipping Over $99 + 3 Free Samples With Every Order</h5></div>
+                        <h5>Free Shipping Over $99 + 3 Free Samples With Every Order</h5>
+                    </div>
                     <div class="col-md-3">
                         <span class="ph-number">Call : 800 1234 5678</span>
                     </div>
@@ -27,7 +28,9 @@
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="navbar-brand" href="index.html"><img src="/images/logo.png" alt="logo"></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -54,7 +57,8 @@
                             <span class="quntity">3</span>
                         </div>
                         <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search here..." aria-label="Search">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search here..."
+                                aria-label="Search">
                             <span class="fa fa-search"></span>
                         </form>
                     </div>
@@ -70,28 +74,31 @@
     </div>
     <section class="static about-sec">
         <div class="container">
-            <h1>My Account / REgister</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's printer took a galley of type and scrambled it to make a type specimen book. It has survived not only fiveLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem </p>
+            <h1>My Account / Add Book</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's printer took a galley of type and scrambled it to make a type specimen book. It has survived
+                not only fiveLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem </p>
             <div class="form">
                 <form>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <input id="emailInp" type="email" placeholder="Enter User Name" required>
-                            <span class="required-star">*</span>
-                        </div>
-                        <div class="col-md-4">
-                            <input id="passInp" type="password" placeholder="Password" required>
-                            <span class="required-star">*</span>
-                        </div>
-                        <div class="col-md-4">
-                            <input id="repassInp" type="password" placeholder="Repeat Password" required>
-                            <span class="required-star">*</span>
-                        </div>
-                        <div class="col-lg-8 col-md-12">
-                            <button id="registerBtn" class="btn black">Register</button>
-                            <h5>not Registered? <a href="login.html">Login here</a></h5>
-                        </div>
+                    <div class="form-group">
+                        <label for="bookTitleInp">Book Title</label>
+                        <input type="text" class="form-control" id="bookTitleInp" placeholder="name@example.com">
                     </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Book Images</label>
+                        <input type="file" class="form-control-file" multiple id="bookImgsInp"
+                            accept="image/x-png,image/gif,image/jpeg">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Book PDF</label>
+                        <input type="file" class="form-control-file"  id="bookPdfInp"
+                        accept="application/pdf" >
+                    </div>
+                    <div class="form-group">
+                        <label for="bookDescriptionInp">Book Description</label>
+                        <textarea class="form-control" id="bookDescriptionInp"></textarea>
+                    </div>
+                    <button class="btn btn-success mt-3" id="bookSaveBtn">save</button>
                 </form>
             </div>
         </div>
@@ -103,7 +110,7 @@
                     <div class="address">
                         <h4>Our Address</h4>
                         <h6>The BookStore Theme, 4th Store
-                        Beside that building, USA</h6>
+                            Beside that building, USA</h6>
                         <h6>Call : 800 1234 5678</h6>
                         <h6>Email : info@bookstore.com</h6>
                     </div>
@@ -137,7 +144,7 @@
                 <div class="col-md-5">
                     <div class="form">
                         <h3>Quick Contact us</h3>
-                        <h6>We are now offering some good discount 
+                        <h6>We are now offering some good discount
                             on selected books go and shop them</h6>
                         <form>
                             <div class="row">
@@ -180,106 +187,165 @@
     </footer>
     <div class="modal" tabindex="-1" role="dialog" id="resultModal">
         <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Modal title</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-              <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
     <%- include('partials/htmlJs')%>
 
+    <script src="/tinymce/tinymce.min.js"></script>
     <script>
+        tinymce.init({
 
-        // your front end fetch request code here
-        // get inputs values
-        document.querySelector('#registerBtn').addEventListener('click', e => {
-            e.preventDefault()
-            const email = document.querySelector('#emailInp').value.trim()
-            const password = document.querySelector('#passInp').value.trim()
-            const repassword = document.querySelector('#repassInp').value.trim()
+selector: '#bookDescriptionInp',
+/* theme of the editor */
+theme: "silver",
+skin: "oxide-dark",
 
-            // check data is not empty and password matches the repassword
-            if (email && password && password == repassword) {
+/* width and height of the editor */
+width: "100%",
+height: 300,
 
-                // create object to be sent
-                const sentObj = {
-                    email,
-                    password,
-                    repassword
-                }
+/* display statusbar */
+statubar: true,
 
+/* plugin */
+plugins: [
+    "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+    "save table contextmenu directionality emoticons template paste textcolor"
+],
 
-                // send data using fetch
-                fetch('/register',{
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(sentObj)
-                }).then(response => {
-                    if(response.status == 200) {
-                        response.json().then(data => {
-                            //console.log(data)
-                            switch (data) {
-                                case 1:
-                                    showModal(false, "Register Success", "you can go to login page...")
-                                    break;
-                                case 2:
-                                showModal(true, "missing ertries", "you miss some entries or your password does not match repassword")
-                                    break;
-                                case 3:
-                                    showModal(true, "Email is registered", "this email already registered to the system")
-                                    break;
-                                case 4:
-                                    showModal(true, "Server Error", "Something unexpected happened. please contact the system Adminstrator")
-                                    break;
-                            
-                                default:
-                                    showModal(true, "Server Error", "Something unexpected happened. please contact the system Adminstrator")
-                                    break;
-                            }
-                        }).catch(error => {
-                            console.log(error);
-                            showModal(true, "error on getting data", 'please contact the Administrator')
-                        })
-                    }
-                }).catch(error => {
-                    console.log(error)
-                    showModal(true, "server side error", error.message)
-                })
-            } else {
-                showModal(true, "missing ertries", "you miss some entries or your password does not match repassword")
+/* toolbar */
+toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
+
+/* style */
+style_formats: [{
+        title: "Headers",
+        items: [{
+                title: "Header 1",
+                format: "h1"
+            },
+            {
+                title: "Header 2",
+                format: "h2"
+            },
+            {
+                title: "Header 3",
+                format: "h3"
+            },
+            {
+                title: "Header 4",
+                format: "h4"
+            },
+            {
+                title: "Header 5",
+                format: "h5"
+            },
+            {
+                title: "Header 6",
+                format: "h6"
             }
-
-        })
-
-
-        function showModal(error, title, content) {
-            const modal = document.querySelector('#resultModal')
-            const modal_header = modal.querySelector('.modal-header')
-            const modal_body = modal.querySelector('.modal-body')
-            if (error) {
-                modal_header.classList.add('bg-danger')
-                modal_header.classList.remove('bg-success')
-            } else {
-                modal_header.classList.remove('bg-danger')
-                modal_header.classList.add('bg-success')
+        ]
+    },
+    {
+        title: "Inline",
+        items: [{
+                title: "Bold",
+                icon: "bold",
+                format: "bold"
+            },
+            {
+                title: "Italic",
+                icon: "italic",
+                format: "italic"
+            },
+            {
+                title: "Underline",
+                icon: "underline",
+                format: "underline"
+            },
+            {
+                title: "Strikethrough",
+                icon: "strikethrough",
+                format: "strikethrough"
+            },
+            {
+                title: "Superscript",
+                icon: "superscript",
+                format: "superscript"
+            },
+            {
+                title: "Subscript",
+                icon: "subscript",
+                format: "subscript"
+            },
+            {
+                title: "Code",
+                icon: "code",
+                format: "code"
             }
-            modal_header.innerHTML = title
-            modal_body.innerHTML = '<p>' + content + '</p>'
-            $('#resultModal').modal('show')
-          }
-        
+        ]
+    },
+    {
+        title: "Blocks",
+        items: [{
+                title: "Paragraph",
+                format: "p"
+            },
+            {
+                title: "Blockquote",
+                format: "blockquote"
+            },
+            {
+                title: "Div",
+                format: "div"
+            },
+            {
+                title: "Pre",
+                format: "pre"
+            }
+        ]
+    },
+    {
+        title: "Alignment",
+        items: [{
+                title: "Left",
+                icon: "alignleft",
+                format: "alignleft"
+            },
+            {
+                title: "Center",
+                icon: "aligncenter",
+                format: "aligncenter"
+            },
+            {
+                title: "Right",
+                icon: "alignright",
+                format: "alignright"
+            },
+            {
+                title: "Justify",
+                icon: "alignjustify",
+                format: "alignjustify"
+            }
+        ]
+    }
+]
+});
+
     </script>
 </body>
 

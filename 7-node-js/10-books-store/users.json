@@ -1,10 +1,1 @@
-{
-    "users":[
-        {
-            "id": "1",
-            "email": "ahmad@ahmad-osman.com",
-            "password": "123456789"
-        }
-    ],
-    "newId":2
-}
+{"users":[{"id":1,"email":"ahmad@ahmad-osman.com","password":"123456789"},{"id":2,"email":"ahmad.osman@digitalcareerinstitute.org","password":"123456789"},{"id":3,"email":"ahmad.osman1@digitalcareerinstitute.org","password":"ddd"}],"newId":4}
