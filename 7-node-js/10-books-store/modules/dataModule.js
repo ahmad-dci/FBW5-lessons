@@ -30,6 +30,11 @@ function registerUser(email, password) {
 
   }
 
+function addBook(bookTitle, bookDescription, bookPdf, bookImgs) {
+
+  }
+
   module.exports = {
-    registerUser
+    registerUser,
+    addBook
   }
