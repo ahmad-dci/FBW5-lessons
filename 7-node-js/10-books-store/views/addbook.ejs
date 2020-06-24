@@ -82,7 +82,7 @@
                 <form>
                     <div class="form-group">
                         <label for="bookTitleInp">Book Title</label>
-                        <input type="text" class="form-control" id="bookTitleInp" placeholder="name@example.com">
+                        <input type="text" class="form-control" id="bookTitleInp" placeholder="Book Title">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlFile1">Book Images</label>
@@ -346,6 +346,36 @@ style_formats: [{
 ]
 });
 
+
+
+document.querySelector('#bookSaveBtn').addEventListener('click', e => {
+e.preventDefault()
+const bookTitle = document.querySelector('#bookTitleInp').value
+const bookDescription = tinymce.get("bookDescriptionInp").getContent();
+const bookImgs = document.querySelector('#bookImgsInp').files
+const bookPdf = document.querySelector('#bookPdfInp').files[0]
+
+// console.log(bookTitle)
+// console.log(bookDescription)
+// console.log(bookImgs)
+// console.log(bookPdf)
+const fd = new FormData()
+fd.append('bookTitle', bookTitle)
+fd.append('bookDescription', bookDescription)
+for (let i = 0; i < bookImgs.length; i++) {
+    fd.append('bookImg' + i, bookImgs[i])
+}
+fd.append('bookPdf', bookPdf)
+
+let url = '/admin/addbook'
+// send fd to server side using fetch
+fetch(url , {
+    method: 'POST',
+    body: fd
+}).then(response => {
+
+})
+})
     </script>
 </body>
 
