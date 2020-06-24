@@ -1,18 +1,18 @@
 {
-    "books": [
-    {
+    "books": [{
         "id": 1,
         "title": "Book Title",
         "description": "Book Description",
-        "imgs":[
-            "blalba/blalba/bla.jpeg",
-            "blalba/blalba/bla.jpeg",
-            "blalba/blalba/bla.jpeg",
-            "blalba/blalba/bla.jpeg"
-        ],
+        "imgs": ["blalba/blalba/bla.jpeg", "blalba/blalba/bla.jpeg", "blalba/blalba/bla.jpeg", "blalba/blalba/bla.jpeg"],
         "pdfUrl": "blalba/bla.pdf",
         "userid": 1
-    }
-],
-    "newid": 2
+    }, {
+        "id": 2,
+        "title": "our plan",
+        "description": "<h1 style=\"text-align: center;\"><strong>you can find FBW5 curriculum</strong></h1>",
+        "imgs": ["/uploadedfiles/our_plan_1_0.jpg", "/uploadedfiles/our_plan_1_1.jpg", "/uploadedfiles/our_plan_1_2.jpg"],
+        "pdfUrl": "/uploadedfiles/our_plan_1.pdf",
+        "userid": 1
+    }],
+    "newid": 3
 }

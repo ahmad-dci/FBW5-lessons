@@ -9,6 +9,7 @@ adminRouter.get('/addbook', (req, res) => {
 adminRouter.post('/addbook', (req, res) => {
 
     // responses map
+    // 1 book saved successfuly
     // 2 data error
 console.log(req.body);
 console.log(Object.keys( req.files));
@@ -25,7 +26,9 @@ if (bookTitle && bookDescription && bookPdf && Object.keys( req.files).length > 
             
         }
     }
-    dataModule.addBook(bookTitle, bookDescription, bookPdf, imgs )
+    dataModule.addBook(bookTitle, bookDescription, bookPdf, imgs ).then(() => {
+        res.json(1)
+    })
 
 } else {
     res.json(2)
