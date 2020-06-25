@@ -11,8 +11,10 @@ adminRouter.post('/addbook', (req, res) => {
     // responses map
     // 1 book saved successfuly
     // 2 data error
-console.log(req.body);
-console.log(Object.keys( req.files));
+//console.log(req.body);
+//console.log(Object.keys( req.files));
+if (req.files) {
+
 
 const bookTitle = req.body.bookTitle
 const bookDescription = req.body.bookDescription
@@ -28,12 +30,18 @@ if (bookTitle && bookDescription && bookPdf && Object.keys( req.files).length > 
     }
     dataModule.addBook(bookTitle, bookDescription, bookPdf, imgs ).then(() => {
         res.json(1)
+    }).catch(error => {
+        if (error == 3) {
+            res.json(3)
+        }
     })
 
 } else {
     res.json(2)
 }
-
+} else {
+    res.json(2)
+}
 
 })
 module.exports = adminRouter

@@ -39,6 +39,19 @@ function addBook(bookTitle, bookDescription, bookPdf, bookImgs) {
   // 2-save pdf file
   // 3-save json file
   return new Promise((resolve, reject) => {
+
+    // read books.json
+    const booksJson = fs.readFileSync('./books.json')
+    // convert the read file to object
+    const booksObj = JSON.parse(booksJson)
+
+    const foundBook = booksObj.books.find(book => book.title == bookTitle && book.userid == 1);
+
+    if(foundBook) {
+      reject(3);
+    } else {
+    // check if book title is not exist for this user
+    
     // array will contain the url of images to be saved in the books.json
     const imgsArr = []
     // save the images in uploadedfolder and set the new name pattern
@@ -57,10 +70,6 @@ function addBook(bookTitle, bookDescription, bookPdf, bookImgs) {
     // set the pdf url that gonna be saved in the json file
     let pdfNewUrl = '/uploadedfiles/' + pdfName
 
-    // read books.json
-    const booksJson = fs.readFileSync('./books.json')
-    // convert the read file to object
-    const booksObj = JSON.parse(booksJson)
     // add the new book to books.json
     booksObj.books.push({
       id: booksObj.newid,
@@ -75,11 +84,24 @@ function addBook(bookTitle, bookDescription, bookPdf, bookImgs) {
     // save the booksObj to books.json
     fs.writeFileSync('./books.json', JSON.stringify(booksObj))
     resolve()
+  }
+  })
+  }
+
+function getAllBooks() {
+  return new Promise((resolve, reject) => {
+    // read file to json
+    const booksJson = fs.readFileSync('./books.json')
+    // convert json to object
+    const booksObj = JSON.parse(booksJson)
+    // export the object using resolve to be used on then hand 
+    resolve(booksObj.books)
 
   })
   }
 
   module.exports = {
     registerUser,
-    addBook
+    addBook,
+    getAllBooks
   }

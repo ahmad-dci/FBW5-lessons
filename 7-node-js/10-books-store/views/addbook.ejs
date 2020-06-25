@@ -373,7 +373,43 @@ fetch(url , {
     method: 'POST',
     body: fd
 }).then(response => {
+// code here to show modal 
+// if response data was 1 
+// show success modal and clear the inputs
+// else if it was 2 
+// show error modal missing some entries
 
+// check if response is ok
+if (response.status == 200) {
+    // get response data
+response.json().then(data => {
+switch (data) {
+    case 1:
+        showModal(false, 'success', 'The book saved correctly and it will be shown in books gallery')
+        document.querySelector('#bookTitleInp').value = ''
+        tinymce.get("bookDescriptionInp").setContent('')
+        document.querySelector('#bookImgsInp').value = ''
+        document.querySelector('#bookPdfInp').value = ''
+        break;
+    case 2:
+        showModal(true, 'Error', 'Some entries are missing, make sure to enter all required data')
+        break;
+    case 3:
+        showModal(true, 'Book title is exist', 'Book title is exist, please type another book title')
+        break;
+    default:
+        break;
+}
+}).catch(error => {
+    showModal(true, 'Error', 'unknown response format')
+})
+} else {
+    showModal(true, 'Error', 'could not send the data')
+}
+
+
+}).catch(error => {
+    showModal(true, 'Error', 'can not send the data')
 })
 })
     </script>

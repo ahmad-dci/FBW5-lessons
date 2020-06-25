@@ -63,6 +63,13 @@ app.post('/register', (req, res) => {
     
 });
 
+// shop route
+app.get('/shop', (req, res) => {
+    dataModule.getAllBooks().then(blabooks => {
+        res.render('shop', {books: blabooks})
+    })
+    
+});
 app.listen(3000, () => {
     console.log('App listening on port 3000!');
 });
