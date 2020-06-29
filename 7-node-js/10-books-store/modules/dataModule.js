@@ -100,8 +100,23 @@ function getAllBooks() {
   })
   }
 
+function getBook(id) {
+  return new Promise((resolve, reject) => {
+    const booksJson = fs.readFileSync('./books.json')
+    const booksObj = JSON.parse(booksJson)
+    // find a book with id [id]
+    const foundBook = booksObj.books.find(book => book.id == id)
+    if (foundBook) {
+      resolve(foundBook)
+    } else {
+      reject(new Error('can not find a book with this id : ' + id))
+    }
+  })
+}
+
   module.exports = {
     registerUser,
     addBook,
-    getAllBooks
+    getAllBooks,
+    getBook
   }
