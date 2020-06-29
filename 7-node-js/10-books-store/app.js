@@ -62,12 +62,17 @@ app.post('/register', (req, res) => {
         }
     
 });
-
+ 
 // shop route
 app.get('/shop', (req, res) => {
     dataModule.getAllBooks().then(blabooks => {
         res.render('shop', {books: blabooks})
     })
+    
+});
+
+app.get('/book/:booktitle/:id', (req, res) => {
+    res.send(req.params.id);
     
 });
 app.listen(3000, () => {
