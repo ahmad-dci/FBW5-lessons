@@ -101,7 +101,11 @@ app.get('/shop', (req, res) => {
 app.get('/book/:booktitle/:id', (req, res) => {
     // res.send(req.params.id);
     dataModule.getBook(req.params.id).then(book => {
-        res.render('book', {book})
+        let checkLogin = false
+        if(req.session.user) {
+            checkLogin = true
+        }
+        res.render('book', {book, checkLogin})
     }).catch(error => {
         res.send('404, book could not be found')
     })

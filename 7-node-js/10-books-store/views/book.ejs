@@ -101,7 +101,11 @@
                     <%-book.description%>
                     
                     <div class="btn-sec">
+                        <%if (checkLogin){%>
                         <a href="<%=book.pdfUrl%>" target="_blank" class="btn btn-success">download</a>
+                        <%} else {%>
+                        <a href="/login"  class="btn btn-success">Login for Download</a>
+                        <%}%>
                     </div>
                 </div>
             </div>
