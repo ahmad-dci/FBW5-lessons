@@ -1,7 +1,8 @@
 const express = require('express')
 // const MongoClient = require('mongodb').MongoClient
+// const ObjectID = require('mongodb').ObjectID
 // or destructuring
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectID } = require('mongodb')
 
 const app = express()
 const connectionString = 'mongodb+srv://fbw5:123456abc@cluster0-rmrmn.mongodb.net/test1?retryWrites=true&w=majority'
@@ -116,6 +117,37 @@ app.get('/getusers', (req, res) => {
             res.send(error);
         }
         
+    })()
+});
+app.get('/findone', (req, res) => {
+    (async ()=>{
+            try {
+                const client =  await MongoClient.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
+                const db = client.db('test1')
+                const response = await db.collection('users').findOne({_id: new ObjectID('5efc575b6224502c8adead59')})
+                client.close()
+                res.send(response);
+            } catch (error) {
+                res.send(error);
+            }
+            
+
+    })()
+});
+
+app.get('/updatemany', (req, res) => {
+    (async ()=>{
+        try{
+            const client = await MongoClient.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
+            const db = client.db('test1')
+            const response = await db.collection('users').updateMany({password: '123456'},{
+                $set: {email: 'asd@asd.asd'}
+            })
+            client.close()
+            res.send(response);
+        } catch(error){
+            res.send(error);
+        }
     })()
 });
 
