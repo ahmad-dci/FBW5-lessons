@@ -151,6 +151,50 @@ app.get('/updatemany', (req, res) => {
     })()
 });
 
+app.get('/updateone', (req, res) => {
+    (async () => {
+        try {
+            const client = await MongoClient.connect(connectionString, {useUnifiedTopology: true, useNewUrlParser: true})
+            const db = client.db('test1')
+            const response = await db.collection('users').updateOne({_id: new ObjectID('5efc575b6224502c8adead59')},{
+                $set: {email: 'bla@email.email'}
+            })
+            client.close()
+            res.send(response);
+        } catch (error) {
+            res.send(error);
+        }
+    })()
+});
+
+app.get('/deletemany', (req, res) => {
+    (async () => {
+        try {
+            const client = await MongoClient.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
+            const db = client.db('test1')
+            const response = await db.collection('users').deleteMany({password: '123456'})
+            client.close()
+            res.send(response);
+        } catch (error) {
+            res.send(error);
+        }
+    })()
+    
+});
+app.get('/deleteone', (req, res) => {
+    (async() => {
+        try {
+            const client = await MongoClient.connect(connectionString, {useUnifiedTopology: true, useNewUrlParser: true})
+            const db = client.db('test1')
+            const response = await db.collection('users').deleteOne({_id: new ObjectID('5efc575b6224502c8adead59')})
+            client.close()
+            res.send(response);
+        } catch (error) {
+            res.send(error);
+        }
+    })()
+});
+
 app.listen(3000, () => {
     console.log('App listening on port 3000!');
 });
