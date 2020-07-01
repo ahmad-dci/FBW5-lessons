@@ -1,5 +1,6 @@
 const express = require('express')
 // const MongoClient = require('mongodb').MongoClient
+// or destructuring
 const { MongoClient } = require('mongodb')
 
 const app = express()
@@ -23,7 +24,7 @@ app.get('/connect', (req, res) => {
 
 
 app.get('/adduser', (req, res) => {
-    // connect to mongodb server
+    // connect node js to mongodb server or cluster
     MongoClient.connect(connectionString,{useNewUrlParser: true, useUnifiedTopology: true} ).then(client => {
         // get the database 
         const db = client.db('test1')
@@ -46,6 +47,78 @@ app.get('/adduser', (req, res) => {
     })
     
 });
+
+
+app.get('/adduserasync', (req, res) => {
+
+    // other code 
+    // iffie (async ()=>{ your code })()
+   (async ()=>{
+       try {
+        const client = await MongoClient.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
+        const db = client.db('test1')
+        const response = await db.collection('users').insertOne({
+            email: 'bla@bla.bla',
+            password: '123456'
+        })
+        client.close()
+        res.send(response);
+       } catch (error) {
+           res.send(error);
+       }
+       
+   })()
+});
+
+app.get('/insertmany', (req, res) => {
+    (async ()=>{
+        try {
+         const client = await MongoClient.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
+         const db = client.db('test1')
+         const response = await db.collection('users').insertMany([
+             {
+             email: 'bla@bla.bla',
+             password: '123456'
+         },
+         {
+            email: 'bla@bla.bla1',
+            password: '123456'
+        },
+        {
+            email: 'bla@bla.bla2',
+            password: '123456'
+        },
+        {
+            email: 'bla@bla.bla3',
+            password: '123456'
+        },
+        ])
+         client.close()
+         res.send(response);
+        } catch (error) {
+            res.send(error);
+        }
+        
+    })()
+});
+
+app.get('/getusers', (req, res) => {
+    (async ()=>{
+        try {
+         const client = await MongoClient.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
+         const db = client.db('test1')
+         const response = await db.collection('users').find().toArray()
+         //console.log(response);
+         
+         client.close()
+         res.send(response);
+        } catch (error) {
+            res.send(error);
+        }
+        
+    })()
+});
+
 app.listen(3000, () => {
     console.log('App listening on port 3000!');
 });
