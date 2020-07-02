@@ -5,6 +5,12 @@ const express = require('express')
 const { MongoClient, ObjectID } = require('mongodb')
 
 const app = express()
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
+
+app.set('view engine', 'ejs')
+app.set('views', './views')
+
 const connectionString = 'mongodb+srv://fbw5:123456abc@cluster0-rmrmn.mongodb.net/test1?retryWrites=true&w=majority'
 app.get('/', (req, res) => {
     res.send('welcom to mongodb');
@@ -195,6 +201,53 @@ app.get('/deleteone', (req, res) => {
     })()
 });
 
+
+app.get('/register', (req, res) => {
+    res.render('register')
+});
+app.post('/register', (req, res) => {
+    // 1 register success
+    // 2 server error
+    // 3 user is already exist
+    //console.log(req.body)
+    const username = req.body.username.trim()
+    const password = req.body.password
+    if(username && password) {
+        (async () => {
+            try {
+                const client = await MongoClient.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true}) 
+                const db = client.db('test1')
+                const response = await db.collection('users').findOne({email: username})
+                
+                //console.log(response)
+                if (response) {
+                    client.close()
+                    res.json(3)
+                } else {
+                    const insertResponse = await db.collection('users').insertOne({
+                        email: username,
+                        password: password
+                    })
+                    // console.log(insertResponse);
+                    client.close()
+                    if(insertResponse.result.ok) {
+                        res.json(1)
+                    } else {
+                        res.json(2)
+                    }
+                    
+                }
+
+            } catch (error) {
+                res.json(2)
+            }
+            
+
+        })()
+    } else{
+        res.json(2)
+    }
+});
 app.listen(3000, () => {
     console.log('App listening on port 3000!');
 });
