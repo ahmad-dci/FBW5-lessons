@@ -5,9 +5,8 @@ const cookie = require('cookie-parser')
 const fs = require('fs')
 
 // include dataModule
-const dataModule = require('./modules/dataModule')
+const dataModule = require('./modules/mongodbDataModule')
 const adminRouter = require('./routes/adminRoutes')
-const { resolve } = require('path')
 
 const app = express()
 app.use(express.static(__dirname + '/public'))
@@ -76,6 +75,7 @@ app.post('/login', (req, res) => {
     if (req.body.email && req.body.password) {
         dataModule.checkUser(req.body.email.trim(), req.body.password).then(user => {
             req.session.user = user
+            console.log(user)
             res.json(1)
         }).catch(error => {
             if (error == 3) {
@@ -109,9 +109,6 @@ app.get('/book/:booktitle/:id', (req, res) => {
     }).catch(error => {
         res.send('404, book could not be found')
     })
-    
-
-    
 });
 app.listen(3000, () => {
     console.log('App listening on port 3000!');
