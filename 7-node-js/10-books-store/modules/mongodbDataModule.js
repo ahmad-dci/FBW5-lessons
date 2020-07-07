@@ -1,7 +1,7 @@
 const passwordHash = require('password-hash')
 const {MongoClient, ObjectID} = require('mongodb')
 const { response } = require('express')
-const connectionString = 'mongodb+srv://fbw5:123456abc@cluster0-rmrmn.mongodb.net/test1?retryWrites=true&w=majority'
+const connectionString = ''
 
 function connect() {
     return new Promise((resolve, reject) => {
@@ -126,9 +126,78 @@ function connect() {
           })
       })
   }
+  function getAllBooks() {
+      return new Promise((resolve, reject) => {
+          connect().then(client => {
+              const db = client.db('test1')
+              db.collection('books').find().toArray().then(books => {
+                  // add id property to each book instead of _id
+                  // becausethis how it used in ejs
+                  books.forEach(book => {
+                      // book.id = book._id
+                      book['id'] = book['_id']
+                  })
+                  client.close()
+                  resolve(books)
+              }).catch(error => {
+                client.close()
+                  reject(error)
+              })
+          }).catch(error => {
+              reject(error)
+          })
+      })
+}
+function getBook(id) {
+    return new Promise((resolve, reject) => {
+        connect().then(client => {
+            const db = client.db('test1')
+            db.collection('books').findOne({_id: new ObjectID(id)}).then(book => {
+                client.close()
+                if(book) {
+                    book.id = book._id
+                    resolve(book)
+                } else {
+                    reject(new Error('can not find a book with this id : ' + id))
+                }
+            }).catch(error => {
+                client.close()
+                reject(error)
+            })
+        }).catch(error => {
+            reject(error)
+        })
+    })
+}
+
+function userBooks(userid) {
+    return new Promise((resolve, reject) => {
+        connect().then(client => {
+            const db = client.db('test1')
+            db.collection('books').find({userid: userid}).toArray().then(books => {
+                // add id property to each book instead of _id
+                // becausethis how it used in ejs
+                books.forEach(book => {
+                    // book.id = book._id
+                    book['id'] = book['_id']
+                })
+                client.close()
+                resolve(books)
+            }).catch(error => {
+              client.close()
+                reject(error)
+            })
+        }).catch(error => {
+            reject(error)
+        })
+    })
+  }
 
   module.exports = {
     registerUser,
     checkUser,
-    addBook
+    addBook,
+    getAllBooks,
+    getBook,
+    userBooks
   }

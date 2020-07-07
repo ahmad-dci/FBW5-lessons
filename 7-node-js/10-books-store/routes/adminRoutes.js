@@ -10,7 +10,7 @@ adminRouter.use((req, res, next) => {
     }
 })
 adminRouter.get('/', (req, res) => {
-    res.render('admin')
+    res.render('admin', {email: req.session.user.email})
 })
 adminRouter.get('/addbook', (req, res) => {
     res.render('addbook');
@@ -52,6 +52,17 @@ if (bookTitle && bookDescription && bookPdf && Object.keys( req.files).length > 
     res.json(2)
 }
 
+})
+adminRouter.get('/mybooks', (req, res) => {
+    dataModule.userBooks(req.session.user._id).then(books => {
+        res.render('mybooks', {books})
+    }).catch(error => {
+        res.send("404. page can not be found");
+    })
+})
+adminRouter.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.redirect('/login')
 })
 
 module.exports = adminRouter
