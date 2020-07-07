@@ -64,5 +64,14 @@ adminRouter.get('/logout', (req, res) => {
     req.session.destroy()
     res.redirect('/login')
 })
+adminRouter.get('/mybook/:id', (req, res) => {
+    const bookid = req.params.id
+    dataModule.getBook(bookid).then(book => {
+        res.render('editbook', {book})
+    }).catch(error => {
+        res.send("this book is not exist");
+    })
+
+})
 
 module.exports = adminRouter
