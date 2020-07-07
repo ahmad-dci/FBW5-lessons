@@ -73,5 +73,12 @@ adminRouter.get('/mybook/:id', (req, res) => {
     })
 
 })
+adminRouter.post('/editbook', (req, res) => {
+    const {newBookTitle, oldImgsUrls, bookDescription} = req.body
+    console.log(newBookTitle, oldImgsUrls, bookDescription )
+    console.log(req.files)
+    res.json(1)
+
+})
 
 module.exports = adminRouter
