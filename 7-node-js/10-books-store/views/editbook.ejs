@@ -392,6 +392,8 @@ document.querySelectorAll('.deleteImg').forEach(element => {
         } 
         // collect the data to be sent to the server side
         const fd = new FormData()
+        // add book id to fd
+        fd.append('bookid', '<%=book.id%>')
         fd.append('newBookTitle', bookTitle) 
         // collect old images urls
         const oldImgsArr = []
@@ -419,7 +421,15 @@ document.querySelectorAll('.deleteImg').forEach(element => {
             body: fd
         }).then(response => {
             if (response.status == 200) {
-
+                response.json().then(data => {
+                    if (data === 1) {
+                        showModal(false, 'success update', 'your book updated successfuly')
+                    } else {
+                        showModal(true, ' server error', 'call the admin because of this error')
+                    }
+                }).catch(error => {
+                    showModal(true, ' server error', 'call the admin because of this error')
+                })
             } else {
                 showModal(true, 'Error', 'can not send the data')
             }

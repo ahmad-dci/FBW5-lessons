@@ -1,7 +1,8 @@
 const passwordHash = require('password-hash')
 const {MongoClient, ObjectID} = require('mongodb')
 const { response } = require('express')
-const connectionString = ''
+const fs = require('fs')
+const connectionString = 'mongodb+srv://fbw5:@cluster0-rmrmn.mongodb.net/test1?retryWrites=true&w=majority'
 
 function connect() {
     return new Promise((resolve, reject) => {
@@ -193,11 +194,73 @@ function userBooks(userid) {
     })
   }
 
+function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBook, newImgs, userid ) {
+    return new Promise((resolve, reject) => {
+        try {
+            
+        
+        (async () => {
+            let oldBookData = await getBook(bookid)
+            const deletedImgs = []
+            const keepImgs = []
+            // get update version number
+            let updateNum = 1
+            if(oldBookData.update){
+                updateNum = oldBookData.update +1
+            }
+            
+            // check which images user wants to keep and which to delete
+            oldBookData.imgs.forEach(img => {
+                if (oldImgsUrls.indexOf(img) >= 0) {
+                    keepImgs.push(img)
+                } else{
+                    deletedImgs.push(img)
+                }
+            })
+            // save new images to file system and to array to be saved to db
+            const newImgsUrlsArr = []
+            newImgs.forEach((img,idx) => {
+                const imgExt =img.name.substr(img.name.lastIndexOf('.')) 
+                const newImgName =  newBookTitle.trim().replace(/ /g, '_') + '_' + userid + '_' + idx + '_' + updateNum + imgExt
+                newImgsUrlsArr.push('/uploadedfiles/' + newImgName )
+                img.mv('./public/uploadedfiles/' + newImgName)
+            })
+            // delete the deleted images files from the system
+            deletedImgs.forEach(file => {
+                // first check file is exist
+                if (fs.existsSync('./public' + file)) {
+                    fs.unlinkSync('./public' + file)
+                }
+            })
+            // check if user upload a new pdf file and move it to the same place of the old one so it will OVERWRITE it
+            if (newPdfBook) {
+                newPdfBook.mv('./public' + oldBookData.pdfUrl)
+            }
+            const client = await connect()
+            const db = client.db('test1')
+            const result = await db.collection('books').updateOne({_id: new ObjectID(bookid)}, {
+                $set: {
+                    title: newBookTitle,
+                    description: bookDescription,
+                    imgs :[...keepImgs, ...newImgsUrlsArr],
+                    update: updateNum
+                }
+            })
+            resolve()
+
+        })()
+    } catch (error) {
+            reject(error)
+    }
+    })
+  }
+
   module.exports = {
     registerUser,
     checkUser,
     addBook,
     getAllBooks,
     getBook,
-    userBooks
+    userBooks,
+    updateBook
   }
