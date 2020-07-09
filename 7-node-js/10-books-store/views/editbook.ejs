@@ -416,10 +416,13 @@ document.querySelectorAll('.deleteImg').forEach(element => {
         }
         // get book description from html editor tinymce and append it to fd
         fd.append('bookDescription', tinymce.get("bookDescriptionInp").getContent())
+        // disable save btn
+        btnWait(e.target, true, 'Saving...')
         fetch('/admin/editbook',{
             method: 'POST',
             body: fd
         }).then(response => {
+            btnWait(e.target, false, 'Save')
             if (response.status == 200) {
                 response.json().then(data => {
                     if (data === 1) {
@@ -435,6 +438,7 @@ document.querySelectorAll('.deleteImg').forEach(element => {
             }
         }).catch(error => {
             showModal(true, 'Error', 'can not send the data')
+            btnWait(e.target, false, 'Save')
         })
 
     })

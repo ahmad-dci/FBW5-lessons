@@ -1,6 +1,5 @@
 const passwordHash = require('password-hash')
 const {MongoClient, ObjectID} = require('mongodb')
-const { response } = require('express')
 const fs = require('fs')
 const connectionString = 'mongodb+srv://fbw5:@cluster0-rmrmn.mongodb.net/test1?retryWrites=true&w=majority'
 
@@ -246,6 +245,7 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
                     update: updateNum
                 }
             })
+            client.close()
             resolve()
 
         })()
@@ -254,7 +254,44 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
     }
     })
   }
-
+function deleteBook(bookid, userid) {
+    return new Promise((resolve, reject) => {
+        getBook(bookid).then(book => {
+            // check if the book belong to the current login user
+            if (book.userid === userid) {
+                // delete book images
+                book.imgs.forEach(img => {
+                    //check the img file is exist then delete it
+                    if (fs.existsSync('./public' + img)){
+                        fs.unlinkSync('./public' + img)
+                    }
+                })
+                // delete pdf file
+                // check if pdf file is exist then delete it
+                if (fs.existsSync('./public' + book.pdfUrl)) {
+                    fs.unlinkSync('./public' + book.pdfUrl)
+                }
+                connect().then(client => {
+                    const db = client.db('test1')
+                    db.collection('books').deleteOne({_id: new ObjectID(bookid)}).then(() => {
+                        client.close()
+                        resolve()
+                    }).catch(error => {
+                        client.close()
+                        reject(error)
+                    })
+                }).catch(error => {
+                    reject(error)
+                })
+            } else {
+                reject(new Error('hacking try. not this time'))
+            }
+        }).catch(error => {
+            reject(error)
+        })
+    })
+    
+  }
   module.exports = {
     registerUser,
     checkUser,
@@ -262,5 +299,6 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
     getAllBooks,
     getBook,
     userBooks,
-    updateBook
+    updateBook,
+    deleteBook
   }
