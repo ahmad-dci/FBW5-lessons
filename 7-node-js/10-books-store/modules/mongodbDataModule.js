@@ -1,7 +1,7 @@
 const passwordHash = require('password-hash')
 const {MongoClient, ObjectID} = require('mongodb')
 const fs = require('fs')
-const connectionString = 'mongodb+srv://fbw5:@cluster0-rmrmn.mongodb.net/test1?retryWrites=true&w=majority'
+const connectionString = 'mongodb+srv://fbw5:5vT2OVt8eSTwntF8@cluster0-rmrmn.mongodb.net/test1?retryWrites=true&w=majority'
 
 function connect() {
     return new Promise((resolve, reject) => {
