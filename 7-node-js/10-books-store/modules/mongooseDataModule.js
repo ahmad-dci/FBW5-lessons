@@ -2,7 +2,7 @@ const passwordHash = require('password-hash')
 // const {MongoClient, ObjectID} = require('mongodb')
 const mongoose = require('mongoose')
 const fs = require('fs')
-const connectionString = ''
+const connectionString = 'mongodb+srv://fbw5:5vT2OVt8eSTwntF8@cluster0-rmrmn.mongodb.net/test1?retryWrites=true&w=majority'
 
 
 // get Schema object
@@ -161,19 +161,19 @@ function connect() {
   }
   function getAllBooks() {
       return new Promise((resolve, reject) => {
-          connect().then(client => {
-              const db = client.db('test1')
-              db.collection('books').find().toArray().then(books => {
+          connect().then(() => {
+              // delete const db = client.db('test1')
+              Books.find().then(books => {
                   // add id property to each book instead of _id
                   // becausethis how it used in ejs
                   books.forEach(book => {
                       // book.id = book._id
                       book['id'] = book['_id']
                   })
-                  client.close()
+                  // delete client.close()
                   resolve(books)
               }).catch(error => {
-                client.close()
+                // delete client.close()
                   reject(error)
               })
           }).catch(error => {
@@ -183,10 +183,10 @@ function connect() {
 }
 function getBook(id) {
    return  new Promise((resolve, reject) => {
-        connect().then(client => {
-            const db = client.db('test1')
-            db.collection('books').findOne({_id: new ObjectID(id)}).then(book => {
-                client.close()
+        connect().then(() => {
+            // delete const db = client.db('test1')
+            Books.findOne({_id: id}).then(book => {
+                // delete client.close()
                 if(book) {
                     book.id = book._id
                     resolve(book)
@@ -194,7 +194,7 @@ function getBook(id) {
                     reject(new Error('can not find a book with this id : ' + id))
                 }
             }).catch(error => {
-                client.close()
+                //delete client.close()
                 reject(error)
             })
         }).catch(error => {
@@ -205,19 +205,19 @@ function getBook(id) {
 
 function userBooks(userid) {
     return new Promise((resolve, reject) => {
-        connect().then(client => {
-            const db = client.db('test1')
-            db.collection('books').find({userid: userid}).toArray().then(books => {
+        connect().then(() => {
+            // delete const db = client.db('test1')
+            Books.find({userid: userid}).then(books => {
                 // add id property to each book instead of _id
                 // becausethis how it used in ejs
                 books.forEach(book => {
                     // book.id = book._id
                     book['id'] = book['_id']
                 })
-                client.close()
+                // delete client.close()
                 resolve(books)
             }).catch(error => {
-              client.close()
+              // delete client.close()
                 reject(error)
             })
         }).catch(error => {
@@ -236,10 +236,10 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
             const deletedImgs = []
             const keepImgs = []
             // get update version number
-            let updateNum = 1
-            if(oldBookData.update){
-                updateNum = oldBookData.update +1
-            }
+            // let updateNum = 1
+            // if(oldBookData.update){
+            //     updateNum = oldBookData.update +1
+            // }
             
             // check which images user wants to keep and which to delete
             oldBookData.imgs.forEach(img => {
@@ -253,7 +253,7 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
             const newImgsUrlsArr = []
             newImgs.forEach((img,idx) => {
                 const imgExt =img.name.substr(img.name.lastIndexOf('.')) 
-                const newImgName =  newBookTitle.trim().replace(/ /g, '_') + '_' + userid + '_' + idx + '_' + updateNum + imgExt
+                const newImgName =  newBookTitle.trim().replace(/ /g, '_') + '_' + userid + '_' + idx + '_' + (oldBookData.__v + 1) + imgExt
                 newImgsUrlsArr.push('/uploadedfiles/' + newImgName )
                 img.mv('./public/uploadedfiles/' + newImgName)
             })
@@ -268,17 +268,18 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
             if (newPdfBook) {
                 newPdfBook.mv('./public' + oldBookData.pdfUrl)
             }
-            const client = await connect()
-            const db = client.db('test1')
-            const result = await db.collection('books').updateOne({_id: new ObjectID(bookid)}, {
-                $set: {
+            await connect()
+            // delete const db = client.db('test1')
+            await Books.updateOne({_id: bookid}, {
+                
                     title: newBookTitle,
                     description: bookDescription,
                     imgs :[...keepImgs, ...newImgsUrlsArr],
-                    update: updateNum
-                }
+                    //delete update: updateNum,
+                    $inc: {__v: 1}
+                
             })
-            client.close()
+            // delete client.close()
             resolve()
 
         })()
