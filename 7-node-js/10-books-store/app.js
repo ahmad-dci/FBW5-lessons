@@ -5,7 +5,7 @@ const cookie = require('cookie-parser')
 const fs = require('fs')
 
 // include dataModule
-const dataModule = require('./modules/mongodbDataModule')
+const dataModule = require('./modules/mongooseDataModule')
 const adminRouter = require('./routes/adminRoutes')
 
 const app = express()
@@ -71,11 +71,9 @@ app.get('/login', (req, res) => {
     
 });
 app.post('/login', (req, res) => {
-    console.log(req.body);
     if (req.body.email && req.body.password) {
         dataModule.checkUser(req.body.email.trim(), req.body.password).then(user => {
             req.session.user = user
-            console.log(user)
             res.json(1)
         }).catch(error => {
             if (error == 3) {
