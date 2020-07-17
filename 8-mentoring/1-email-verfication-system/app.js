@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const database = require('./modules/database')
 
 const app = express()
 app.use(express.urlencoded({extended: false}))
@@ -16,7 +17,20 @@ app.get('/register', (req, res) => {
 });
 app.post('/register', (req, res) => {
     console.log(req.body);
-    res.json(1)
+    const lname = req.body.lname
+    const fname = req.body.fname
+    const password = req.body.password
+    const email = req.body.email
+
+    if (fname.trim() && lname.trim() && password && email.trim()) {
+        database.register(fname, lname, password, email).then(() => {
+            res.json(1)
+        }).catch(error => {
+            res.json(2)
+        })
+    } else {
+        res.json(2)
+    }
 });
 app.listen(3000, () => {
     console.log('App listening on port 3000!');
@@ -29,3 +43,9 @@ app.listen(3000, () => {
 // repassword
 // email
 // 
+// users mongoose schema
+// fname
+// laname,
+// password saved hashed
+// email unique
+// verefied Boolean
