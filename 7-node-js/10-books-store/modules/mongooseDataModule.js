@@ -268,7 +268,7 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
             if (newPdfBook) {
                 newPdfBook.mv('./public' + oldBookData.pdfUrl)
             }
-            await connect()
+            // await connect()
             // delete const db = client.db('test1')
             await Books.updateOne({_id: bookid}, {
                 
@@ -305,18 +305,18 @@ function deleteBook(bookid, userid) {
                 if (fs.existsSync('./public' + book.pdfUrl)) {
                     fs.unlinkSync('./public' + book.pdfUrl)
                 }
-                connect().then(client => {
-                    const db = client.db('test1')
-                    db.collection('books').deleteOne({_id: new ObjectID(bookid)}).then(() => {
-                        client.close()
+                // connect().then(client => {
+                    // const db = client.db('test1')
+                    Books.deleteOne({_id: bookid}).then(() => {
+                        // client.close()
                         resolve()
                     }).catch(error => {
-                        client.close()
+                        // client.close()
                         reject(error)
                     })
-                }).catch(error => {
-                    reject(error)
-                })
+                // }).catch(error => {
+                //     reject(error)
+                // })
             } else {
                 reject(new Error('hacking try. not this time'))
             }
