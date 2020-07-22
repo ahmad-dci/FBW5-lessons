@@ -5,7 +5,7 @@ const cookie = require('cookie-parser')
 const fs = require('fs')
 
 // include dataModule
-const dataModule = require('./modules/mongooseDataModule')
+const dataModule = require('./modules/mysqlDataModule')
 const adminRouter = require('./routes/adminRoutes')
 
 const app = express()

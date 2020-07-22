@@ -115,6 +115,23 @@ app.get('/delete', (req, res) => {
     })
 });
 
+app.get('/update', (req, res) => {
+    connect().then(() => {
+        con.query("UPDATE users SET email = 'ahmad@ahmad.com' where id = 4 ", (error, result, fields) => {
+            console.log(error);
+            console.log(result);
+            console.log(fields);
+            if (error) {
+                res.send(error.message);
+            } else {
+                res.json(result)
+            }
+        })
+    }).catch(error => {
+        res.send(error.message);
+    })
+});
+
 
 app.listen(3000, () => {
     console.log('App listening on port 3000!');
