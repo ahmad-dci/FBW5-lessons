@@ -181,45 +181,54 @@ function addBook(bookTitle, bookDescription, bookPdf, bookImgs, userid) {
 
 function getAllBooks() {
     return new Promise((resolve, reject) => {
-        connect().then(() => {
-            // delete const db = client.db('test1')
-            Books.find().then(books => {
-                // add id property to each book instead of _id
-                // becausethis how it used in ejs
-                books.forEach(book => {
-                    // book.id = book._id
-                    book['id'] = book['_id']
-                })
-                // delete client.close()
-                resolve(books)
-            }).catch(error => {
-                // delete client.close()
-                reject(error)
+        runQuery('SELECT books.*, imgs.* FROM books INNER JOIN imgs on books.id = imgs.bookid').then(results => {
+            const books = []
+            results.forEach(result => {
+                // search if the book has been added to books array
+                let book = books.find(element => element.id === result.bookid)
+                if (book){
+                    // if the book is added before, we need  only to append the imgs property with the new imgurl
+                    book.imgs.push(result.imgUrl)
+                } else {
+                    // if the book is not added to books, 
+                    // we need to add it to books and set imgs as new array with one element imgurl
+                    books.push({
+                        id: result.bookid,
+                        title: result.title,
+                        description: result.description,
+                        pdfUrl: result.pdfUrl,
+                        userid: result.userid,
+                        imgs: [result.imgUrl]
+                    })
+                }
             })
+            resolve(books)
         }).catch(error => {
             reject(error)
         })
     })
 }
-
 function getBook(id) {
     return new Promise((resolve, reject) => {
-        connect().then(() => {
-            // delete const db = client.db('test1')
-            Books.findOne({
-                _id: id
-            }).then(book => {
-                // delete client.close()
-                if (book) {
-                    book.id = book._id
-                    resolve(book)
-                } else {
-                    reject(new Error('can not find a book with this id : ' + id))
-                }
-            }).catch(error => {
-                //delete client.close()
-                reject(error)
-            })
+        runQuery(`SELECT books.* , imgs.* FROM books INNER JOIN imgs ON imgs.bookid = books.id wHERE imgs.bookid = ${id}`).then(results => {
+            if (results.length) {
+                const book = {}
+                results.forEach(result => {
+                    if(book.id) {
+                        book.imgs.push(result.imgUrl)
+                    } else {
+                        book.id = result.bookid
+                        book.title = result.title
+                        book.description = result.description
+                        book.pdfUrl = result.pdfUrl
+                        book.userid = result.userid
+                        book.imgs = [result.imgUrl]
+                    }
+                })
+                resolve(book)
+            } else {
+                reject(new Error('can not find a book with this id : ' + id))
+            }
         }).catch(error => {
             reject(error)
         })
@@ -228,34 +237,38 @@ function getBook(id) {
 
 function userBooks(userid) {
     return new Promise((resolve, reject) => {
-        connect().then(() => {
-            // delete const db = client.db('test1')
-            Books.find({
-                userid: userid
-            }).then(books => {
-                // add id property to each book instead of _id
-                // becausethis how it used in ejs
-                books.forEach(book => {
-                    // book.id = book._id
-                    book['id'] = book['_id']
-                })
-                // delete client.close()
-                resolve(books)
-            }).catch(error => {
-                // delete client.close()
-                reject(error)
+        runQuery(`SELECT books.*, imgs.* FROM books INNER JOIN imgs on books.id = imgs.bookid WHERE books.userid = ${userid}`).then(results => {
+            const books = []
+            results.forEach(result => {
+                // search if the book has been added to books array
+                let book = books.find(element => element.id === result.bookid)
+                if (book){
+                    // if the book is added before, we need  only to append the imgs property with the new imgurl
+                    book.imgs.push(result.imgUrl)
+                } else {
+                    // if the book is not added to books, 
+                    // we need to add it to books and set imgs as new array with one element imgurl
+                    books.push({
+                        id: result.bookid,
+                        title: result.title,
+                        description: result.description,
+                        pdfUrl: result.pdfUrl,
+                        userid: result.userid,
+                        imgs: [result.imgUrl]
+                    })
+                }
             })
+            resolve(books)
         }).catch(error => {
             reject(error)
         })
     })
 }
 
+
 function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBook, newImgs, userid) {
     return new Promise((resolve, reject) => {
         try {
-
-
             (async () => {
                 let oldBookData = await getBook(bookid)
                 const deletedImgs = []
@@ -275,16 +288,21 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
                     }
                 })
                 // save new images to file system and to array to be saved to db
-                const newImgsUrlsArr = []
+                let newImgsQuery = ''
+                const currentTime = Date.now()
                 newImgs.forEach((img, idx) => {
                     const imgExt = img.name.substr(img.name.lastIndexOf('.'))
-                    const newImgName = newBookTitle.trim().replace(/ /g, '_') + '_' + userid + '_' + idx + '_' + (oldBookData.__v + 1) + imgExt
-                    newImgsUrlsArr.push('/uploadedfiles/' + newImgName)
+                    const newImgName = newBookTitle.trim().replace(/ /g, '_') + '_' + userid + '_' + idx + '_' + currentTime + imgExt
+                    //newImgsUrlsArr.push('/uploadedfiles/' + newImgName)
+                    const newImgUrl = '/uploadedfiles/' + newImgName
+                    newImgsQuery += `INSERT INTO imgs (imgUrl, bookid) VALUES ('${newImgUrl}', ${bookid} );`
                     img.mv('./public/uploadedfiles/' + newImgName)
                 })
                 // delete the deleted images files from the system
+                let deleteImgQuery = ''
                 deletedImgs.forEach(file => {
                     // first check file is exist
+                    deleteImgQuery += `DELETE FROM imgs WHERE imgUrl like '${file}' AND bookid = ${bookid};`
                     if (fs.existsSync('./public' + file)) {
                         fs.unlinkSync('./public' + file)
                     }
@@ -293,23 +311,27 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
                 if (newPdfBook) {
                     newPdfBook.mv('./public' + oldBookData.pdfUrl)
                 }
+                await runQuery(`UPDATE books SET title = '${newBookTitle}', description = '${bookDescription}' WHERE id = ${bookid};` 
+                + deleteImgQuery + newImgsQuery)
+
+                resolve()
                 // await connect()
                 // delete const db = client.db('test1')
-                await Books.updateOne({
-                    _id: bookid
-                }, {
+                // await Books.updateOne({
+                //     _id: bookid
+                // }, {
 
-                    title: newBookTitle,
-                    description: bookDescription,
-                    imgs: [...keepImgs, ...newImgsUrlsArr],
-                    //delete update: updateNum,
-                    $inc: {
-                        __v: 1
-                    }
+                //     title: newBookTitle,
+                //     description: bookDescription,
+                //     imgs: [...keepImgs, ...newImgsUrlsArr],
+                //     //delete update: updateNum,
+                //     $inc: {
+                //         __v: 1
+                //     }
 
-                })
+                // })
                 // delete client.close()
-                resolve()
+                //resolve()
 
             })()
         } catch (error) {
