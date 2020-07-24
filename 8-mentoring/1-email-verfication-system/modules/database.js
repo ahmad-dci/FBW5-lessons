@@ -1,6 +1,7 @@
 const connectionString = 'mongodb+srv://test2_user:!234qweR@cluster0-rmrmn.mongodb.net/test2?retryWrites=true&w=majority'
 const mongoose = require('mongoose')
 const passwordHash = require('password-hash')
+const emailSender = require('./emailSender')
 
 const Schema = mongoose.Schema
 
@@ -66,7 +67,19 @@ function register(fname, lname, password, email) {
                 verfied: false
             })
             newUser.save().then(() => {
-                resolve()
+                // emaial message :
+                // welcome to our website. to verify your email click the following link
+                // http://localhost:3000/verify/[newUser._id]
+                // in Heroku
+                // https://ahmad-emailverfication.herokuapp.com/verify/[newUser._id]
+                let message = 'Hi ' + fname + ' ' + lname + 'Welcome to our Website\n'
+                message += 'to verify you email address please click in the following link\n'
+                message += 'https://ahmad-emailverfication.herokuapp.com/verify/' + newUser._id
+                emailSender.sendEmail(email, 'Verify Email', message).then(() => {
+                    resolve()
+                }).catch(error => {
+                    reject(error)
+                })
             }).catch(error => {
                 reject(error)
             })

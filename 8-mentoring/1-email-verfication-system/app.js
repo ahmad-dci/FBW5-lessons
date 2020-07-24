@@ -2,6 +2,8 @@ const express = require('express')
 const path = require('path')
 const database = require('./modules/database')
 
+const port = process.env.PORT || 3000
+
 const app = express()
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
@@ -32,8 +34,8 @@ app.post('/register', (req, res) => {
         res.json(2)
     }
 });
-app.listen(3000, () => {
-    console.log('App listening on port 3000!');
+app.listen(port, () => {
+    console.log(`App listening on port ${port}!`);
 });
 
 // register page fiels
