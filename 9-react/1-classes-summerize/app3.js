@@ -10,8 +10,7 @@ class Auto {
         this.speed = maxSpeed;
         this.color = color;
     }
-    wheals = 4;
-    showDescription = function () {
+    showDescription() {
         console.log(`this auto contains ${this.seats} seats and its max speed is ${this.speed}`);
       }
       static showGenerlaDescription() {
@@ -23,11 +22,28 @@ const newAuto = new Auto(4, 280, 'blue');
 const anotherAuto = new Auto(6, 260, 'black');
 // add new property
 newAuto.doors = 2;
-// adda new method to newAuto
-newAuto.newDescription = function(){
+// override a  method in Auto Class
+Auto.prototype.showDescription = function(){
+
     console.log(`I am a new Auto with ${this.speed} km/h speed and I am ${this.color}`);
 }
-newAuto.newDescription()
-Auto.doors = 5;
-console.log(anotherAuto.doors);
-// console.log(newAuto);
+// add new method to Auto class
+Auto.prototype.newDescription = function () {
+    console.log('this is a new method on Class Auto')
+  }
+
+
+ anotherAuto.newDescription()
+anotherAuto.showDescription()
+
+// add a new method to any string on Javascript
+String.prototype.fbw5 = function () { 
+    console.log('Hi We are fbw5');
+ }
+ String.prototype.replace = function(x, z){
+     console.log('Replace not working anymore')
+ }
+ 
+ "I am a string".fbw5()
+ "I am a string".replace('f', 'd')
+
