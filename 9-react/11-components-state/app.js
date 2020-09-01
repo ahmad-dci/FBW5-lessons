@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Oclock from './components/Oclock'
+//import getPosition from './services/getPosition'
+import ShowPosition from './components/ShowPosition'
 
 // functional component
 // const App = () => {
@@ -19,26 +21,31 @@ import Oclock from './components/Oclock'
 // class component
 class App extends React.Component{
 
-    constructor(props){
-        super(props)
-        this.state = {lat: null, errorMessage: null}
-    }
+    // constructor(props){
+    //     super(props)
+    //     this.state = {lat: null, errorMessage: null}
+    // }
 
     componentDidMount(){
         //console.log('the component is mounted');
-        window.navigator.geolocation.getCurrentPosition(
-            (position) => {
-                //console.log(position);
-                // mistake 
-                // this.state.lat = position.coords.latitude
+        // window.navigator.geolocation.getCurrentPosition(
+        //     (position) => {
+        //         //console.log(position);
+        //         // mistake 
+        //         // this.state.lat = position.coords.latitude
 
-                this.setState({lat: position.coords.latitude})
-            }, 
-            (error) => {
-                console.log(error);
-                this.setState({errorMessage: error.message})
-            }
-            )
+        //         this.setState({lat: position.coords.latitude})
+        //     }, 
+        //     (error) => {
+        //         console.log(error);
+        //         this.setState({errorMessage: error.message})
+        //     }
+        //     )
+        // getPosition().then(position => {
+        //     this.setState({lat: position.coords.latitude})
+        // }).catch(error => {
+        //     this.setState({errorMessage: error.message})
+        // })
     }
 
     componentDidUpdate(){
@@ -56,8 +63,7 @@ class App extends React.Component{
 
         return (
             <div>
-                <div>Your Latitude is: {this.state.lat} </div>
-                <div>error: {this.state.errorMessage}</div>
+                <ShowPosition />
                 <Oclock />
             </div>
         
