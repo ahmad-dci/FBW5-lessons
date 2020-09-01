@@ -78,6 +78,11 @@ document.querySelector('#submitBtn').addEventListener('click', e => {
                 const container = document.querySelector('#container')
                 const article = new Article(title, description, categoryObg);
                 article.render(container)
+                response.json().then(data => {
+                    alert(data)
+                }).catch(error => {
+                    alert(error)
+                })
             }
         }).catch(error => {
             alert(error)

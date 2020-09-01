@@ -20,11 +20,16 @@ class App extends React.Component{
 
     constructor(props){
         super(props)
-        this.state = {lat: null, time: null}
+        this.state = {lat: null, time: null, errorMessage: null}
 
+        
+    }
+
+    componentDidMount(){
+        //console.log('the component is mounted');
         window.navigator.geolocation.getCurrentPosition(
             (position) => {
-                console.log(position);
+                //console.log(position);
                 // mistake 
                 // this.state.lat = position.coords.latitude
 
@@ -32,6 +37,7 @@ class App extends React.Component{
             }, 
             (error) => {
                 console.log(error);
+                this.setState({errorMessage: error.message})
             }
             )
             
@@ -41,11 +47,23 @@ class App extends React.Component{
             }, 1000)
     }
 
+    componentDidUpdate(){
+        //console.log('the component is updated');
+    }
+
+    componentWillUnmount(){
+        console.log('the component will be unmounted');
+    }
+
 
     render(){
+        
+
+
         return (
             <div>
                 <div>Your Latitude is: {this.state.lat} </div>
+                <div>error: {this.state.errorMessage}</div>
                 <div>now the Time is : {this.state.time}</div>
             </div>
         
