@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Oclock from './components/Oclock'
 
 // functional component
 // const App = () => {
@@ -20,7 +21,7 @@ class App extends React.Component{
 
     constructor(props){
         super(props)
-        this.state = {lat: null, time: null, errorMessage: null}
+        this.state = {lat: null, errorMessage: null}
 
         
     }
@@ -40,11 +41,6 @@ class App extends React.Component{
                 this.setState({errorMessage: error.message})
             }
             )
-            
-            setInterval(() => {
-                //console.log(new Date().toLocaleTimeString());
-                this.setState({time: new Date().toLocaleTimeString() })
-            }, 1000)
     }
 
     componentDidUpdate(){
@@ -64,7 +60,7 @@ class App extends React.Component{
             <div>
                 <div>Your Latitude is: {this.state.lat} </div>
                 <div>error: {this.state.errorMessage}</div>
-                <div>now the Time is : {this.state.time}</div>
+                <Oclock />
             </div>
         
         )
