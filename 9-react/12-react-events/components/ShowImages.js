@@ -11,11 +11,11 @@ class ShowImages extends React.Component{
         let imagesElements = []
         this.props.images.forEach((image, idx) => {
             imagesElements.push(
-                <img key={idx} src={image.previewURL} />
+                        <img key={idx}   src={image.previewURL} />
             )
         });
         return(
-            <div>
+            <div className="container">
                 {imagesElements}
             </div>
         )
