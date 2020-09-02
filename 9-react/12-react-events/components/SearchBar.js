@@ -7,7 +7,6 @@ class SearchBar extends React.Component{
         //console.log(e.target.value);
         this.setState({keyWord: e.target.value})
         //console.log(this);
-
     }
     onFormSubmit = (e) => {
         e.preventDefault()

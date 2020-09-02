@@ -1,7 +1,7 @@
 const getImages = (keyWord) => {
     return new Promise((resolve, reject) => {
 
-        const url = 'https://pixabay.com/api?key=12000491-41fc68d8c365df909e022ceb6&q=' + keyWord
+        const url = 'https://pixabay.com/api?key=12000491-41fc68d8c365df909e022ceb6&q=' + keyWord 
 
         fetch(url, {
             method: 'GET'
