@@ -1,8 +1,10 @@
-const getImages = (keyWord, color) => {
+const getImages = (keyWord, color, pageNum) => {
+    //console.log(pageNum);
     return new Promise((resolve, reject) => {
 
         const url = 'https://pixabay.com/api?key=12000491-41fc68d8c365df909e022ceb6&q=' + keyWord +
-                    (color ? '&colors=' + color : '')
+                    (color ? '&colors=' + color : '') + 
+                    (pageNum ? '&page=' + pageNum : '')
 
         fetch(url, {
             method: 'GET'

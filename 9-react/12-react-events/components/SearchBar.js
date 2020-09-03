@@ -16,7 +16,7 @@ class SearchBar extends React.Component{
         e.preventDefault()
         // console.log(this.state.keyWord);
         if (this.state.keyWord) {
-            this.props.runSearch(this.state.keyWord, this.state.color)
+            this.props.runSearch(this.state.keyWord, this.state.color, 1)
         }
         
 

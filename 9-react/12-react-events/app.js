@@ -4,6 +4,7 @@ import SearchBar from './components/SearchBar'
 import Oclock from './components/Oclock'
 import getImages from './services/pixabay'
 import ShowImages from './components/ShowImages'
+import Pagging from './components/Pagging'
 class App extends React.Component {
 
     constructor(props) {
@@ -14,22 +15,30 @@ class App extends React.Component {
 
   state = {
     totalImages: null,
-    imagesList: []
+    imagesList: [],
+    searchWord: null,
+    color: null
   }
-  search = (searchWord, color) => {
+  search = (searchWord, color,pageNumber) => {
     //console.log(searchWord); search proccess
+
     this.blaspinnerRef.current.classList.add('active')
-    getImages(searchWord, color).then(data => {
+    getImages(searchWord, color, pageNumber).then(data => {
         this.blaspinnerRef.current.classList.remove('active')
       console.log(data);
       this.setState({
         totalImages: data.total,
-        imagesList: [...data.hits]
+        imagesList: [...data.hits],
+        searchWord: searchWord,
+        color: color
       })
     }).catch(error => {
         this.blaspinnerRef.current.classList.remove('active')
       console.log(error);
     })
+  }
+  goToPage = (num) => {
+      this.search(this.state.searchWord, this.state.color, num)
   }
   render() {
     // let foundMessage = '' if (this.state.totalImages != null) {     foundMessage
@@ -41,7 +50,10 @@ class App extends React.Component {
         {this.state.totalImages != null
           ? 'Found: ' + this.state.totalImages + ' Images'
           : ''}
+          
         <ShowImages images={this.state.imagesList}/>
+        {/* {this.state.totalImages != null ? <Pagging /> : ''} */}
+        <Pagging totalImages={this.state.totalImages} runPage={this.goToPage}/>
           <div ref={this.blaspinnerRef} className="ui  dimmer">
             <div className="ui text loader">Loading</div>
           </div>
