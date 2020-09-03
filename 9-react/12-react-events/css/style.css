@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 .container {
     width: 100%;
@@ -16,6 +17,6 @@
     cursor: pointer;
     } 
     .container>div>div>img{
-        height: 90vh;
-        margin: auto;
+        height: 80%;
+        /* margin: auto; */
     }
