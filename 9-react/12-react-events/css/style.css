@@ -1,3 +1,7 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 .container {
     width: 100%;
     padding: 20px 50px;
@@ -5,8 +9,13 @@
     flex-wrap: wrap;
     justify-content: center;
     }
-    .container img {
+    .container>div>img {
     padding: 3px;
     background-color: aliceblue;
     margin: 5px;
+    cursor: pointer;
     } 
+    .container>div>div>img{
+        height: 90vh;
+        margin: auto;
+    }
