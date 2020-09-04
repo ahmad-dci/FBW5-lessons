@@ -1,7 +1,38 @@
 import React from 'react'
 
 class ShowProducts extends React.Component {
+ // life cycle order
+ // 1- constructor gonna be called ONCE first
+ // 2- render gonna be called for the first time and AFTER each change of the state
+ // 3- componentDidMount will be called ONCE after the component is shown in the page
+ // 4- componentDidUpdate will be called after each change of the state and it will not run for the first time
+ // 5- componentWillUnmount will be called directly before removing the component
 
+    constructor(props){
+        super(props)
+        this.ulRef = React.createRef()
+    }
+
+    isBottom(el) {
+        return el.getBoundingClientRect().bottom <= window.innerHeight;
+      }
+    componentDidMount() {
+        document.addEventListener('scroll', this.trackScrolling);
+      }
+    componentDidUpdate() {
+        document.addEventListener('scroll', this.trackScrolling);
+      }
+    componentWillUnmount() {
+        document.removeEventListener('scroll', this.trackScrolling);
+      }
+    trackScrolling = () => {
+        const wrappedElement = this.ulRef.current;
+        if (this.isBottom(wrappedElement)) {
+          // console.log('header bottom reached');
+          this.props.goNext()
+          document.removeEventListener('scroll', this.trackScrolling);
+        }
+      };
   render() {
     const productsComponents = []
     
@@ -46,7 +77,7 @@ class ShowProducts extends React.Component {
         )
       });
     return (
-      <ul className="list-group shadow">
+      <ul ref={this.ulRef} className="list-group shadow mb-3">
         {productsComponents}
       </ul>
     )
