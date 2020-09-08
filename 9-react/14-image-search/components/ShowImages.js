@@ -2,13 +2,29 @@ import React from 'react'
 
 class ShowImages extends React.Component {
 
-    checkScroll = () => {
-        console.log('I am checking scroll');
+    constructor(props){
+        super(props)
+        this.ulRef = React.createRef()
     }
 
+    checkScroll = () => {
+        // console.log('I am checking scroll');
+        // console.log('this is window inner Height:', window.innerHeight);
+        // console.log('this is ul bottom: ', this.ulRef.current.getBoundingClientRect().bottom);
+        if (this.ulRef.current.getBoundingClientRect().bottom < window.innerHeight){
+            //console.log('reach the end')
+            this.props.runNext()
+            document.removeEventListener('scroll', this.checkScroll)
+        }
+    }
+
+    
     componentDidMount(){
         document.addEventListener('scroll', this.checkScroll)
 
+    }
+    componentDidUpdate(){
+        document.addEventListener('scroll', this.checkScroll)
     }
     componentWillUnmount = () => {
         // console.log('I am gonna be deleted');
@@ -53,7 +69,7 @@ class ShowImages extends React.Component {
           )
       })
     return (
-      <ul className="list-group shadow">
+      <ul ref={this.ulRef} className="list-group shadow mb-3">
         {imagesElements}
       </ul>
     )
