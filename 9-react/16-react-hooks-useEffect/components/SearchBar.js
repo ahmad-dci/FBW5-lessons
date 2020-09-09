@@ -1,10 +1,17 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import getData from '../services/Wikipedia'
 
 const SearchBar = () => {
 
-  const [searchWord, setSearchWord] = useState('')
-  const [articles, setArticles] = useState([])
+  const btnRef = useRef()
+  useEffect(() => {
+    console.log(btnRef.current);
+  }, []);
+
+  const [searchWord,
+    setSearchWord] = useState('')
+  const [articles,
+    setArticles] = useState([])
 
   const onSearchInpChange = (e) => {
     console.log(e.target.value);
@@ -19,11 +26,20 @@ const SearchBar = () => {
   useEffect(() => {
     // console.log('I am gonna be called for the first time and when "searchWord in
     // the state"  is changed');
-    if (searchWord) {
-      getData(searchWord).then(data => {
-        console.log(data);
-        setArticles([...data.query.search])
-      })
+    const timmer = setTimeout(() => {
+      if (searchWord) {
+        getData(searchWord).then(data => {
+          console.log(data);
+          setArticles([...data.query.search])
+        })
+      }
+    }, 1000)
+
+    // clean up function
+    return () => {
+      console.log('this is clean up function which gonna be invoked directly before call same useEf' +
+          'fect function for the next time');
+      clearTimeout(timmer)
     }
 
   }, [searchWord])
@@ -35,9 +51,16 @@ const SearchBar = () => {
           {article.title}
         </div>
         <div className="card-body">
-          
-          <p className="card-text">{article.snippet} </p>
-          <a href={`https://en.wikipedia.org?curid=${article.pageid}`} target="_blank" className="btn btn-primary">Open In Wikipedia</a>
+
+          <p
+            className="card-text"
+            dangerouslySetInnerHTML={{
+            __html: article.snippet
+          }}></p>
+          <a
+            href={`https://en.wikipedia.org?curid=${article.pageid}`}
+            target="_blank"
+            className="btn btn-primary">Open In Wikipedia</a>
         </div>
       </div>
     )
@@ -47,7 +70,7 @@ const SearchBar = () => {
     <div className="row">
       <div className="input-group mb-3">
         <div className="input-group-prepend">
-          <button className="btn btn-outline-secondary" type="button">Search</button>
+          <button ref={btnRef} className="btn btn-outline-secondary" type="button">Search</button>
         </div>
         <input
           type="text"
@@ -60,7 +83,7 @@ const SearchBar = () => {
       </div>
 
       <div className="col-sm-12">
-          {artilcesElements}
+        {artilcesElements}
       </div>
 
     </div>
