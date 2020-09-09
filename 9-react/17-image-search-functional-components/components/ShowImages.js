@@ -1,38 +1,43 @@
-import React from 'react'
+import React, {useRef, useEffect} from 'react'
 
-class ShowImages extends React.Component {
+const ShowImages = (props) => {
 
-    constructor(props){
-        super(props)
-        this.ulRef = React.createRef()
-    }
+    
+    const ulRef = useRef()
 
-    checkScroll = () => {
+    const checkScroll = () => {
         // console.log('I am checking scroll');
         // console.log('this is window inner Height:', window.innerHeight);
         // console.log('this is ul bottom: ', this.ulRef.current.getBoundingClientRect().bottom);
-        if (this.ulRef.current.getBoundingClientRect().bottom < window.innerHeight){
+        if (ulRef.current.getBoundingClientRect().bottom < window.innerHeight){
             //console.log('reach the end')
-            this.props.runNext()
-            document.removeEventListener('scroll', this.checkScroll)
+            props.runNext()
+            document.removeEventListener('scroll', checkScroll)
         }
     }
 
+    // useEffect(() => {
+    //   document.addEventListener('scroll', checkScroll)
+    // }, [])
     
-    componentDidMount(){
-        document.addEventListener('scroll', this.checkScroll)
+    useEffect(() => {
+      document.addEventListener('scroll', checkScroll)
+      return () => {
+        document.removeEventListener('scroll', checkScroll)
+      }
+    })
+    
 
-    }
-    componentDidUpdate(){
-        document.addEventListener('scroll', this.checkScroll)
-    }
-    componentWillUnmount = () => {
-        // console.log('I am gonna be deleted');
-        document.removeEventListener('scroll', this.checkScroll)
-    }
+    // instead of componentWillUnMount
+    // useEffect(() => {
+    //   return () => {
+    //     document.removeEventListener('scroll', checkScroll)
+    //   }
+    // }, [])
 
-  render() {
-      const imagesElements = this.props.images.map((image, idx) => {
+    
+
+      const imagesElements = props.images.map((image, idx) => {
           return(
             <li key={idx} className="list-group-item">
             <div className="media align-items-lg-center flex-column flex-lg-row p-3">
@@ -69,11 +74,10 @@ class ShowImages extends React.Component {
           )
       })
     return (
-      <ul ref={this.ulRef} className="list-group shadow mb-3">
+      <ul ref={ulRef} className="list-group shadow mb-3">
         {imagesElements}
       </ul>
     )
-  }
 }
 
 export default ShowImages

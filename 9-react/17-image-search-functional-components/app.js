@@ -13,7 +13,10 @@ const App = () => {
         perPage: 4
     }
     const [myState, setMyState] = useState(defaultState)
-
+// const [results, setResults] = useState([])
+// const [searchWord, setSearchWord] = useState('')
+// const [pageNum, setPageNum] = useState(1)
+// const [perPage, setPerPage] = useState(4)
 
 
     const search = (keyWord) => {

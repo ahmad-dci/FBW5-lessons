@@ -1,24 +1,22 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-class SearchBar extends React.Component {
-    state = {searchWord: ''}
+const SearchBar = (props) => {
 
+    const [searchWord, setSearchWord] = useState('')
 
     
-    onSearchInpChange = (e) => {
-        this.setState({searchWord: e.target.value })
-        
+    const onSearchInpChange = (e) => {
+      setSearchWord(e.target.value)
     }
 
     // componentDidUpdate(){
     //     console.log(this.state.searchWord);
     // }
 
-    onSearchBtnClick = () => {
-        this.props.runSearch(this.state.searchWord)
+    const onSearchBtnClick = () => {
+        props.runSearch(searchWord)
     }
 
-  render() {
     return (
       <div className="row">
         <div className="input-group mb-3">
@@ -26,7 +24,7 @@ class SearchBar extends React.Component {
             <button 
             className="btn btn-outline-secondary" 
             type="button" 
-            onClick={this.onSearchBtnClick}
+            onClick={onSearchBtnClick}
             >
                 Search
             </button>
@@ -35,13 +33,12 @@ class SearchBar extends React.Component {
             type="text"
             className="form-control"
             placeholder="Type something to search"
-            value={this.state.searchWord}
-            onChange={this.onSearchInpChange}
+            value={searchWord}
+            onChange={onSearchInpChange}
             />
         </div>
       </div>
     )
-  }
 }
 
 export default SearchBar
