@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {BrowserRouter, Route, Link} from 'react-router-dom'
+import NavBar from './components/NavBar'
 
 
 
@@ -40,15 +41,14 @@ const PageThree = () => {
 class App extends React.Component{
     render() {
         return(
-            <div>
                 <BrowserRouter>
                     <div>
+                        <NavBar />
                         <Route path="/" exact  component={PageOne} />
                         <Route path="/pagetwo" exact component={PageTwo} />
                         <Route path="/pagetwo/pagethree" component={PageThree} />
                     </div>
-                </BrowserRouter>
-            </div>
+                </BrowserRouter>           
         )
     }
 }
