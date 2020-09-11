@@ -2,16 +2,23 @@ import React from 'react'
 import {InputGroup, InputGroupAddon, InputGroupText, Button, Input} from 'reactstrap'
 
 class RegisterForm extends React.Component {
+    state = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        repassword: ''
+    }
   render() {
     return (
-      <div>
+      <React.Fragment>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
             <InputGroupText>
               First Name
             </InputGroupText>
           </InputGroupAddon>
-          <Input/>
+          <Input value={this.state.firstName} onChange={(e) => {this.setState({firstName: e.target.value})}}/>
         </InputGroup>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
@@ -19,7 +26,7 @@ class RegisterForm extends React.Component {
               Last Name
             </InputGroupText>
           </InputGroupAddon>
-          <Input/>
+          <Input value={this.state.lastName}/>
         </InputGroup>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
@@ -27,7 +34,7 @@ class RegisterForm extends React.Component {
               Email
             </InputGroupText>
           </InputGroupAddon>
-          <Input/>
+          <Input type="email" value={this.state.email}/>
         </InputGroup>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
@@ -35,7 +42,7 @@ class RegisterForm extends React.Component {
               Password
             </InputGroupText>
           </InputGroupAddon>
-          <Input/>
+          <Input type="password" value={this.state.password}/>
         </InputGroup>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
@@ -43,13 +50,12 @@ class RegisterForm extends React.Component {
               Re-Password
             </InputGroupText>
           </InputGroupAddon>
-          <Input/>
+          <Input type="password" value={this.state.repassword}/>
         </InputGroup>
         <Button color="primary">Register</Button>
-      </div>
+      </React.Fragment>
     )
   }
 }
-
 
 export default RegisterForm

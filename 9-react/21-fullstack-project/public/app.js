@@ -10,9 +10,12 @@ const FirstPage = () => {
 const RegisterPage = () => {
   return (
     <div className="container">
+        <h2>Register Form</h2>
       <div className="row">
-          <h2>Register Form</h2>
+          
+          <div className="form-group">
         <RegisterForm/>
+        </div>
       </div>
     </div>
   )
