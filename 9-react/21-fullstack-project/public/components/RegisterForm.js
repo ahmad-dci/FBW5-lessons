@@ -1,5 +1,6 @@
 import React from 'react'
 import {InputGroup, InputGroupAddon, InputGroupText, Button, Input} from 'reactstrap'
+import MyModal from './Modal'
 
 class RegisterForm extends React.Component {
     state = {
@@ -7,11 +8,38 @@ class RegisterForm extends React.Component {
         lastName: '',
         email: '',
         password: '',
-        repassword: ''
+        repassword: '',
+        errorMessage: null
+    }
+    onSendBtnClick = () =>{
+        let messageArr = []
+        if(!this.state.firstName){
+            messageArr.push ("Please enter you first Name")
+        }
+        if(!this.state.lastName){
+            messageArr.push ("Please enter you last Name")
+        }
+        if(!this.state.email){
+            messageArr.push ("Please enter you email")
+        }
+        if(!this.state.password){
+            messageArr.push ("Please enter you password")
+        }
+        if(this.state.password != this.state.repassword){
+            messageArr.push ("Password dose not match repassword")
+        }
+
+        const errorLi = messageArr.map((item, idx) => {
+            return <li key={idx}>{item}</li>
+        })
+        if (errorLi.length){
+            this.setState({errorMessage: <ul>{errorLi}</ul>})
+        }
     }
   render() {
     return (
       <React.Fragment>
+          <MyModal className="danger" message={this.state.errorMessage} />
         <InputGroup>
           <InputGroupAddon addonType="prepend">
             <InputGroupText>
@@ -26,7 +54,7 @@ class RegisterForm extends React.Component {
               Last Name
             </InputGroupText>
           </InputGroupAddon>
-          <Input value={this.state.lastName}/>
+          <Input value={this.state.lastName} onChange={(e) => {this.setState({lastName: e.target.value})}}/>
         </InputGroup>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
@@ -34,7 +62,7 @@ class RegisterForm extends React.Component {
               Email
             </InputGroupText>
           </InputGroupAddon>
-          <Input type="email" value={this.state.email}/>
+          <Input type="email" value={this.state.email} onChange={(e) => {this.setState({email: e.target.value})}}/>
         </InputGroup>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
@@ -42,7 +70,7 @@ class RegisterForm extends React.Component {
               Password
             </InputGroupText>
           </InputGroupAddon>
-          <Input type="password" value={this.state.password}/>
+          <Input type="password" value={this.state.password} onChange={(e) => {this.setState({password: e.target.value})}}/>
         </InputGroup>
         <InputGroup>
           <InputGroupAddon addonType="prepend">
@@ -50,9 +78,9 @@ class RegisterForm extends React.Component {
               Re-Password
             </InputGroupText>
           </InputGroupAddon>
-          <Input type="password" value={this.state.repassword}/>
+          <Input type="password" value={this.state.repassword} onChange={(e) => {this.setState({repassword: e.target.value})}}/>
         </InputGroup>
-        <Button color="primary">Register</Button>
+        <Button color="primary" onClick={this.onSendBtnClick}>Register</Button>
       </React.Fragment>
     )
   }
