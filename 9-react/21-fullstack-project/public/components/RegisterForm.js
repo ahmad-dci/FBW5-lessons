@@ -1,6 +1,7 @@
 import React from 'react'
 import {InputGroup, InputGroupAddon, InputGroupText, Button, Input} from 'reactstrap'
 import MyModal from './Modal'
+import register from '../services/register'
 
 class RegisterForm extends React.Component {
     state = {
@@ -34,12 +35,16 @@ class RegisterForm extends React.Component {
         })
         if (errorLi.length){
             this.setState({errorMessage: <ul>{errorLi}</ul>})
+        } else {
+            register(this.state.firstName, this.state.lastName, this.state.email, this.state.password).then(data => {
+                console.log(data);
+            })
         }
     }
   render() {
     return (
       <React.Fragment>
-          <MyModal className="danger" message={this.state.errorMessage} />
+          <MyModal modalTitle="Error" className="bg-danger" message={this.state.errorMessage} />
         <InputGroup>
           <InputGroupAddon addonType="prepend">
             <InputGroupText>

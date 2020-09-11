@@ -9,7 +9,10 @@ app.use(express.static(__dirname + '/public'))
 
 const port = process.env.PORT || 3000
 
-
+app.post('/register', (req, res) => {
+    console.log(req.body);
+    res.json(1)
+});
 app.use('/', (req, res, next) => {
     const html = fs.readFileSync(__dirname + '/index.html', 'utf-8')
     res.send((html));
