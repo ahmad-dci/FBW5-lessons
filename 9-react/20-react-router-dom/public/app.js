@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {BrowserRouter, Route, Link} from 'react-router-dom'
+import {BrowserRouter, Route, Link, Switch} from 'react-router-dom'
 import NavBar from './components/NavBar'
 
 
@@ -42,12 +42,13 @@ class App extends React.Component{
     render() {
         return(
                 <BrowserRouter>
-                    <div>
-                        <NavBar />
-                        <Route path="/" exact  component={PageOne} />
-                        <Route path="/pagetwo" exact component={PageTwo} />
-                        <Route path="/pagetwo/pagethree" component={PageThree} />
-                    </div>
+                <NavBar />
+                    <Switch>
+                        <Route exact path="/pagetwo/pagethree" component={PageThree} />
+                        <Route exact path="/pagetwo"  component={PageTwo} />
+                        <Route exact path="/"   component={PageOne} /> 
+                        
+                    </Switch>
                 </BrowserRouter>           
         )
     }
