@@ -10,9 +10,10 @@ class SongsList extends React.Component {
         // this.props.dispatch(selectSong(song))
         this.props.selectSong(song)
     }
+    
 
   render() {
-    console.log(this.props);
+      console.log(this.props);
     const songsItems = this.props.songs.map((song, idx) => {
         return(
             <li key={idx} className="list-group-item">{song.title} <button onClick={() => {this.onSelectBtnClick(song)}} className="btn btn-primary float-right">Show</button></li>
@@ -31,7 +32,7 @@ class SongsList extends React.Component {
 // this function is to cnvert some data from main state to props to be passed to
 // a component using connect method
 const mapStateToProps = (state) => {
-    console.log(state);
+    // console.log(state);
   return ({songs: state.songs})
 }
 

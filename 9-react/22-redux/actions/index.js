@@ -5,4 +5,11 @@ export const selectSong = (song) => {
     }
 }
 
+export const addSong = (song) => {
+    return {
+        type: 'ADD_SONG',
+        payload: song
+    }
+}
+
 //export default selectSong

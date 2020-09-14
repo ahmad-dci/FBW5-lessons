@@ -6,6 +6,7 @@ import {createStore} from 'redux'
 import SongsList from './components/SongsList'
 import SongDetail from './components/SongDetail'
 import reducers from './reducers'
+import AddSong from './components/AddSong'
 
 
 
@@ -16,6 +17,7 @@ class App extends React.Component{
                 <div className="row">
                     <SongsList />
                     <SongDetail />
+                    <AddSong />
                 </div>
             </div>
         )
