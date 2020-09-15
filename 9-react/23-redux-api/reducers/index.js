@@ -16,7 +16,16 @@ const selectedImageReducer = (image = null, action) => {
     return image
 }
 
+const goNextReducer = (next = false, action) => {
+    if (action.type === 'NEXT') {
+        return action.payload
+    }
+
+    return next
+}
+
 export default combineReducers({
     images: imagesReducer,
-    selectedImage: selectedImageReducer
+    selectedImage: selectedImageReducer,
+    next: goNextReducer
 })

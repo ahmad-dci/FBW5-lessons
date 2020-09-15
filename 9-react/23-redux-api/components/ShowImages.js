@@ -1,9 +1,26 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import {selectImage} from '../actions'
+import {selectImage, nextAction} from '../actions'
 
 class ShowImages extends React.Component{
+  constructor(props){
+    super(props)
+    this.ulRef = React.createRef()
+  }
+  scroll = () => {
+    console.log(this.ulRef.current.getBoundingClientRect().bottom);
+    console.log(window.innerHeight);
+    if (this.ulRef.current.getBoundingClientRect().bottom < window.innerHeight){
+      console.log('reach the end');
+      this.props.nextAction(true)
+    }
+  }
+  componentDidUpdate(){
+    window.addEventListener('scroll',() => {
+      this.scroll()
+    })
+  }
     onSelectImgBtnClick = (image) => {
         this.props.selectImage(image)
     }
@@ -28,7 +45,7 @@ class ShowImages extends React.Component{
             )
         })
       return (
-        <ul className="list-group shadow col-md-12 mb-3">
+        <ul ref={this.ulRef} className="list-group shadow col-md-12 mb-3">
           {imagesElements}
         </ul>
       )
@@ -41,4 +58,4 @@ const mapStateToProps = (state) => {
     return{images: state.images}
 }
 
-export default connect(mapStateToProps, {selectImage})(ShowImages)
+export default connect(mapStateToProps, {selectImage, nextAction})(ShowImages)

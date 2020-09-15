@@ -5,9 +5,7 @@ import {selectImage} from '../actions'
 
 class ImageDetail extends React.Component {
     close = () => {
-    this
-      .props
-      .selectImage(null)
+    this.props.selectImage(null)
   }
   render() {
     if (this.props.selectedImage) {

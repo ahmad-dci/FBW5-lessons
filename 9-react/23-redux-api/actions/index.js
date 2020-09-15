@@ -11,3 +11,10 @@ export const selectImage = (image) => {
         payload: image
     }
 }
+
+export const nextAction = (next) => {
+    return{
+        type: 'NEXT',
+        payload: next
+    }
+}
