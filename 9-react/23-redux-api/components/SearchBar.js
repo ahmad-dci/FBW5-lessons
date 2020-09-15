@@ -43,7 +43,6 @@ class SearchBar extends React.Component {
 }
 // state on mapStateToProps is gonna be the main State 
 const mapStateToProps = (state) => {
-    console.log(state);
     return { images: state.images}
 }
 
