@@ -1,6 +1,8 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
 import getData from '../services/pixabay'
+import {setImages} from '../actions'
 
 class SearchBar extends React.Component {
 
@@ -17,7 +19,8 @@ class SearchBar extends React.Component {
 
     onSearchBtnClick = () => {
         getData(this.state.searchWord, 10, 1).then(data => {
-            console.log(data);
+            //console.log(data);
+            this.props.setImages(data.hits)
         })
     }
 
@@ -38,5 +41,10 @@ class SearchBar extends React.Component {
     )
   }
 }
+// state on mapStateToProps is gonna be the main State 
+const mapStateToProps = (state) => {
+    console.log(state);
+    return { images: state.images}
+}
 
-export default SearchBar
+export default connect(mapStateToProps, {setImages})(SearchBar)

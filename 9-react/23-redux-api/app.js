@@ -6,6 +6,7 @@ import {createStore} from 'redux'
 import SearchBar from './components/SearchBar'
 import ShowImages from './components/ShowImages'
 import ImageDetail from './components/ImageDetail'
+import reducers from './reducers'
 
 class App extends React.Component {
   render() {
@@ -22,7 +23,7 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
-<Provider store={createStore(null)}>
+<Provider store={createStore(reducers)}>
   <App/>
 </Provider>
   , document.querySelector('#container'))
