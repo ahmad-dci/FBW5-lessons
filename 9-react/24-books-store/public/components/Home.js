@@ -1,11 +1,14 @@
 import React from 'react'
 
+import Slider from './Slider'
+
 class Home extends React.Component {
   render() {
     return (
       <section className="slider">
         <div className="container">
-          <div id="owl-demo" className="owl-carousel owl-theme">
+            <Slider />
+          {/* <div id="owl-demo" className="owl-carousel owl-theme">
             <div className="item">
               <div className="slide">
                 <img src="/images/slide1.jpg" alt="slide1"/>
@@ -54,7 +57,7 @@ class Home extends React.Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
     )
