@@ -9,7 +9,6 @@ class App  extends React.Component{
             <Router>
                 <div>Hi there!</div>
             </Router>
-            
         )
     }
 }
