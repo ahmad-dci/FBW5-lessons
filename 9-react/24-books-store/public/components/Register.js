@@ -1,12 +1,16 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import PopUpModal from './PopUpModal'
+import validator from 'validator';
 
 class Register extends React.Component {
    
   state = {
     email: '',
     password: '',
-    repassword: ''
+    repassword: '',
+    errorCompenent: null,
+    showErrorModal: false
   }
 
 
@@ -14,11 +18,40 @@ class Register extends React.Component {
   onRegisterBtnClick = (e) => {
       e.preventDefault()
       console.log(this.state);
+      if (this.state.email.trim() === '' || this.state.password === '' || this.state.password !== this.state.repassword || !validator.isEmail(this.state.email.trim())){
+        const errorsElement = (
+        
+            <ul>
+                {this.state.email.trim() === '' ? <li>Email should not be empty</li> : null}
+                {!validator.isEmail(this.state.email.trim())  ? <li>you have to enter a valid email</li> : null}
+                {this.state.password === '' ? <li>password should not be empty</li> : null}
+                {this.state.password !== this.state.repassword ? <li>password is not matching the repassword</li> : null}
+            </ul>
+            
+        )
+        
+        this.setState({
+            errorCompenent: errorsElement,
+            showErrorModal: true
+        })
+      }
+      
   }
 
+  closeModal = () => {
+      console.log('I am called from the child');
+      this.setState({
+        showErrorModal: false
+      })
+  }
   render() {
     return (
+        
       <React.Fragment>
+         
+        <PopUpModal show={this.state.showErrorModal} close={this.closeModal} className="bg-danger" title="Entries Error">
+            {this.state.errorCompenent}
+        </PopUpModal>
         <div className="breadcrumb">
           <div className="container">
             <Link className="breadcrumb-item" to="/">Home</Link>
