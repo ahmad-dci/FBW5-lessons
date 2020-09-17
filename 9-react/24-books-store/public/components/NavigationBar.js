@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link, withRouter} from 'react-router-dom'
 import {
     Collapse,
     Navbar,
@@ -6,12 +7,7 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText
+    NavLink
   } from 'reactstrap'
 
 class NavigationBar extends React.Component {
@@ -24,31 +20,37 @@ class NavigationBar extends React.Component {
         })
     }
   render() {
+      console.log(this.props);
+      console.log(window.location.pathname);
+      let currentLocation = this.props.location.pathname
     return (
       <header>
           <div className="main-menu">
             <div className="container">
             <Navbar color="light" light expand="lg">
-                <NavbarBrand href="/">
+                <NavbarBrand tag={Link} to="/">
                     <img src="/images/logo.png" alt="logo" />
                 </NavbarBrand>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
-                        <NavItem className="navbar-item" active>
-                            <NavLink href="/components/">Home</NavLink>
+                        <NavItem className="navbar-item" active={currentLocation === '/' ? true : false}>
+                            <NavLink tag={Link} to="/">Home</NavLink>
                         </NavItem>
-                        <NavItem className="navbar-item">
-                            <NavLink href="/components/">Shop</NavLink>
+                        <NavItem className="navbar-item" active={currentLocation === '/shop' ? true : false} >
+                            <NavLink tag={Link} to="/shop">Shop</NavLink>
                         </NavItem>
-                        <NavItem className="navbar-item">
-                            <NavLink href="/components/">About</NavLink>
+                        <NavItem className="navbar-item" active={currentLocation === '/about' ? true : false}>
+                            <NavLink tag={Link} to="/about">About</NavLink>
                         </NavItem>
-                        <NavItem className="navbar-item">
-                            <NavLink href="/components/">FAQ</NavLink>
+                        <NavItem className="navbar-item" active={currentLocation === '/faq' ? true : false}>
+                            <NavLink tag={Link} to="/faq">FAQ</NavLink>
                         </NavItem>
-                        <NavItem className="navbar-item">
-                            <NavLink href="/components/">Login</NavLink>
+                        <NavItem className="navbar-item" active={currentLocation === '/login' ? true : false}>
+                            <NavLink tag={Link} to="/login">Login</NavLink>
+                        </NavItem>
+                        <NavItem className="navbar-item" active={currentLocation === '/register' ? true : false}>
+                            <NavLink tag={Link} to="/register">Register</NavLink>
                         </NavItem>
                     </Nav>
                     <div className="cart my-2 my-lg-0">
@@ -69,4 +71,4 @@ class NavigationBar extends React.Component {
   }
 }
 
-export default NavigationBar
+export default withRouter(NavigationBar)

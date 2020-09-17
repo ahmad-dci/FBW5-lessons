@@ -1,8 +1,10 @@
 import React from 'react'
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
 import NavigationBar from './NavigationBar'
 import Home from './Home'
+import Page404 from './Page404'
+import Footer from './Footer'
 
 class Router extends React.Component{
     render() {
@@ -11,9 +13,13 @@ class Router extends React.Component{
                 <div>
                    
                     <NavigationBar />
+                    <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/contact" exact component={null} />
                     <Route path="/aboutus" exact component={null} />
+                    <Route path="/" component={Page404} />
+                    </Switch>
+                    <Footer />
                 </div>
                 </BrowserRouter>
         )
