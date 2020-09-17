@@ -1,23 +1,32 @@
 import React from 'react'
 import {Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption} from 'reactstrap';
+import {Link} from 'react-router-dom'
 
 const items = [
   {
     src: '/images/slide1.jpg',
-    altText: 'Slider1 Alt text',
-    caption: 'slider1 Caption'
+    title1: 'welcome to bookstore',
+    title2: 'Discover the best books online with us',
+    btnText: 'shop books',
+    btnLink: '/'
   }, {
     src: '/images/slide2.jpg',
-    altText: 'Slider2 Alt text',
-    caption: 'slider2 Caption'
+    title1: 'welcome to bookstore',
+    title2: 'Discover the best books online with us',
+    btnText: 'shop books',
+    btnLink: '/shop'
   }, {
     src: '/images/slide3.jpg',
-    altText: 'Slider3 Alt text',
-    caption: 'slider3 Caption'
+    title1: 'welcome to bookstore',
+    title2: 'Discover the best books online with us',
+    btnText: 'shop books',
+    btnLink: '/'
   }, {
     src: '/images/slide4.jpg',
-    altText: 'Slider4 Alt text',
-    caption: 'slider4 Caption'
+    title1: 'welcome to bookstore',
+    title2: 'Discover the best books online with us',
+    btnText: 'shop books',
+    btnLink: '/'
   }
 ]
 class Slider extends React.Component {
@@ -59,8 +68,15 @@ class Slider extends React.Component {
           this.setState({animating: false})
         }}
           key={idx}>
-          <img src={item.src} alt={item.altText}/>
-          <CarouselCaption captionText={item.caption} captionHeader={item.caption}/>
+          <img src={item.src} alt={item.title1}/>
+          <div className="content">
+            <div className="title">
+              <h3>{item.title1}</h3>
+              <h5>{item.title2}</h5>
+              <Link to={item.btnLink} className="btn">{item.btnText}</Link>
+            </div>
+          </div>
+          <CarouselCaption captionText={item.title1} captionHeader={item.title2}/>
         </CarouselItem>
       )
     })
@@ -72,7 +88,7 @@ class Slider extends React.Component {
         <CarouselIndicators
           items={items}
           activeIndex={this.state.activeIndex}
-          onClickHandler={this.goToIndex}/>
+          onClickHandler={this.goToIndex}/> 
           {slides}
         <CarouselControl
           direction="prev"
