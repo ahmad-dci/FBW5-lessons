@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import PopUpModal from './PopUpModal'
 import validator from 'validator';
-
+import {registerPost} from '../services/api'
 class Register extends React.Component {
    
   state = {
@@ -33,6 +33,12 @@ class Register extends React.Component {
         this.setState({
             errorCompenent: errorsElement,
             showErrorModal: true
+        })
+      } else {
+        registerPost(this.state.email, this.state.password, this.state.repassword).then(data => {
+          console.log(data);
+        }).catch(error => {
+          console.log(error);
         })
       }
       
