@@ -1,5 +1,7 @@
 const express = require('express')
 const fs = require('fs')
+const session = require('express-session')
+const fileupload = require('express-fileupload')
 
 const dataModule = require('./modules/mongooseDataModule')
 
@@ -8,9 +10,35 @@ const app = express()
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
+const sessionOptions = {
+    secret: 'bookStore',
+    cookie: {}
+}
+app.use(session(sessionOptions))
 
 const port = process.env.PORT || 5000
 
+app.post('/login', (req, res) => {
+    // 1 login success
+    // 2 servererror
+    // 3 password is wrong
+    // 4 user not exist
+    if (req.body.email && req.body.password) {
+        dataModule.checkUser(req.body.email.trim(), req.body.password).then(user => {
+            req.session.user = user
+            res.json(1)
+        }).catch(error => {
+            if (error == 3) {
+                res.json(3)
+            } else {
+                res.json(4)
+            }
+        })
+    } else {
+        res.json(2)
+    }
+    
+});
 
 app.post('/register', (req, res) => {
     // your post register handler here

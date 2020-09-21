@@ -103,7 +103,7 @@ function connect() {
                          reject(3)
                      }
                  } else {
-                     reject(3)
+                     reject(4)
                  }
               })
           }).catch(error => {
