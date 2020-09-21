@@ -4,6 +4,7 @@ const session = require('express-session')
 const fileupload = require('express-fileupload')
 
 const dataModule = require('./modules/mongooseDataModule')
+const adminRoutes = require('./routes/adminRoutes')
 
 const app = express()
 
@@ -68,6 +69,8 @@ app.post('/register', (req, res) => {
     
 });
 
+
+app.use('/admin', adminRoutes);
 
 app.use('/', (req, res) => {
     const html = fs.readFileSync(__dirname + '/index.html' , 'utf-8')

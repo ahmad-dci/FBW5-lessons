@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 
 import PopUpModal from './PopUpModal'
 import {loginPost} from '../services/api'
 
 const Login = () => {
 
+  const history = useHistory()
   const intialState = {
     email: '',
     password: '',
@@ -50,6 +51,7 @@ const Login = () => {
             break;
           case 1:
             // show admin panel
+            history.push('/admin', myState.email)
             console.log('should be login');
             break;
         

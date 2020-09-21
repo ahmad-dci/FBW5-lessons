@@ -7,6 +7,8 @@ import Page404 from './Page404'
 import Footer from './Footer'
 import Register from './Register'
 import Login from './Login'
+import Admin from './Admin'
+import AddBook from './AddBook'
 
 class Router extends React.Component{
     render() {
@@ -19,6 +21,8 @@ class Router extends React.Component{
                     <Route path="/" exact component={Home} />
                     <Route path="/register" exact component={Register} />
                     <Route path="/login" exact component={Login} />
+                    <Route path="/admin" exact component={Admin} />
+                    <Route path="/admin/addbook" exact component={AddBook} />
                     <Route path="/contact" exact component={null} />
                     <Route path="/aboutus" exact component={null} />
                     <Route path="/" component={Page404} />
