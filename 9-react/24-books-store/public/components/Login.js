@@ -1,19 +1,60 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 
+import PopUpModal from './PopUpModal'
+
 const Login = () => {
 
   const intialState = {
     email: '',
-    password: ''
+    password: '',
+    entriesError: false,
+    errorElement: null,
+    errorTitle: ''
   }
   const [myState, setMyState] = useState(intialState)
 
+  const onLoginBtnClick = (e) => {
+    e.preventDefault()
+    if (myState.email.trim() === '' || myState.password === '') {
+      const errorElement = (
+        <ul>
+          {myState
+            .email
+            .trim() === ''
+            ? <li>Email should not be empty</li>
+            : null}
+          {myState.password === ''
+            ? <li>Password should not be empty</li>
+            : null}
+        </ul>
+      )
+      setMyState({
+        ...myState,
+        entriesError: true,
+        errorElement,
+        errorTitle: 'Entries Error'
+      })
+    }
+  }
+  const closeModal = () => {
+    setMyState({
+      ...myState,
+      entriesError: false
+    })
+  }
 
-console.log(myState);
+  console.log(myState);
 
   return (
     <React.Fragment>
+      <PopUpModal
+        show={myState.entriesError}
+        close={closeModal}
+        className="bg-danger"
+        title={myState.errorTitle}>
+          {myState.errorElement}
+        </PopUpModal>
       <div className="breadcrumb">
         <div className="container">
           <Link className="breadcrumb-item" to="/">Home</Link>
@@ -36,7 +77,12 @@ console.log(myState);
                     type="email"
                     placeholder="Enter User Name"
                     required
-                    onChange={(e) => {setMyState({...myState, email: e.target.value})}}
+                    onChange={(e) => {
+                    setMyState({
+                      ...myState,
+                      email: e.target.value
+                    })
+                  }}
                     value={myState.email}/>
                   <span className="required-star">*</span>
                 </div>
@@ -45,13 +91,18 @@ console.log(myState);
                     type="password"
                     placeholder="Password"
                     required
-                    onChange={(e) => {setMyState({...myState, password: e.target.value})}}
+                    onChange={(e) => {
+                    setMyState({
+                      ...myState,
+                      password: e.target.value
+                    })
+                  }}
                     value={myState.password}/>
                   <span className="required-star">*</span>
                 </div>
 
                 <div className="col-md-4">
-                  <button className="btn black">Login</button>
+                  <button className="btn black" onClick={onLoginBtnClick}>Login</button>
                   <h5>not Registered?
                     <Link to="/register">register here</Link>
                   </h5>

@@ -22,6 +22,7 @@ app.post('/register', (req, res) => {
     const email = req.body.email.trim()
     const password = req.body.password
     const repassword = req.body.repassword
+    console.log(req.body);
     if (email && password && password == repassword){
         dataModule.registerUser(email, password).then(() => {
             res.json(1)
