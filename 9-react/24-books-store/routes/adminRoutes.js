@@ -31,6 +31,8 @@ adminRouter.post('/addbook', (req, res) => {
     // responses map
     // 1 book saved successfuly
     // 2 data error
+    // 3 book title is exist
+    // 4 server side error
 //console.log(req.body);
 //console.log(Object.keys( req.files));
 if (req.files) {
@@ -53,6 +55,8 @@ if (bookTitle && bookDescription && bookPdf && Object.keys( req.files).length > 
     }).catch(error => {
         if (error == 3) {
             res.json(3)
+        } else {
+            res.json(4)
         }
     })
 

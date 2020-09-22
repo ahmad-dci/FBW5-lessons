@@ -1,14 +1,20 @@
 import React, {useState, useRef} from 'react'
+import {Link} from 'react-router-dom'
 
 import PopUpModal from './PopUpModal'
+import {addBookPost} from '../services/api'
 
 const AddBook = () => {
+
+
+
   const intialState = {
     bookTitle: '',
     bookDescription: '',
     modalElement: null,
     showModal: false,
-    modalTitle: ''
+    modalTitle: '',
+    modalClass: 'bg-danger'
   }
   const [state,
     setState] = useState(intialState)
@@ -35,10 +41,61 @@ const AddBook = () => {
             ...state,
             modalElement: errorElement,
             showModal: true,
-            modalTitle: 'Entries Errors'
+            modalTitle: 'Entries Errors',
+            modalClass: 'bg-danger'
           })
         } else {
-          
+          addBookPost(state.bookTitle, state.bookDescription, pdfFileInpRef.current.files[0], imagesFileInpRef.current.files).then(data => {
+            switch (data) {
+              case 1:
+                setState({
+                  ...state,
+                  modalElement: <p>the book saved successfuly</p>,
+                  showModal: true,
+                  modalTitle: 'Success',
+                  modalClass: 'bg-success'
+                })
+                break;
+              case 2:
+                setState({
+                    ...state,
+                    modalElement: <p>Some Entries not right</p>,
+                    showModal: true,
+                    modalTitle: 'Entries Error',
+                    modalClass: 'bg-danger'
+                  })
+                  break;
+                case 3:
+                setState({
+                      ...state,
+                      modalElement: <p>Book Title is already exist</p>,
+                      showModal: true,
+                      modalTitle: 'Title Error',
+                      modalClass: 'bg-danger'
+                    })
+                    break;
+                case 4:
+                setState({
+                      ...state,
+                      modalElement: <p>Server Error pleasecontact the Adminstrator</p>,
+                      showModal: true,
+                      modalTitle: 'Server Error',
+                      modalClass: 'bg-danger'
+                    })
+                    break;
+            
+              default:
+                break;
+            }
+          }).catch(error => {
+            setState({
+              ...state,
+              modalElement: <p>Can not send the data to server</p>,
+              showModal: true,
+              modalTitle: 'Sending Error',
+              modalClass: 'bg-danger'
+            })
+          })
         }
   }
   const closeModal = () => {
@@ -52,15 +109,15 @@ const AddBook = () => {
       <PopUpModal 
         show={state.showModal} 
         close={closeModal} 
-        className="bg-danger"
+        className={state.modalClass}
         title={state.modalTitle}
         >
           {state.modalElement}
         </PopUpModal>
       <div className="breadcrumb">
         <div className="container">
-          <a className="breadcrumb-item" href="index.html">Home</a>
-          <span className="breadcrumb-item active">Register</span>
+          <Link className="breadcrumb-item" to="/admin">Dashboard</Link>
+          <span className="breadcrumb-item active">Add Book</span>
         </div>
       </div>
       <section className="static about-sec">

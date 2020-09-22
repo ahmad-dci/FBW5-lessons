@@ -1,4 +1,3 @@
-import { resolveContent } from "nodemailer/lib/shared"
 
 export const registerPost = (email, password, repassword) => {
     const sendData = {

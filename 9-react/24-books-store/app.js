@@ -16,7 +16,9 @@ const sessionOptions = {
     cookie: {}
 }
 app.use(session(sessionOptions))
-
+app.use(fileupload({
+    limits: { fileSize: 50 * 1024 * 1024 }
+}))
 const port = process.env.PORT || 5000
 
 app.post('/login', (req, res) => {
