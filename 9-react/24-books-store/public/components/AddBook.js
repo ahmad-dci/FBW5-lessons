@@ -1,9 +1,14 @@
 import React, {useState, useRef} from 'react'
 
+import PopUpModal from './PopUpModal'
+
 const AddBook = () => {
   const intialState = {
     bookTitle: '',
-    bookDescription: ''
+    bookDescription: '',
+    modalElement: null,
+    showModal: false,
+    modalTitle: ''
   }
   const [state,
     setState] = useState(intialState)
@@ -11,8 +16,45 @@ const AddBook = () => {
   const pdfFileInpRef = useRef()
   const imagesFileInpRef = useRef()
 
+
+  const bookSaveBtnClick = e => {
+    e.preventDefault()
+    if (state.bookTitle.trim() ==='' || 
+        state.bookDescription.trim() === '' || 
+        pdfFileInpRef.current.files.length === 0 || 
+        imagesFileInpRef.current.files.length === 0){
+          const errorElement = (
+            <ul>
+              {state.bookTitle.trim() ==='' ? <li>please enter book title</li> : null}
+              {state.bookDescription.trim() === ''  ? <li>please enter book Description</li> : null}
+              {pdfFileInpRef.current.files.length === 0  ? <li>please upload the book pdf file</li> : null}
+              {imagesFileInpRef.current.files.length === 0  ? <li>please upload at least one Image</li> : null}
+            </ul>
+          )
+          setState({
+            ...state,
+            modalElement: errorElement,
+            showModal: true,
+            modalTitle: 'Entries Errors'
+          })
+        }
+  }
+  const closeModal = () => {
+    setState({
+      ...state,
+      showModal: false
+    })
+  }
   return (
     <React.Fragment>
+      <PopUpModal 
+        show={state.showModal} 
+        close={closeModal} 
+        className="bg-danger"
+        title={state.modalTitle}
+        >
+          {state.modalElement}
+        </PopUpModal>
       <div className="breadcrumb">
         <div className="container">
           <a className="breadcrumb-item" href="index.html">Home</a>
@@ -66,6 +108,7 @@ const AddBook = () => {
               <div className="form-group">
                 <label htmlFor="bookDescriptionInp">Book Description</label>
                 <textarea
+                  value={state.bookDescription}
                   onChange={e => {
                   setState({
                     ...state,
@@ -73,9 +116,9 @@ const AddBook = () => {
                   })
                 }}
                   className="form-control"
-                  id="bookDescriptionInp">{state.bookDescription}</textarea>
+                  id="bookDescriptionInp"></textarea>
               </div>
-              <button className="btn btn-success mt-3">save</button>
+              <button onClick={bookSaveBtnClick} className="btn btn-success mt-3">save</button>
             </form>
           </div>
         </div>
