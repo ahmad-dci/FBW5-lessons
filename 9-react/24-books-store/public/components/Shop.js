@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 
+import {allBooksPost} from '../services/api'
+
 const Shop = () => {
 
 
@@ -10,10 +12,23 @@ const Shop = () => {
     const [state, setState] = useState(intialState)
 
     useEffect(() => {
-        
+        allBooksPost().then(data => {
+            console.log(data);
+            setState({...state, books: data})
+        })
     }, [])
 
-
+    const BooksElement = state.books.map(book => {
+        return (
+            <div key={book._id} className="col-md-3">
+                        <div className="item">
+                            <img className="bookimage" src={book.imgs[0]} alt="img" />
+                            <h3><Link to={'/book/' + book.title.trim().replace(/ /g, '_') + '/' + book._id}>{book.title}</Link></h3>
+                            <h6><Link to={'/book/' + book.title.trim().replace(/ /g, '_') + '/' + book._id}>Download</Link></h6>
+                        </div>
+                    </div>
+        )
+    })
     return(
         <React.Fragment>
             <div className="breadcrumb">
@@ -28,13 +43,7 @@ const Shop = () => {
             <div className="recent-book-sec">
                 <div className="row">
                     
-                    <div className="col-md-3">
-                        <div className="item">
-                            <img className="bookimage" src="<%= books[i].imgs[0]%>" alt="img" />
-                            <h3><a href="/book/<%=books[i].title.trim().replace(/ /g, '_')%>/<%=books[i].id%>">books[i].title</a></h3>
-                            <h6><a href="/book/<%=books[i].title.trim().replace(/ /g, '_')%>/<%=books[i].id%>">Download</a></h6>
-                        </div>
-                    </div>
+                    {BooksElement}
 
                 </div>
                 <div className="btn-sec">
