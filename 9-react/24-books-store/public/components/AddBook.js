@@ -1,6 +1,16 @@
-import React from 'react'
+import React, {useState, useRef} from 'react'
 
 const AddBook = () => {
+  const intialState = {
+    bookTitle: '',
+    bookDescription: ''
+  }
+  const [state,
+    setState] = useState(intialState)
+
+  const pdfFileInpRef = useRef()
+  const imagesFileInpRef = useRef()
+
   return (
     <React.Fragment>
       <div className="breadcrumb">
@@ -22,6 +32,13 @@ const AddBook = () => {
               <div className="form-group">
                 <label htmlFor="bookTitleInp">Book Title</label>
                 <input
+                  value={state.bookTitle}
+                  onChange={e => {
+                  setState({
+                    ...state,
+                    bookTitle: e.target.value
+                  })
+                }}
                   id="bookTitleInp"
                   type="text"
                   className="form-control"
@@ -30,6 +47,7 @@ const AddBook = () => {
               <div className="form-group">
                 <label htmlFor="exampleFormControlFile1">Book Images</label>
                 <input
+                  ref={imagesFileInpRef}
                   id="exampleFormControlFile1"
                   type="file"
                   className="form-control-file"
@@ -39,6 +57,7 @@ const AddBook = () => {
               <div className="form-group">
                 <label htmlFor="exampleFormControlFile1">Book PDF</label>
                 <input
+                  ref={pdfFileInpRef}
                   id="exampleFormControlFile1"
                   type="file"
                   className="form-control-file"
@@ -46,7 +65,15 @@ const AddBook = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="bookDescriptionInp">Book Description</label>
-                <textarea className="form-control" id="bookDescriptionInp"></textarea>
+                <textarea
+                  onChange={e => {
+                  setState({
+                    ...state,
+                    bookDescription: e.target.value
+                  })
+                }}
+                  className="form-control"
+                  id="bookDescriptionInp">{state.bookDescription}</textarea>
               </div>
               <button className="btn btn-success mt-3">save</button>
             </form>
