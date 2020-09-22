@@ -18,7 +18,7 @@ const Shop = () => {
         })
     }, [])
 
-    const BooksElement = state.books.map(book => {
+    const booksElement = state.books.map(book => {
         return (
             <div key={book._id} className="col-md-3">
                         <div className="item">
@@ -43,7 +43,7 @@ const Shop = () => {
             <div className="recent-book-sec">
                 <div className="row">
                     
-                    {BooksElement}
+                    {booksElement}
 
                 </div>
                 <div className="btn-sec">
