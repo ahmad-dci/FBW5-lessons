@@ -37,6 +37,8 @@ const AddBook = () => {
             showModal: true,
             modalTitle: 'Entries Errors'
           })
+        } else {
+          
         }
   }
   const closeModal = () => {
