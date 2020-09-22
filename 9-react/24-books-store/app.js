@@ -80,6 +80,19 @@ app.post('/getallbooks', (req, res) => {
     })
 });
 
+app.post('/getbook', (req, res) => {
+    const bookId = req.body.id
+    
+    dataModule.getBook(bookId).then(data => {
+        res.json({
+            book: data,
+            login: req.session.user != null
+        })
+    }).catch(error => {
+        res.json(2)
+    })
+});
+
 
 app.use('/admin', adminRoutes);
 

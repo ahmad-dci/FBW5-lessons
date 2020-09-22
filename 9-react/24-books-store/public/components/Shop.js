@@ -14,7 +14,10 @@ const Shop = () => {
     useEffect(() => {
         allBooksPost().then(data => {
             console.log(data);
-            setState({...state, books: data})
+            if(data != 2){
+                setState({...state, books: data})
+            }
+            
         })
     }, [])
 
