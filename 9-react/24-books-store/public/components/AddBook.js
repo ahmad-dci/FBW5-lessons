@@ -1,12 +1,12 @@
 import React, {useState, useRef} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 
 import PopUpModal from './PopUpModal'
 import {addBookPost} from '../services/api'
 
 const AddBook = () => {
 
-
+const history = useHistory()
 
   const intialState = {
     bookTitle: '',
@@ -46,6 +46,7 @@ const AddBook = () => {
           })
         } else {
           addBookPost(state.bookTitle, state.bookDescription, pdfFileInpRef.current.files[0], imagesFileInpRef.current.files).then(data => {
+            console.log(data);
             switch (data) {
               case 1:
                 setState({
@@ -83,7 +84,9 @@ const AddBook = () => {
                       modalClass: 'bg-danger'
                     })
                     break;
-            
+                case 10:
+                  history.push('/login')
+                  break;
               default:
                 break;
             }

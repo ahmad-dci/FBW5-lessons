@@ -72,6 +72,15 @@ app.post('/register', (req, res) => {
 });
 
 
+app.post('/getallbooks', (req, res) => {
+    dataModule.getAllBooks().then(books => {
+        res.json(books)
+    }).catch(error => {
+        res.json(2)
+    })
+});
+
+
 app.use('/admin', adminRoutes);
 
 app.use('/', (req, res) => {
