@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react'
-import {useParams} from 'react-router-dom'
+import {set} from 'mongoose'
+import React, {useEffect, useState} from 'react'
+import {useParams, Link} from 'react-router-dom'
 
 import {getBookPost} from '../services/api'
 
@@ -7,15 +8,55 @@ const Book = () => {
   const params = useParams()
   //console.log(params);
 
+  const intialState = {
+    book: null
+  }
+  const [state,
+    setState] = useState(intialState)
+
   useEffect(() => {
     getBookPost(params.id).then(data => {
       console.log(data);
+      setState({
+        ...state,
+        book: data
+      })
     })
   }, [])
+  if (state.book) {
+    return (
+      <React.Fragment>
+        <div className="breadcrumb">
+          <div className="container">
+            <Link className="breadcrumb-item" to="/">Home</Link>
+            <span className="breadcrumb-item active">{state.book.title}</span>
+          </div>
+        </div>
+        <section className="product-sec">
+          <div className="container">
+            <h1>{state.book.title}</h1>
+            <div className="row">
+              <div className="col-md-6 slider-sec"></div>
+              <div className="col-md-6 slider-content">
+                {state.book.description}
 
-  return (
-    <div>Book</div>
-  )
+                <div className="btn-sec">
+                  {state.book.pdfurl
+                    ? <a href={state.book.pdfUrl} target="_blank" className="btn btn-success">download</a>
+                    : <Link to="/login" className="btn btn-success">Login for Download</Link>}
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </React.Fragment>
+    )
+  } else {
+    return(
+      <div>Loading ...</div>
+    )
+  }
 }
 
 export default Book
