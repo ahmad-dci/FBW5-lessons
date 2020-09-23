@@ -11,6 +11,7 @@ import Admin from './Admin'
 import AddBook from './AddBook'
 import Shop from './Shop'
 import Book from './Book'
+import MyBooks from './MyBooks'
 
 class Router extends React.Component{
     render() {
@@ -25,6 +26,7 @@ class Router extends React.Component{
                     <Route path="/login" exact component={Login} />
                     <Route path="/admin" exact component={Admin} />
                     <Route path="/admin/addbook" exact component={AddBook} />
+                    <Route path="/admin/mybooks" exact component={MyBooks} />
                     <Route path="/contact" exact component={null} />
                     <Route path="/aboutus" exact component={null} />
                     <Route path="/shop" exact component={Shop} />
