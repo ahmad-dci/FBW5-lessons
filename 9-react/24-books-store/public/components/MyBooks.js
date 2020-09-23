@@ -1,4 +1,3 @@
-import {set} from 'mongoose'
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 
@@ -16,14 +15,7 @@ const MyBooks = () => {
     setState] = useState(intialState)
 
 
-    const deleteBtnClick = (bookId) => {
-        setState({
-            ...state,
-            confirmModalShow: true,
-            confirmModalPayLoad: bookId,
-            confirmModalElement: <p>I hope you know what you are doing , this book gonna be deleted for ever</p>
-          })
-    }
+    
 
 
   useEffect(() => {
@@ -46,9 +38,7 @@ const MyBooks = () => {
             </div>
           )
         })
-        setState({
-          ...state,
-          booksElement
+        setState({...state, booksElement
         })
       }
     }).catch(error => {
@@ -57,12 +47,27 @@ const MyBooks = () => {
   }, [])
 
   const closeCnfirmModal = () => {
+      
     setState({
       ...state,
       confirmModalShow: false
     })
   }
 
+  const deleteConfirm = bookid => {
+      console.log(bookid)
+  }
+
+  const deleteBtnClick = (bookId) => {
+    
+    setState({
+        ...state,
+        confirmModalShow: true,
+        confirmModalPayLoad: bookId,
+        confirmModalElement: <p>I hope you know what you are doing , this book gonna be deleted for ever</p>
+      })
+}
+console.log('showmodal',state);
   return (
     <React.Fragment>
       <ConfirmModal
@@ -71,6 +76,7 @@ const MyBooks = () => {
         close={closeCnfirmModal}
         title="Confirm Delete"
         payload={state.confirmModalPayLoad}
+        onConfirm={deleteConfirm}
         >
             {state.confirmModalElement}
         </ConfirmModal>

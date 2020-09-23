@@ -9,7 +9,7 @@ class ConfirmModal extends React.Component {
     }
 
     confirm = () => {
-
+      this.props.onConfirm(this.props.payload)
     }
     
   render() {
