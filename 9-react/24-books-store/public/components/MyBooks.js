@@ -1,14 +1,39 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 
 import {myBooksPost} from '../services/api'
 const MyBooks = () => {
+
+    const intialState = {
+        booksElement: null
+    }
+    const [state, setState] = useState(intialState)
+
 
   useEffect(() => {
     myBooksPost().then(data => {
       console.log(data);
       if (data != 2) {
         // job gonna be here
+        const booksElement = data.map(book => {
+            return(
+                <div key={book._id} className="col-md-3">
+                <div className="item">
+                  <img className="bookimage" src={book.imgs[0]} alt="img"/>
+                  <h3>
+                    <Link to={"/admin/mybook/"+book._id}>{book.title}</Link>
+                  </h3>
+                  <h6>
+                    <Link to={"/admin/mybook/"+book._id}>Edit</Link>&nbsp;&nbsp;&nbsp;<button className="btn btn-danger"  >Delete</button>
+                  </h6>
+                </div>
+              </div>
+            )
+        })
+        setState({
+            ...state,
+            booksElement
+        })
       }
     }).catch(error => {
       console.log(error);
@@ -30,18 +55,7 @@ const MyBooks = () => {
           <div className="recent-book-sec">
             <div className="row">
 
-              <div className="col-md-3">
-                <div className="item">
-                  <img className="bookimage" src="<%= books[i].imgs[0]%>" alt="img"/>
-                  <h3>
-                    <a href="/admin/mybook/<%=books[i].id%>">
-                      books[i].title</a>
-                  </h3>
-                  <h6>
-                    <a href="/admin/mybook/<%=books[i].id%>">Edit</a>&nbsp;&nbsp;&nbsp;<a className="showDeleteModalBtn" bookid="<%=books[i].id%>" href="#">Delete</a>
-                  </h6>
-                </div>
-              </div>
+              {state.booksElement}
 
             </div>
             <div className="btn-sec">
@@ -51,3 +65,7 @@ const MyBooks = () => {
         </div>
       </section>
     </React.Fragment>
+  )
+}
+
+export default MyBooks
