@@ -25,14 +25,9 @@ const Book = () => {
     })
   }, [])
   if (state.book) {
-
-    const imagesSet = state
-      .book
-      .imgs
-      .map(image => {
+    const imagesSet = state.book.imgs.map(image => {
         return ({original: image, thumbnail: image})
       })
-
     return (
       <React.Fragment>
         <div className="breadcrumb">
