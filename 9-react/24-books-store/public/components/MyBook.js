@@ -11,6 +11,7 @@ const MyBook = () => {
 
   const pdfSpanRef = useRef()
   const pdfInputRef = useRef()
+  const imgInputRef = useRef()
 
   const initialState = {
     book: null,
@@ -114,16 +115,7 @@ const MyBook = () => {
       //all things are good we need to send the data to server side
       editBookPost(state.book.title, state.book.description, state.book.imgs, state.newImgFiles, state.newPdfFile, params.id).then(data => {
         switch (data) {
-          case 1:
-            setState({
-              ...state,
-              showModal: true,
-              modalClass: 'bg-success',
-              modalTitle: 'updates successfuly',
-              modalElement: <p>the book is updated succeffuly</p>
-
-            })
-            break;
+          
             case 2:
             setState({
               ...state,
@@ -139,6 +131,17 @@ const MyBook = () => {
             break;
         
           default:
+            pdfInputRef.current.value=''
+            imgInputRef.current.value=''
+            setState({
+              ...state,
+              book: data,
+              showModal: true,
+              modalClass: 'bg-success',
+              modalTitle: 'updates successfuly',
+              modalElement: <p>the book is updated succeffuly</p>
+            })
+            
             break;
         }
       }).catch(error => {
@@ -220,6 +223,7 @@ const MyBook = () => {
                     {imagesElement}
                   </div>
                   <input
+                    ref={imgInputRef}
                     onChange={e => {setState({...state, newImgFiles: e.target.files})}}
                     type="file"
                     className="form-control-file"

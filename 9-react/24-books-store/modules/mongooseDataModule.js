@@ -281,7 +281,12 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
                 
             })
             // delete client.close()
-            resolve()
+            getBook(bookid).then(book => {
+                resolve(book)
+            }).catch(error => {
+                reject(error)
+            })
+            
         } else {
             reject(new Error('hacking try. not this time'))
         }
