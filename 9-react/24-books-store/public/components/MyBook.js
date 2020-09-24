@@ -1,10 +1,15 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import {Link, useParams, useHistory} from 'react-router-dom'
 import {getBookPost} from '../services/api'
 
 const MyBook = () => {
   const params = useParams()
   const history = useHistory()
+
+
+  const pdfSpanRef = useRef()
+  const pdfInputRef = useRef()
+
   const initialState = {
     book: null
   }
@@ -33,15 +38,32 @@ const MyBook = () => {
     })
 
   }, []);
-  if (state.book) {
+  
 
+  const deleteImgClick = (image, e) => {
+    e.preventDefault()
+    const newBook = {...state.book}
+    newBook.imgs.splice(newBook.imgs.indexOf(image), 1)
+    setState({
+      ...state,
+      book: newBook
+    })
+  }
+
+  const pdfDeleteClick = e => {
+    e.preventDefault()
+    pdfSpanRef.current.remove()
+    pdfInputRef.current.disabled = false
+  }
+
+  if (state.book) {
     const imagesElement = state
       .book
       .imgs
       .map((image, idx) => {
         return (
           <div key={idx} className="col-md-3">
-            <a href="#" className="deleteImg">X</a>
+            <a href="#" className="deleteImg" onClick={(e) => {deleteImgClick(image, e)}}>X</a>
             <img className="bookimg" src={image} alt=""/>
           </div>
         )
@@ -87,10 +109,11 @@ const MyBook = () => {
                 </div>
                 <div className="form-group">
                   <label htmlFor="bookPdfInp">Book PDF</label>
-                  <span className="badge badge-default">{state.book.pdfUrl.substr(state.book.pdfUrl.lastIndexOf('/')+1)}
-                    <a href="#" id="deletePdf">X</a>
+                  <span ref={pdfSpanRef} className="badge badge-default">{state.book.pdfUrl.substr(state.book.pdfUrl.lastIndexOf('/')+1)}
+                    <a href="#" id="deletePdf" onClick={e => {pdfDeleteClick(e)}}>X</a>
                   </span>
                   <input
+                    ref={pdfInputRef}
                     type="file"
                     className="form-control-file"
                     id="bookPdfInp"
