@@ -126,6 +126,16 @@ const MyBook = () => {
               
             })
             break;
+            case 100:
+            setState({
+              ...state,
+              showModal: true,
+              modalClass: 'bg-danger',
+              modalTitle: 'hahaha you are trying to hack',
+              modalElement: <p>nice trying hacker but not with my website</p>
+              
+            })
+            break;
             case 10:
               history.push('/login')
             break;

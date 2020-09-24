@@ -118,7 +118,12 @@ adminRouter.post('/editbook', (req, res) => {
     dataModule.updateBook(bookid, newBookTitle, oldImgsUrlsArr, bookDescription, newPdfBook, newImgs, req.session.user._id ).then((book) => {
 res.json(book)
     }).catch(error => {
-res.json(2)
+        if(error === 'hack'){
+            res.json(100)
+        }else{
+            res.json(2)
+        }
+
     })
     
 

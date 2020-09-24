@@ -288,7 +288,7 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
             })
             
         } else {
-            reject(new Error('hacking try. not this time'))
+            reject('hack')
         }
         })()
     } catch (error) {
