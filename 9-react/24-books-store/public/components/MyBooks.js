@@ -6,7 +6,7 @@ import ConfirmModal from './ConfirmModal'
 const MyBooks = () => {
 
   const intialState = {
-    booksElement: null,
+    books: [],
     confirmModalShow: false,
     confirmModalElement: null,
     confirmModalPayLoad: null
@@ -19,34 +19,20 @@ const MyBooks = () => {
 
 
   useEffect(() => {
+      console.log('I am run');
     myBooksPost().then(data => {
       console.log(data);
       if (data != 2) {
         // job gonna be here
-        const booksElement = data.map(book => {
-          return (
-            <div key={book._id} className="col-md-3">
-              <div className="item">
-                <img className="bookimage" src={book.imgs[0]} alt="img"/>
-                <h3>
-                  <Link to={"/admin/mybook/" + book._id}>{book.title}</Link>
-                </h3>
-                <h6>
-                  <Link to={"/admin/mybook/" + book._id}>Edit</Link>&nbsp;&nbsp;&nbsp;<button onClick={()=>{deleteBtnClick(book._id)}} className="btn btn-danger">Delete</button>
-                </h6>
-              </div>
-            </div>
-          )
-        })
-        setState({...state, booksElement
-        })
+        
+        setState({...state, books: data})
       }
     }).catch(error => {
       console.log(error);
     })
   }, [])
 
-  const closeCnfirmModal = () => {
+  const closeConfirmModal = () => {
       
     setState({
       ...state,
@@ -59,7 +45,7 @@ const MyBooks = () => {
   }
 
   const deleteBtnClick = (bookId) => {
-    
+    console.log('showmodal',state);
     setState({
         ...state,
         confirmModalShow: true,
@@ -67,13 +53,29 @@ const MyBooks = () => {
         confirmModalElement: <p>I hope you know what you are doing , this book gonna be deleted for ever</p>
       })
 }
-console.log('showmodal',state);
+
+const booksElement = state.books.map(book => {
   return (
+    <div key={book._id} className="col-md-3">
+      <div className="item">
+        <img className="bookimage" src={book.imgs[0]} alt="img"/>
+        <h3>
+          <Link to={"/admin/mybook/" + book._id}>{book.title}</Link>
+        </h3>
+        <h6>
+          <Link to={"/admin/mybook/" + book._id}>Edit</Link>&nbsp;&nbsp;&nbsp;<button onClick={(e)=>{deleteBtnClick(book._id)}} className="btn btn-danger">Delete</button>
+        </h6>
+      </div>
+    </div>
+  )
+})
+
+return (
     <React.Fragment>
       <ConfirmModal
         className="bg-danger"
         show={state.confirmModalShow}
-        close={closeCnfirmModal}
+        close={closeConfirmModal}
         title="Confirm Delete"
         payload={state.confirmModalPayLoad}
         onConfirm={deleteConfirm}
@@ -93,7 +95,7 @@ console.log('showmodal',state);
           <div className="recent-book-sec">
             <div className="row">
 
-              {state.booksElement}
+              {booksElement}
 
             </div>
             <div className="btn-sec">
