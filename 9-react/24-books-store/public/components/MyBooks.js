@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 
-import {myBooksPost} from '../services/api'
+import {myBooksPost, deleteBookPost} from '../services/api'
 import ConfirmModal from './ConfirmModal'
 const MyBooks = () => {
+
+
+  const history = useHistory()
 
   const intialState = {
     books: [],
@@ -22,11 +25,18 @@ const MyBooks = () => {
       console.log('I am run');
     myBooksPost().then(data => {
       console.log(data);
-      if (data != 2) {
-        // job gonna be here
-        
-        setState({...state, books: data})
+      switch (data) {
+        case 10:
+          history.push('/login')
+          break;
+        case 2:
+            console.log('server error')
+            break;
+        default:
+          setState({...state, books: data})
+          break;
       }
+      
     }).catch(error => {
       console.log(error);
     })
@@ -41,7 +51,28 @@ const MyBooks = () => {
   }
 
   const deleteConfirm = bookid => {
-      console.log(bookid)
+      //console.log(bookid)
+      deleteBookPost(bookid).then(data => {
+
+        switch (data) {
+          case 10:
+            history.push('/login')
+            break;
+          case 2:
+              console.log('server error');
+              break;
+          default:
+            const newBooks = [...state.books]
+          newBooks.splice(newBooks.indexOf(newBooks.find(element => element._id === bookid)), 1)
+          setState({
+            ...state,
+            books: newBooks,
+            confirmModalShow: false
+          })
+            break;
+        }
+        
+      })
   }
 
   const deleteBtnClick = (bookId) => {
