@@ -233,6 +233,7 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
         
         (async () => {
             let oldBookData = await getBook(bookid)
+            if(oldBookData.userid === userid){
             const deletedImgs = []
             const keepImgs = []
             // get update version number
@@ -281,7 +282,9 @@ function updateBook(bookid, newBookTitle, oldImgsUrls, bookDescription, newPdfBo
             })
             // delete client.close()
             resolve()
-
+        } else {
+            reject(new Error('hacking try. not this time'))
+        }
         })()
     } catch (error) {
             reject(error)

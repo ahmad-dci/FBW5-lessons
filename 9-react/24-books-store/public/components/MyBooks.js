@@ -94,7 +94,8 @@ const booksElement = state.books.map(book => {
           <Link to={"/admin/mybook/" + book._id}>{book.title}</Link>
         </h3>
         <h6>
-          <Link to={"/admin/mybook/" + book._id}>Edit</Link>&nbsp;&nbsp;&nbsp;<button onClick={(e)=>{deleteBtnClick(book._id)}} className="btn btn-danger">Delete</button>
+          <Link to={"/admin/mybook/" + book._id}>Edit</Link>
+          &nbsp;&nbsp;&nbsp;<button onClick={(e)=>{deleteBtnClick(book._id)}} className="btn btn-danger">Delete</button>
         </h6>
       </div>
     </div>
