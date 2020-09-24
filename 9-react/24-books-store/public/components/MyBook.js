@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react'
 import {Link, useParams, useHistory} from 'react-router-dom'
+
 import {getBookPost} from '../services/api'
+import PopUpModal  from './PopUpModal'
 
 const MyBook = () => {
   const params = useParams()
@@ -11,7 +13,13 @@ const MyBook = () => {
   const pdfInputRef = useRef()
 
   const initialState = {
-    book: null
+    book: null,
+    newImgFiles: [],
+    newPdfFile: null,
+    showModal: false,
+    modalElement: null,
+    modalTitle: '',
+    modalClass: ''
   }
   const [state,
     setState] = useState(initialState)
@@ -54,6 +62,74 @@ const MyBook = () => {
     e.preventDefault()
     pdfSpanRef.current.remove()
     pdfInputRef.current.disabled = false
+    const newBook = {...state.book}
+    newBook.pdfUrl = ''
+    setState({
+      ...state,
+      book: newBook
+    })
+  }
+
+  const titleInpChange = e => {
+    const newBook = {...state.book}
+    newBook.title = e.target.value
+    setState({
+      ...state,
+      book: newBook
+    })
+  }
+
+  const descriptionInpChange = e => {
+    const newBook = {...state.book}
+    newBook.description = e.target.value
+    setState({
+      ...state,
+      book: newBook
+    })
+  }
+
+  const saveBtnClick = e => {
+    e.preventDefault()
+    let titleErrorElement = null
+    if(state.book.title.trim() === ''){
+      titleErrorElement = <li>Book title should not be empty</li>
+    }
+
+    let imgsErrorElement = null
+    if(state.book.imgs.length === 0 && state.newImgFiles.length === 0){
+      imgsErrorElement = <li>you deleted all old images but you did not upload any new images</li>
+    }
+
+    let pdfErrorElement = null
+    if(state.newPdfFile === null && state.book.pdfUrl === ''){
+      pdfErrorElement = <li>you deltedthe old pdf file but you did not upload new one</li>
+    }
+
+    let descriptionErrorElement = null
+    if(state.book.description.trim() === ''){
+      descriptionErrorElement = <li>description should not be empty</li>
+    }
+
+    if (titleErrorElement === null && imgsErrorElement === null && pdfErrorElement === null && descriptionErrorElement === null){
+      //all things are good we need to send the data to server side
+    } else {
+      const errorElement = (
+        <ul>
+          {titleErrorElement}
+          {imgsErrorElement}
+          {pdfErrorElement}
+          {descriptionErrorElement}
+        </ul>
+      )
+      setState({
+        ...state,
+        showModal: true,
+        modalClass: 'bg-danger',
+        modalTitle: 'Entries Error',
+        modalElement: errorElement
+      })
+    }
+
   }
 
   if (state.book) {
@@ -70,6 +146,9 @@ const MyBook = () => {
       })
     return (
       <React.Fragment>
+        <PopUpModal title={state.modalTitle} show={state.showModal} className={state.modalClass} close={() => {setState({...state, showModal: false})}}>
+          {state.modalElement}
+        </PopUpModal>
         <div className="breadcrumb">
           <div className="container">
             <Link className="breadcrumb-item" to="/admin">Dashboard</Link>
@@ -93,6 +172,7 @@ const MyBook = () => {
                     className="form-control"
                     id="bookTitleInp"
                     placeholder="Book Title"
+                    onChange={titleInpChange}
                     value={state.book.title}/>
                 </div>
                 <div className="form-group">
@@ -101,6 +181,7 @@ const MyBook = () => {
                     {imagesElement}
                   </div>
                   <input
+                    onChange={e => {setState({...state, newImgFiles: e.target.files})}}
                     type="file"
                     className="form-control-file"
                     multiple
@@ -113,6 +194,7 @@ const MyBook = () => {
                     <a href="#" id="deletePdf" onClick={e => {pdfDeleteClick(e)}}>X</a>
                   </span>
                   <input
+                    onChange={e => {setState({...state, newPdfFile: e.target.files[0]})}}
                     ref={pdfInputRef}
                     type="file"
                     className="form-control-file"
@@ -122,9 +204,9 @@ const MyBook = () => {
                 </div>
                 <div className="form-group">
                   <label htmlFor="bookDescriptionInp">Book Description</label>
-                  <textarea className="form-control" id="bookDescriptionInp" value={state.book.description}></textarea>
+                  <textarea className="form-control" id="bookDescriptionInp" value={state.book.description} onChange={descriptionInpChange}></textarea>
                 </div>
-                <button className="btn btn-success mt-3">save</button>
+                <button className="btn btn-success mt-3" onClick={saveBtnClick}>save</button>
               </form>
             </div>
           </div>
