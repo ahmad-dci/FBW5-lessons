@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react'
 import {Link, useParams, useHistory} from 'react-router-dom'
 
-import {getBookPost} from '../services/api'
+import {getBookPost, editBookPost} from '../services/api'
 import PopUpModal  from './PopUpModal'
 
 const MyBook = () => {
@@ -112,6 +112,45 @@ const MyBook = () => {
 
     if (titleErrorElement === null && imgsErrorElement === null && pdfErrorElement === null && descriptionErrorElement === null){
       //all things are good we need to send the data to server side
+      editBookPost(state.book.title, state.book.description, state.book.imgs, state.newImgFiles, state.newPdfFile, params.id).then(data => {
+        switch (data) {
+          case 1:
+            setState({
+              ...state,
+              showModal: true,
+              modalClass: 'bg-success',
+              modalTitle: 'updates successfuly',
+              modalElement: <p>the book is updated succeffuly</p>
+
+            })
+            break;
+            case 2:
+            setState({
+              ...state,
+              showModal: true,
+              modalClass: 'bg-danger',
+              modalTitle: 'updates faild',
+              modalElement: <p>can not update the book because of a server error. please contact the Admin</p>
+              
+            })
+            break;
+            case 10:
+              history.push('/login')
+            break;
+        
+          default:
+            break;
+        }
+      }).catch(error => {
+        setState({
+          ...state,
+          showModal: true,
+          modalClass: 'bg-danger',
+          modalTitle: 'updates faild',
+          modalElement: <p>can not send the data to server side</p>
+          
+        })
+      })
     } else {
       const errorElement = (
         <ul>
@@ -151,7 +190,7 @@ const MyBook = () => {
         </PopUpModal>
         <div className="breadcrumb">
           <div className="container">
-            <Link className="breadcrumb-item" to="/admin">Dashboard</Link>
+            <Link className="breadcrumb-item" to="/admin/mybooks">My Books</Link>
             <span className="breadcrumb-item active">{state.book.title}</span>
           </div>
         </div>

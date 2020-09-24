@@ -190,7 +190,7 @@ export const editBookPost = (bookTitle, bookDescription, bookOldImgs, booknewImg
         const fd = new FormData()
         fd.append('bookid', bookid)
         fd.append('newBookTitle', bookTitle)
-        fd.append('oldImgsUrls', bookOldImgs)
+        fd.append('oldImgsUrls',JSON.stringify(bookOldImgs))
         for (let i = 0; i < booknewImgs.length; i++) {
             fd.append('bookImg' + i, booknewImgs[i])
         }
