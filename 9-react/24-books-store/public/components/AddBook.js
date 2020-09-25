@@ -46,7 +46,6 @@ const history = useHistory()
           })
         } else {
           addBookPost(state.bookTitle, state.bookDescription, pdfFileInpRef.current.files[0], imagesFileInpRef.current.files).then(data => {
-            console.log(data);
             switch (data) {
               case 1:
                 setState({

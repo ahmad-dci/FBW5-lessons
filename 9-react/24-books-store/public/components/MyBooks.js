@@ -22,9 +22,7 @@ const MyBooks = () => {
 
 
   useEffect(() => {
-      console.log('I am run');
     myBooksPost().then(data => {
-      console.log(data);
       switch (data) {
         case 10:
           history.push('/login')
@@ -76,7 +74,6 @@ const MyBooks = () => {
   }
 
   const deleteBtnClick = (bookId) => {
-    console.log('showmodal',state);
     setState({
         ...state,
         confirmModalShow: true,

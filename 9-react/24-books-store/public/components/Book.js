@@ -17,7 +17,6 @@ const Book = () => {
 
   useEffect(() => {
     getBookPost(params.id).then(data => {
-      console.log(data);
       if(data != 2){
         setState({
         ...state,

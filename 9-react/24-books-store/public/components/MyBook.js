@@ -27,7 +27,6 @@ const MyBook = () => {
 
   useEffect(() => {
     getBookPost(params.id).then(data => {
-      console.log(data);
       switch (data) {
         case 2:
           console.log('server error');

@@ -11,7 +11,6 @@ const Admin = (props) => {
     
     //console.log('location', location);
     //console.log('history', history);
-    console.log('props', props );
   return (
     <section className="slider">
       <div className="container">
