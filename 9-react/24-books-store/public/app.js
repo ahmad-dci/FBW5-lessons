@@ -8,6 +8,7 @@ import Router from './components/Router'
 import reducer from './reducers'
 
 class App  extends React.Component{
+    
     render(){
         return(
             <Router>

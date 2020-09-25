@@ -32,7 +32,6 @@ class NavigationBar extends React.Component {
         })
     }
   render() {
-      console.log(this.props.location);
       let currentLocation = this.props.location.pathname
     return (
       <header>
