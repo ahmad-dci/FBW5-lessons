@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 // import {useLocation, useHistory} from 'react-router-dom'
 
 const Admin = (props) => {
@@ -16,17 +17,17 @@ const Admin = (props) => {
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            <h2>Welcome {props.location.state}</h2>
+            <h2>Welcome {props.user}</h2>
             <Link to="/admin/addbook">Add Book</Link>
             <br/>
             <Link to="/admin/mybooks">My Books</Link>
-            <br/>
-            <Link to="/admin/logout">Logout</Link>
           </div>
         </div>
       </div>
     </section>
   )
 }
-
-export default Admin
+const mapStateToProps = state => {
+  return {user: state.user}
+}
+export default connect(mapStateToProps)(Admin)

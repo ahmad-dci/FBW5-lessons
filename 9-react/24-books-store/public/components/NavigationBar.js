@@ -11,6 +11,9 @@ import {
     NavLink
   } from 'reactstrap'
 
+
+  import {logoutPost} from '../services/api'
+
 class NavigationBar extends React.Component {
     state = {
         isOpen: false
@@ -18,6 +21,14 @@ class NavigationBar extends React.Component {
     toggle = () => {
         this.setState({
             isOpen: !this.state.isOpen
+        })
+    }
+    logoutBtnClick = (e) => {
+        e.preventDefault()
+        logoutPost().then(data => {
+            if(data === 10) {
+                this.props.history.push('/login')
+            }
         })
     }
   render() {
@@ -50,7 +61,7 @@ class NavigationBar extends React.Component {
                         ?
                         <React.Fragment>
                             <NavItem className="navbar-item" >
-                                <NavLink  to="#">Logout</NavLink>
+                                <NavLink  href="#" onClick={this.logoutBtnClick}>Logout</NavLink>
                             </NavItem>
                             <NavItem className="navbar-item" active={currentLocation === '/admin' ? true : false}>
                                 <NavLink tag={Link} to="/admin">Dashboard</NavLink>

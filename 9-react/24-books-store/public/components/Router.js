@@ -13,6 +13,7 @@ import Shop from './Shop'
 import Book from './Book'
 import MyBooks from './MyBooks'
 import MyBook from './MyBook'
+import CheckLogin from './CheckLogin'
 
 class Router extends React.Component{
     render() {
@@ -25,10 +26,10 @@ class Router extends React.Component{
                     <Route path="/" exact component={Home} />
                     <Route path="/register" exact component={Register} />
                     <Route path="/login" exact component={Login} />
-                    <Route path="/admin" exact component={Admin} />
-                    <Route path="/admin/addbook" exact component={AddBook} />
-                    <Route path="/admin/mybooks" exact component={MyBooks} />
-                    <Route path="/admin/mybook/:id" exact component={MyBook} />
+                    <Route path="/admin" exact component={() => <CheckLogin><Admin /></CheckLogin>} />
+                    <Route path="/admin/addbook" exact component={() => <CheckLogin><AddBook /></CheckLogin>} />
+                    <Route path="/admin/mybooks" exact component={() => <CheckLogin><MyBooks /></CheckLogin>} />
+                    <Route path="/admin/mybook/:id" exact component={() => <CheckLogin><MyBook /></CheckLogin>} />
                     <Route path="/contact" exact component={null} />
                     <Route path="/aboutus" exact component={null} />
                     <Route path="/shop" exact component={Shop} />

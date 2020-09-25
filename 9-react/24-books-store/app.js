@@ -93,6 +93,13 @@ app.post('/getbook', (req, res) => {
     })
 });
 
+app.post('/checklogin', (req, res) => {
+    if(req.session.user){
+        res.json(req.session.user.email)
+    } else{
+        res.json(10)
+    }
+});
 
 app.use('/admin', adminRoutes);
 

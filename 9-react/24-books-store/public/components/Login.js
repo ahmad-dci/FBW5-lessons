@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import {connect} from 'react-redux'
 
@@ -7,6 +7,13 @@ import {loginPost} from '../services/api'
 import {setUserAction} from '../actions'
 
 const Login = (props) => {
+
+
+  useEffect(() => {
+    props.setUserAction(null)
+    
+  }, []);
+
 
   const history = useHistory()
   const intialState = {
