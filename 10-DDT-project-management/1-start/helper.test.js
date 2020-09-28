@@ -27,7 +27,7 @@ test('should return [user name is ahmad ,and the age is 33]', () => {
 test('chould show element after adding right data and click the button', async() => {
     const browser = await puppeteer.launch({
         headless: false,
-        slowMo: 500,
+        slowMo: 200,
         args: ['--window-size=1920,1080']
     })
     const page = await browser.newPage()
